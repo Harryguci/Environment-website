@@ -1,0 +1,151 @@
+@use "base";
+
+$light-green: rgb(100, 220, 100);
+
+.heading {
+  color: base.$primary;
+  font-weight: bold;
+  font-size: 5rem;
+}
+
+#footer {
+  min-height: 50vh;
+  background: rgba(50, 200, 50, 0.8);
+  padding: 6rem 10rem;
+  font-size: 1.6rem;
+  width: 100%;
+  margin: 10rem 0 0 0;
+  color: white;
+  border-radius: 20rem 20rem 0 0;
+
+  h3 {
+    font-size: 4rem;
+  }
+
+  ul {
+    padding: 0;
+    list-style: none;
+  }
+
+  @media (max-width: 900px) {
+    padding: 6rem 5rem;
+  }
+
+  @media (max-width: 768px) {
+    margin: 5rem 0 0 0;
+    border-radius: 10rem 10rem 0 0;
+  }
+  @media (max-width: 500px) {
+    padding: 5rem 1rem;
+  }
+}
+
+.footer {
+  position: relative;
+  z-index: 5;
+  box-shadow: 0 -5rem 60px rgba(0, 255, 0, 0.2);
+
+  &__section-container__item {
+    padding: 0;
+    overflow: hidden;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.2);
+    margin: 1rem 0;
+    position: relative;
+
+    &__title {
+      display: block;
+      font-weight: bold;
+      font-size: 2rem;
+    }
+
+    .thumbnail {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      background: white;
+      border-radius: 20px;
+    }
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: all 0.3s ease-in-out;
+    }
+
+    &:hover {
+      img {
+        filter: brightness(60%);
+      }
+    }
+    img:hover {
+      .footer__products-container__item__title {
+        opacity: 1;
+      }
+    }
+  }
+
+  .contact-form {
+    padding: 3rem 7rem;
+    * {
+      font-size: 1.6rem;
+    }
+
+    input,
+    textarea {
+      display: block;
+      width: 100%;
+      padding: 1.5rem 2rem;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    button {
+      padding: 1rem 2.5rem;
+      background-color: rgb(50, 50, 250);
+      font-weight: bold;
+      position: relative;
+      border: none;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+      transition: all 0.3s ease-in-out;
+
+      &::after {
+        content: "";
+        display: block;
+        border-radius: 5px;
+        border: 2px solid white;
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        transform: translate(-100%, 0);
+        opacity: 0;
+        transition: all 0.3s ease-in-out;
+      }
+
+      &:hover {
+        background-color: rgba(100, 100, 250, 0);
+        &::after {
+          opacity: 1;
+          transform: translate(0, 0);
+        }
+      }
+    }
+
+    @media (max-width: 900px) {
+      padding: 3rem 5rem;
+    }
+
+    @media (max-width: 500px) {
+      padding: 2rem 2rem;
+    }
+  }
+
+  .contact-info-list {
+    margin: 0 auto;
+    li {
+      margin-bottom: 0.7rem;
+    }
+  }
+}

@@ -1,0 +1,89 @@
+@use "base";
+
+.navbar {
+  margin: 2rem 0 5rem;
+  font-size: 1.6rem;
+  transition: all 0.3s ease-in-out;
+
+  #toggle-btn {
+    border: none;
+    outline: none;
+    font-size: 2rem;
+  }
+}
+.navbar-brand {
+  font-size: 3rem;
+  font-weight: 800;
+  color: base.$primary;
+
+  &:hover {
+    color: base.$primary;
+  }
+}
+
+#search-form {
+  input {
+    font-size: 1.6rem;
+    padding: 1rem 1.5rem;
+    width: 10rem;
+    transition: width 0.3s ease-in-out;
+
+    &:focus,
+    &:active,
+    &:hover {
+      width: 20rem;
+    }
+  }
+
+  button {
+    padding: 1rem 1.5rem;
+    font-size: 1.6rem;
+    transition: all 0.3s ease-in-out;
+  }
+
+  button[type="submit"] {
+    background: base.$primary;
+
+    border: none;
+    &:hover {
+      background: rgb(70, 200, 70);
+    }
+  }
+}
+
+.navbar-nav {
+  margin-left: 3rem;
+  .nav-link {
+    display: block;
+    padding: 1rem 2.5rem !important;
+    position: relative;
+    overflow: hidden;
+
+    &::after {
+      content: "";
+      display: block;
+      position: absolute;
+      width: 100%;
+      left: 0;
+      bottom: 0;
+      height: 1px;
+      background-color: base.$primary;
+      opacity: 1;
+      transform: translate(-100%, 0);
+      transition: 0.5s ease-in-out;
+    }
+    &:hover {
+      &::after {
+        transform: translate(100%, 0);
+      }
+    }
+  }
+  .nav-link.active {
+    font-size: bold;
+    color: base.$primary;
+    &::after {
+      opacity: 1;
+      transform: translate(0);
+    }
+  }
+}

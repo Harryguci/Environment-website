@@ -1,0 +1,42 @@
+[
+  {
+    "title": "Ngưng sử dụng rác thải nhựa",
+    "description": "Vấn đề ô nhiễm môi trường là vấn đề quan tâm của toàn cầu. Nước ta cũng vậy và nó đang ở mức báo động cao. Các cơ quan, tổ chức đã cố gắng trong việc thực hiện chính sách và pháp luật về bảo vệ môi trường nhưng tình trạng này không có dấu hiệu dừng lại và tiếp tục tăng cao. Với tốc độ công nghiệp hóa và đô thị hóa tăng khá nhanh cùng với đó là sự gia tăng dân số gây áp lực ngày càng nặng nề đối với môi trường của Việt Nam.",
+    "imageUrl": "./widget-top1.png",
+    "links": [
+      {
+        "href": "/blogs/ngung-su-dung-rac-thai-nhua",
+        "content": "Đọc thêm"
+      },
+      {
+        "href": "/blogs/ngung-su-dung-rac-thai-nhua",
+        "content": "Theo dõi"
+      },
+      {
+        "href": "/blogs/ngung-su-dung-rac-thai-nhua",
+        "content": "Yêu thích",
+        "icon": "faHeart"
+      }
+    ]
+  },
+  {
+    "title": "Những vấn đề môi trường cấp bách của Việt Nam: Thực trạng, xu thế, thách thức và giải pháp",
+    "description": "Quá trình phát triển kinh tế - xã hội đã bộc lộ nhiều bất cập và tạo ra nhiều áp lực lớn đối với môi trường sinh thái. Tình trạng ô nhiễm môi trường (ONMT) tiếp tục diễn biến phức tạp, ngày càng nghiêm trọng với nhiều điểm nóng, chất lượng môi trường nhiều nơi suy giảm mạnh",
+    "imageUrl": "https://cdni.iconscout.com/illustration/premium/thumb/national-pollution-prevention-6564373-5429344.png",
+    "links": [
+      {
+        "href": "/blogs/ngung-su-dung-rac-thai-nhua",
+        "content": "Đọc thêm"
+      },
+      {
+        "href": "/blogs/ngung-su-dung-rac-thai-nhua",
+        "content": "Theo dõi"
+      },
+      {
+        "href": "/blogs/ngung-su-dung-rac-thai-nhua",
+        "content": "Yêu thích",
+        "icon": "faHeart"
+      }
+    ]
+  }
+]

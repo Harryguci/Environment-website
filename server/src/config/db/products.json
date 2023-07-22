@@ -1,0 +1,62 @@
+[
+  {
+    "id": 1,
+    "name": "Túi vải bảo vệ môi trường",
+    "imageUrl": "https://canavibag.com/uploads/hinh-0016.jpg",
+    "description": "Túi vải bảo vệ môi trường được đánh giá là một trong những vật dụng tốt nhất để bảo vệ cuộc sống. Túi vải làm hạn chế quy trình xả thải, giảm thiểu quy trình sản xuất túi nilon, làm cho công đoạn tái chế nhựa được giảm xuống, tiết kiệm không nhỏ kinh tế và giúp giảm tác hại xấu với môi trường.",
+    "cost": "100000",
+    "url": "/products/1",
+    "create_at": "2023-07-11",
+    "remain": "5"
+  },
+  {
+    "id": 2,
+    "name": "Túi vải bảo vệ môi trường",
+    "imageUrl": "https://tuivaithanhtien.com/upload/baiviet/3-2020/tui-than-thien-moi-truong-2.jpg",
+    "description": "Túi vải bảo vệ môi trường được đánh giá là một trong những vật dụng tốt nhất để bảo vệ cuộc sống. Túi vải làm hạn chế quy trình xả thải, giảm thiểu quy trình sản xuất túi nilon, làm cho công đoạn tái chế nhựa được giảm xuống, tiết kiệm không nhỏ kinh tế và giúp giảm tác hại xấu với môi trường.",
+    "cost": "110000",
+    "url": "/products/2",
+    "create_at": "2023-07-12",
+    "remain": "10"
+  },
+  {
+    "id": 3,
+    "name": "Ly giấy thân thiện với môi trường",
+    "imageUrl": "https://lygiayvietnam.vn/uploads/blog/ly-coc-giay-6.png",
+    "description": "Túi vải bảo vệ môi trường được đánh giá là một trong những vật dụng tốt nhất để bảo vệ cuộc sống. Túi vải làm hạn chế quy trình xả thải, giảm thiểu quy trình sản xuất túi nilon, làm cho công đoạn tái chế nhựa được giảm xuống, tiết kiệm không nhỏ kinh tế và giúp giảm tác hại xấu với môi trường.",
+    "cost": "110000",
+    "url": "/products/3",
+    "create_at": "2023-07-22",
+    "remain": "0"
+  },
+  {
+    "id": 4,
+    "name": "Ly giấy thân thiện với môi trường",
+    "imageUrl": "https://lygiayvietnam.vn/uploads/blog/ly-coc-giay-6.png",
+    "description": "Túi vải bảo vệ môi trường được đánh giá là một trong những vật dụng tốt nhất để bảo vệ cuộc sống. Túi vải làm hạn chế quy trình xả thải, giảm thiểu quy trình sản xuất túi nilon, làm cho công đoạn tái chế nhựa được giảm xuống, tiết kiệm không nhỏ kinh tế và giúp giảm tác hại xấu với môi trường.",
+    "cost": "110000",
+    "url": "/products/3",
+    "create_at": "2023-07-22",
+    "remain": "0"
+  },
+  {
+    "id": 5,
+    "name": "Túi vải bảo vệ môi trường",
+    "imageUrl": "https://tuivaithanhtien.com/upload/baiviet/3-2020/tui-than-thien-moi-truong-2.jpg",
+    "description": "Túi vải bảo vệ môi trường được đánh giá là một trong những vật dụng tốt nhất để bảo vệ cuộc sống. Túi vải làm hạn chế quy trình xả thải, giảm thiểu quy trình sản xuất túi nilon, làm cho công đoạn tái chế nhựa được giảm xuống, tiết kiệm không nhỏ kinh tế và giúp giảm tác hại xấu với môi trường.",
+    "cost": "110000",
+    "url": "/products/2",
+    "create_at": "2023-07-12",
+    "remain": "10"
+  },
+  {
+    "id": 6,
+    "name": "Túi vải bảo vệ môi trường",
+    "imageUrl": "https://canavibag.com/uploads/hinh-0016.jpg",
+    "description": "Túi vải bảo vệ môi trường được đánh giá là một trong những vật dụng tốt nhất để bảo vệ cuộc sống. Túi vải làm hạn chế quy trình xả thải, giảm thiểu quy trình sản xuất túi nilon, làm cho công đoạn tái chế nhựa được giảm xuống, tiết kiệm không nhỏ kinh tế và giúp giảm tác hại xấu với môi trường.",
+    "cost": "100000",
+    "url": "/products/1",
+    "create_at": "2023-07-11",
+    "remain": "5"
+  }
+]
