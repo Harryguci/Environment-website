@@ -1,7 +1,8 @@
+import { useState, useEffect } from "react";
 import { Container } from "react-bootstrap";
 import BlogList from "../components/BlogList";
 import ProductFrame from "../components/ProductFrame";
-import "../Assets/SCSS/index.scss";
+
 export default function Home(props) {
   return (
     <div className="App">

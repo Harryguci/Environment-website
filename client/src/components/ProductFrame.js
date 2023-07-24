@@ -12,13 +12,23 @@ import {
   FormControl,
   Button,
 } from "react-bootstrap";
+import axios from "axios";
+
 export default function ProductFrame({ limits, className }) {
   const [products, setProducts] = useState([]);
   const [otherAddress, setOtherAddress] = useState("");
   useEffect(() => {
-    fetch("http://localhost:3001/products/all")
-      .then((response) => response.json())
-      .then((data) => setProducts(data));
+    axios
+      .get("http://localhost:3001/products/all", {
+        headers: {
+          accessToken: localStorage.getItem("accessToken"),
+        },
+      })
+      .then((data) => {
+        if (data.data.error) return console.log(data.data.error);
+        else setProducts(data.data);
+      })
+      .catch((error) => console.error(error));
   }, []);
 
   return (

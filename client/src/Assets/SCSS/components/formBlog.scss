@@ -1,0 +1,38 @@
+.blog-posting-form {
+  * {
+    font-size: 16px !important;
+  }
+
+  > div {
+    margin-bottom: 1.5rem;
+  }
+
+  input[type="file"] {
+    display: none;
+  }
+
+  input[type="file"] + span {
+    cursor: pointer;
+  }
+
+  .preview-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    .thumbnail {
+      min-width: 150px;
+      height: 150px;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      border-radius: 1rem;
+      text-align: center;
+    }
+
+    img {
+      width: 100%;
+      height: auto;
+      object-fit: cover;
+    }
+  }
+}

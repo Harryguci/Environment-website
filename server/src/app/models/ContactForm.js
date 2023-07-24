@@ -7,3 +7,4 @@ class ContactForm {
 }
 
 module.exports = ContactForm;
+  

@@ -15,27 +15,50 @@ import {
   faCircleInfo,
 } from "@fortawesome/free-solid-svg-icons";
 import { useState, useEffect } from "react";
+import axios from "axios";
 
 export default function Footer(props) {
   const [blogs, setBlogs] = useState([]);
   const [contactInformation, setContactInformation] = useState({});
   const [products, setProducts] = useState([]);
+
   useEffect(() => {
-    fetch("http://localhost:3001/blogs/moi-truong")
-      .then((response) => response.json())
-      .then((data) => setBlogs(data));
+    axios
+      .get("http://localhost:3001/blogs/all", {
+        headers: {
+          accessToken: localStorage.getItem("accessToken"),
+        },
+      })
+      .then((data) => {
+        if (data.data.error) console.log(data.data.error);
+        else setBlogs(data.data);
+      });
   }, []);
 
   useEffect(() => {
-    fetch("http://localhost:3001/contact")
-      .then((response) => response.json())
-      .then((data) => setContactInformation(data));
+    axios
+      .get("http://localhost:3001/contact", {
+        headers: {
+          accessToken: localStorage.getItem("accessToken"),
+        },
+      })
+      .then((data) => {
+        if (data.data.error) console.log(data.data.error);
+        else setContactInformation(data.data);
+      });
   }, []);
 
   useEffect(() => {
-    fetch("http://localhost:3001/products")
-      .then((response) => response.json())
-      .then((data) => setProducts(data));
+    axios
+      .get("http://localhost:3001/products", {
+        headers: {
+          accessToken: localStorage.getItem("accessToken"),
+        },
+      })
+      .then((data) => {
+        if (data.data.error) console.log(data.data.error);
+        else setProducts(data.data);
+      });
   }, []);
 
   return (

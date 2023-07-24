@@ -1,0 +1,100 @@
+$color-main-1: rgb(30, 30, 120);
+
+.login-container {
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+  height: max-content;
+  background: $color-main-1;
+
+  #heading-container {
+    height: 30vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  h1 {
+    text-align: center;
+    color: white;
+    margin-top: 3rem;
+    font-size: 5rem;
+    font-weight: bold;
+  }
+
+  #login-form {
+    width: 100%;
+    max-width: 700px;
+    height: 70vh;
+    position: fixed;
+    bottom: 0;
+    margin: 0;
+    padding: 5rem;
+    background: rgb(245, 245, 245);
+    border-radius: 70px 5px 5px 5px;
+    box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.2);
+  }
+
+  #login-form > div {
+    display: flex;
+  }
+
+  #login-form h2 {
+    color: $color-main-1;
+    margin: 2rem auto;
+    text-align: center;
+  }
+
+  #login-form input {
+    display: block;
+    padding: 1rem 1rem;
+    width: 100%;
+    background: rgb(255, 255, 255);
+    font-size: 1rem;
+    border: none;
+    border-bottom: 1px solid rgb(0, 0, 0);
+    border-radius: 10px;
+    margin-bottom: 1.2rem;
+    transition: all 0.3s ease-in-out;
+  }
+
+  #login-form input:focus,
+  #login-form input:active {
+    box-shadow: 5px 10px 0px rgba(0, 0, 0, 0.5);
+  }
+
+  #login-form button[type="submit"] {
+    font-size: 1rem;
+    border: none;
+    border-radius: 5px;
+    padding: 1rem 2rem;
+    margin-top: 1rem;
+    color: white;
+    background: $color-main-1;
+    transition: all 0.3s ease-in-out;
+  }
+
+  #login-form button[type="submit"]:hover,
+  #login-form button[type="submit"]:focus,
+  #login-form button[type="submit"]:active {
+    background: rgb(70, 70, 255);
+  }
+
+  #login-form button[type="button"] {
+    font-size: 1rem;
+    border: 1px solid $color-main-1;
+    border-radius: 5px;
+    padding: 1rem 2rem;
+    margin-top: 1rem;
+    color: $color-main-1;
+    background: none;
+    transition: all 0.3s ease-in-out;
+    margin-left: 1rem;
+  }
+
+  #login-form button[type="button"]:hover,
+  #login-form button[type="button"]:focus,
+  #login-form button[type="button"]:active {
+    background: rgb(70, 70, 255);
+    color: white;
+  }
+}

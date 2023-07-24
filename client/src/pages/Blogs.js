@@ -5,7 +5,7 @@ import BlogList from "../components/BlogList";
 export default function Blogs(props) {
   return (
     <Container>
-      <BlogList />
+      <BlogList typeBlog={"all"} />
     </Container>
   );
 }
