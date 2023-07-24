@@ -11,6 +11,7 @@ import {
   ListGroupItem,
   FormControl,
   Button,
+  Badge,
 } from "react-bootstrap";
 import axios from "axios";
 
@@ -26,7 +27,7 @@ export default function ProductFrame({ limits, className }) {
       })
       .then((data) => {
         if (data.data.error) return console.log(data.data.error);
-        else setProducts(data.data);
+        else setProducts(data.data.reverse());
       })
       .catch((error) => console.error(error));
   }, []);
@@ -98,15 +99,48 @@ export default function ProductFrame({ limits, className }) {
           <div className="product-frame__main">
             {(products && (
               <Row className="" style={{ rowGap: "1.5rem" }}>
-                {products.map((product) => (
-                  <Col sm={4} md={3} xl={2} key={product.id} className="col-6">
-                    <Card className="product-frame__main__item">
-                      <div className="thumbnail">
-                        <img src={product.imageUrl} alt={product.name} />
-                      </div>
-                      <p className="p-3">{product.name}</p>
-                    </Card>
-                  </Col>
+                {products.map((product, index) => (
+                  <>
+                    <Col
+                      sm={4}
+                      md={3}
+                      xl={2}
+                      key={product._id}
+                      className="col-6 position-relative"
+                    >
+                      {index < 2 && (
+                        <Badge
+                          className="position-absolute d-block bg-danger"
+                          style={{
+                            top: "0",
+                            right: 0,
+                            zIndex: 10,
+                          }}
+                        >
+                          new
+                        </Badge>
+                      )}
+                      <Card className="product-frame__main__item position-relative">
+                        <div className="thumbnail">
+                          <img
+                            src={`http://localhost:3001/blogs/${product.imageUrl}`}
+                            alt={product.name}
+                          />
+                        </div>
+                        <div className="p-3">
+                          <a
+                            href={`http://localhost:3001/products/${products.userId}/${products.name}`}
+                            className="text-decoration-none"
+                          >
+                            <h3 className="fs-3">{product.name}</h3>
+                          </a>
+                          <p>
+                            Giá bán:<b> {product.cost}</b>
+                          </p>
+                        </div>
+                      </Card>
+                    </Col>
+                  </>
                 ))}
               </Row>
             )) || <h2>Not found</h2>}

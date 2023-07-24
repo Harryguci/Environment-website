@@ -31,7 +31,7 @@ export default function Footer(props) {
       })
       .then((data) => {
         if (data.data.error) console.log(data.data.error);
-        else setBlogs(data.data);
+        else setBlogs(data.data.reverse());
       });
   }, []);
 
@@ -69,20 +69,30 @@ export default function Footer(props) {
             <p className="fs-1 fw-bold mt-4">Blogs</p>
             {blogs && (
               <ul>
-                {blogs.map((blog, index) => (
+                {blogs.slice(0, 3).map((blog, index) => (
                   <li
                     key={index + 1}
                     className="footer__section-container__item d-flex gap-4"
                   >
                     <div style={{ flex: "0 0 20%" }}>
                       <div className="thumbnail">
-                        <img src={blog.imageUrl} alt="SFIT" />
+                        <a href={`/blogs/${blog._id}`}>
+                          <img
+                            src={`http://localhost:3001/blogs/${blog.files[0].filename}`}
+                            alt="SFIT"
+                          />
+                        </a>
                       </div>
                     </div>
                     <div className="p-3">
-                      <p className="footer__section-container__item__title">
-                        {blog.title}
-                      </p>
+                      <a
+                        href={`/blogs/${blog._id}`}
+                        style={{ textDecoration: "none", color: "white" }}
+                      >
+                        <p className="footer__section-container__item__title">
+                          {blog.title}
+                        </p>
+                      </a>
                       <p className="footer__section-container__item__content">
                         {blog.description.substring(0, 150) + "..."}
                       </p>
@@ -101,8 +111,11 @@ export default function Footer(props) {
                     key={index + 1}
                     className="footer__section-container__item products-container"
                   >
-                    <a href={product.url}>
-                      <img src={product.imageUrl} alt={product.name} />
+                    <a href={product.url} style={{ cursor: "pointer" }}>
+                      <img
+                        src={`http://localhost:3001/blogs/${product.imageUrl}`}
+                        alt={product.name}
+                      />
                     </a>
                     <p
                       className="footer__section-container__item__title"
