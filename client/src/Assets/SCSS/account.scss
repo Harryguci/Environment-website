@@ -13,3 +13,42 @@
     padding-bottom: 1.5rem;
   }
 }
+
+.user-blog-container {
+  &__list {
+    &__item {
+      border-radius: 0.5rem;
+      box-shadow: 0 0 1rem rgba(0, 0, 100, 0.1);
+      transition: all 0.3s ease-in-out;
+      h3 {
+        font-size: 2rem;
+        font-weight: bold;
+        color: rgb(50, 50, 100);
+      }
+
+      .info {
+        padding: 1.5rem;
+      }
+
+      &:hover {
+        box-shadow: 0 0 5rem rgba(0, 0, 255, 0.2);
+      }
+
+      .thumbnail {
+        border-radius: 0.5rem;
+        overflow: hidden;
+        min-width: 250px;
+        padding: 0 2px;
+      }
+
+      .video-section {
+        border-radius: 0.8rem;
+        overflow: hidden;
+      }
+
+      .media {
+        overflow-x: auto;
+      }
+    }
+  }
+}

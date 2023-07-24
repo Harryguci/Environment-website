@@ -22,7 +22,7 @@ function App() {
   });
 
   useEffect(() => {
-    console.log("Get user information");
+    // console.log("Get user information");
     axios
       .get("http://localhost:3001/auth/auth", {
         headers: {

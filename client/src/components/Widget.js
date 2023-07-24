@@ -1,10 +1,23 @@
 import { useEffect, useState, useReducer } from "react";
-import { Container, Row, Col, ListGroup, ListGroupItem } from "react-bootstrap";
+import { Container, Row, Col, Badge } from "react-bootstrap";
+
+// eslint-disable-next-line no-unused-vars
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+// eslint-disable-next-line no-unused-vars
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
+
 import "../Assets/SCSS/components/widget.scss";
 export default function Widget(
-  { heading, description, links, imageUrl, typeWidget },
+  {
+    heading,
+    description,
+    link,
+    imageUrl,
+    typeWidget,
+    author,
+    className,
+    index,
+  },
   ...props
 ) {
   const [showAllDescription, setShowAllDescription] = useReducer(
@@ -23,7 +36,7 @@ export default function Widget(
   }, [description, showAllDescription]);
 
   return (
-    <Container className={"widget " + props.className} key={props.key}>
+    <Container className={"widget " + className} key={props.key}>
       <Row
         className="justify-content-center"
         style={
@@ -35,9 +48,17 @@ export default function Widget(
         <Col md={6} className="d-flex align-items-center">
           <Row>
             <div className="widget__content-container px-3">
-              <h1 style={heading.length > 50 ? { fontSize: "3rem" } : {}}>
-                {heading || "HEADING"}
-              </h1>
+              <a href={link}>
+                {index <= 1 && (
+                  <Badge bg="secondary fs-5 bg-danger mb-2">New</Badge>
+                )}
+                <h1 style={heading.length > 20 ? { fontSize: "3rem" } : {}}>
+                  {heading || "HEADING"}
+                  <p className="fw-light">
+                    Tác giả: <b className="fw-bold">{author}</b>
+                  </p>
+                </h1>
+              </a>
               <p className="widget__description">
                 {displayDescription || "some content..."}
                 <button
@@ -51,23 +72,6 @@ export default function Widget(
                   {!showAllDescription ? `xem thêm` : "ẩn bớt"}
                 </button>
               </p>
-              {links && (
-                <div className="d-flex">
-                  {links.map((link, index) => (
-                    <a
-                      className="custom-btn mx-1"
-                      key={index + 1}
-                      href={link.href}
-                    >
-                      {link.icon === "faHeart" ? (
-                        <FontAwesomeIcon icon={faHeart} />
-                      ) : (
-                        link.content
-                      )}
-                    </a>
-                  ))}
-                </div>
-              )}
             </div>
           </Row>
         </Col>
@@ -75,7 +79,7 @@ export default function Widget(
           <Row>
             <div className="widget__thumbnail">
               <div className="thumbnail">
-                <img src={imageUrl} alt="SFIT" />
+                {imageUrl ? <img src={imageUrl} alt="SFIT" /> : <></>}
               </div>
             </div>
           </Row>

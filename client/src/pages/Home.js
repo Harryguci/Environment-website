@@ -8,7 +8,7 @@ export default function Home(props) {
     <div className="App">
       <section className="section-blogs">
         <Container className="mt-5">
-          <h1 className="heading text-center">Blogs</h1>
+          <h1 className="heading text-center my-5">Blogs</h1>
         </Container>
         <BlogList limits={1} />
       </section>

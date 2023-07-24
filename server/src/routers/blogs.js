@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const Blog = require("../app/models/Blogs");
-
+const User = require("../app/models/User");
 const { validateToken } = require("../middleware/Authentication");
 const multer = require("multer");
 const path = require("path");
@@ -37,7 +37,7 @@ router.get("/user/:id", validateToken, async function (req, res) {
 });
 
 // /blogs/top
-router.get("/top", async (req, res) => {
+router.get("/top", async (req, res, next) => {
   await Blog.find({})
     .then((query) => {
       query = Array.from(query);
@@ -49,7 +49,7 @@ router.get("/top", async (req, res) => {
 });
 
 // /blogs/moi-truong
-router.get("/moi-truong", async (req, res) => {
+router.get("/moi-truong", async (req, res, next) => {
   await Blog.find({})
     .then((query) => {
       query = Array.from(query);
@@ -61,11 +61,18 @@ router.get("/moi-truong", async (req, res) => {
 });
 
 // moi-truong,
-router.get("/all", async (req, res) => {
+router.get("/all", async (req, res, next) => {
   await Blog.find({})
-    .then((query) => {
+    .then(async (query) => {
       query = Array.from(query);
       query = query.map((blog) => blog.toObject());
+
+      for (var i = 0; i < query.length; i++) {
+        var username = await User.findById(query[i].userId).then(
+          (user) => user.toObject().username
+        );
+        query[i].username = username;
+      }
 
       res.send(query);
     })
@@ -86,7 +93,7 @@ router.post("/", upload.array("files", 12), async (req, res) => {
 
   await blog.save();
 
-  res.send(blog);
+  res.redirect("http://localhost:3000/account");
 });
 
 module.exports = router;

@@ -3,7 +3,7 @@ import { Form, FormControl, FormLabel, Button } from "react-bootstrap";
 import "../Assets/SCSS/components/formBlog.scss";
 import AuthContext from "../helpers/Authcontext";
 import axios from "axios";
-import PostForm from "../helpers/PostForm";
+
 export default function FormBlog() {
   const { authState } = useContext(AuthContext);
   const [user, setUser] = useState({});
@@ -55,6 +55,7 @@ export default function FormBlog() {
     });
   };
 
+  // eslint-disable-next-line no-unused-vars
   const HandleSubmit = (e) => {
     e.preventDefault();
     axios.post("http://localhost:3001/blogs", {

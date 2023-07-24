@@ -78,7 +78,7 @@ function NavbarCustom({ user }, props) {
                     <>
                       <div>
                         <a
-                          href="/account"
+                          href={`/account?user=${authState.username}`}
                           className="btn"
                           style={{ color: "rgb(70,70,255)", fontSize: 16 }}
                         >
