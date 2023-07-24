@@ -40,7 +40,7 @@
 
 # Configuration
 
-1. Install Node Js and npm
+1. Install Node Js, npm, mongodb (connected)
 2. Install dependencies in folder:
 
 - Client: npm install
