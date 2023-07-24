@@ -37,3 +37,14 @@
 
 - Node Js.
 - Database: MongoDB
+
+# Configuration
+
+1. Install Node Js and npm
+2. Install dependencies in folder:
+
+- Client: npm install
+- Server: npm install
+
+3. Run: At root folder: npm start
+4. Access: <a href='http://localhost:3000'>http://localhost:3000</a>
