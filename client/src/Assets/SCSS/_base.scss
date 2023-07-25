@@ -71,12 +71,31 @@ body {
   }
 }
 
-
 .custom-btn.primary-blue {
   background: $primary-blue;
   color: white;
   &:hover {
     background: rgb(20, 20, 70);
+    color: white;
+  }
+}
+
+button.bg-none {
+  background: none;
+  color: black;
+  border: none;
+  transition: all 0.3s ease-in-out;
+  border-radius: 0.5rem;
+  &:hover {
+    background: $primary-blue;
+    color: white;
+  }
+}
+
+button.bg-none.red {
+  color: rgb(255, 50, 50);
+  &:hover {
+    background: rgb(255, 50, 50);
     color: white;
   }
 }

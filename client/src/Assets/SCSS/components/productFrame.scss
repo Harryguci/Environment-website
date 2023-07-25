@@ -33,8 +33,19 @@
         justify-content: center;
         align-items: center;
         display: flex;
+        border-radius: 0 0 1rem 1rem;
         flex: 0 0 80%;
+      }
+      &__content {
+        padding: 1rem 2rem;
       }
     }
   }
+}
+
+.card {
+  border-radius: 1rem;
+  border: none;
+  overflow: hidden;
+  box-shadow: 0 0.5rem 2rem rgba(0, 0, 0, 0.2);
 }

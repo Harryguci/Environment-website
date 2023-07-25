@@ -15,7 +15,8 @@ import {
 } from "react-bootstrap";
 import axios from "axios";
 import DisplayPrice from "../helpers/DisplayPrice";
-
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faHeart, faCartShopping } from "@fortawesome/free-solid-svg-icons";
 export default function ProductFrame({ limits, className }) {
   const [products, setProducts] = useState([]);
   const [otherAddress, setOtherAddress] = useState("");
@@ -140,7 +141,7 @@ export default function ProductFrame({ limits, className }) {
                           alt={product.name}
                         />
                       </div>
-                      <div className="p-3">
+                      <div className="product-frame__main__item__content">
                         <a
                           href={`http://localhost:3000/products/single/${product._id}`}
                           className="text-decoration-none"
@@ -150,6 +151,17 @@ export default function ProductFrame({ limits, className }) {
                         <p>
                           Giá bán:<b> {DisplayPrice(product.cost)}</b>
                         </p>
+                      </div>
+                      <div className="d-flex p-3">
+                        <Button className="bg-none red">
+                          <FontAwesomeIcon icon={faHeart} />
+                        </Button>
+                        <Button
+                          className="bg-none"
+                          style={{ marginLeft: "auto", marginRight: "0" }}
+                        >
+                          <FontAwesomeIcon icon={faCartShopping} />
+                        </Button>
                       </div>
                     </Card>
                   </Col>
