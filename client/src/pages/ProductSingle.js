@@ -5,13 +5,14 @@ import { Container, Row, Col, Button } from "react-bootstrap";
 import ReactPlayer from "react-player";
 import "../Assets/SCSS/blogSingle.scss";
 import "../Assets/SCSS/productSingle.scss";
-
+import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCartArrowDown } from "@fortawesome/free-solid-svg-icons";
-
+import DisplayPrice from "../helpers/DisplayPrice";
 export default function BlogSingle(props) {
   const [product, setBlog] = useState({});
   const productId = useParams().id;
+  let navigate = useNavigate();
 
   useEffect(() => {
     console.log("params", productId);
@@ -22,11 +23,17 @@ export default function BlogSingle(props) {
         },
       })
       .then((response) => {
-        setBlog(response.data);
-        console.log(response.data);
+        if (response.data.error) {
+          alert("Bạn phải đăng nhập để xem");
+          navigate("/login");
+        } else setBlog(response.data);
       })
-      .catch((err) => console.log(err));
-  }, [productId]);
+      .catch((err) => {
+        console.log(err);
+        alert("Bạn phải đăng nhập để xem");
+        navigate("/login");
+      });
+  }, [navigate, productId]);
 
   return (
     <React.Fragment>
@@ -77,7 +84,16 @@ export default function BlogSingle(props) {
                 <h1 className="heading">{product.name}</h1>
               )}
             </div>
-            <p className="opacity-50">Author: {product.userId}</p>
+            <p className="opacity-50">
+              Author:
+              <a
+                href={`/account?user=${product.username}`}
+                style={{ marginLeft: "1rem" }}
+              >
+                {product.username || product.userId}
+              </a>
+            </p>
+            <p className="cost">Giá bán: {DisplayPrice(product.cost)} VND</p>
             <p style={{ whiteSpace: "pre-line" }}>{product.description}</p>
           </Col>
         </Row>

@@ -8,11 +8,13 @@ import {
   ListGroupItem,
   FormControl,
   FormLabel,
+  Button,
 } from "react-bootstrap";
 import axios from "axios";
 import AlertDismissible from "../components/AlertDismissable";
 import "../Assets/SCSS/search.scss";
-
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 export default function Search() {
   const [search, setSearch] = useState();
   const [query, setQuery] = useState(useParams().q || "");
@@ -64,7 +66,16 @@ export default function Search() {
         <Row>
           <Col>
             <div className="d-flex justify-content-center">
-              <FormLabel className="w-100" style={{ maxWidth: "50rem" }}>
+              <FormLabel
+                className="w-100 d-flex gap-1"
+                style={{ maxWidth: "50rem" }}
+              >
+                <Button
+                  className="my-auto fw-bold fs-1 bg-light px-4 rounded-2 m-0 h-100 text-dark border-0"
+                  style={{ flex: "0 0 auto" }}
+                >
+                  <FontAwesomeIcon icon={faMagnifyingGlass} />
+                </Button>
                 <FormControl
                   className="fs-4 py-3"
                   type="text"

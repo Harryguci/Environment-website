@@ -1,13 +1,11 @@
 import "bootstrap/dist/css/bootstrap.css";
-import React, { useState, useEffect, lazy } from "react";
+import React, { useState, useEffect } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import "./Assets/SCSS/index.scss";
-// import "./Assets/SCSS/custom/custom.scss";
 
 import AuthContext from "./helpers/Authcontext";
 import axios from "axios";
-
 import Layout from "./layouts/Layout";
 import Home from "./pages/Home";
 import Blogs from "./pages/Blogs";
@@ -17,6 +15,8 @@ import Account from "./pages/Account";
 import BlogSingle from "./pages/BlogSingle";
 import ProductSingle from "./pages/ProductSingle";
 import Search from "./pages/Search";
+import NoPage from "./pages/NoPage";
+import About from "./pages/About";
 
 function App() {
   const [authState, setAuthSate] = useState({
@@ -129,8 +129,24 @@ function App() {
                 </Layout>
               }
             />
+            <Route
+              path="/about"
+              element={
+                <Layout>
+                  <About />
+                </Layout>
+              }
+            />
             <Route path="/login" element={<Login typeForm={"login"} />} />
             <Route path="/signup" element={<Login typeForm={"signup"} />} />
+            <Route
+              path="*"
+              element={
+                <Layout>
+                  <NoPage />
+                </Layout>
+              }
+            />
           </Routes>
         </BrowserRouter>
       </AuthContext.Provider>

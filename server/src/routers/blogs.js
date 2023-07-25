@@ -82,12 +82,17 @@ router.get("/all", async (req, res, next) => {
 router.get("/single/:id", validateToken, async (req, res) => {
   const id = req.params.id;
   console.log(req.params);
-  
+
   const blog = await Blog.findById(id)
     .then((blog) => blog.toObject())
     .catch((err) => {
       console.log(err);
     });
+
+  const username = await User.findById(blog.userId)
+    .then((user) => user.toObject())
+    .then((user) => user.username);
+  blog.username = username;
 
   res.send(blog);
 });

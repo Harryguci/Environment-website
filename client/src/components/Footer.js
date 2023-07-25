@@ -111,22 +111,28 @@ export default function Footer(props) {
                     key={index + 1}
                     className="footer__section-container__item products-container"
                   >
-                    <a href={product.url} style={{ cursor: "pointer" }}>
+                    <a
+                      href={`/products/single/${product._id}`}
+                      style={{ cursor: "pointer" }}
+                    >
                       <img
                         src={`http://localhost:3001/blogs/${product.imageUrl}`}
                         alt={product.name}
                       />
                     </a>
-                    <p
-                      className="footer__section-container__item__title"
+                    <a
+                      href={`/products/single/${product._id}`}
+                      className="footer__section-container__item__title text-white text-decoration-none"
                       style={{
                         position: "absolute",
+                        display: "block",
                         bottom: 10 + "px",
                         padding: "0 1rem",
+                        zIndex: 10,
                       }}
                     >
                       {product.name}
-                    </p>
+                    </a>
                   </Col>
                 ))}
               </Row>

@@ -8,7 +8,7 @@ export default function Products(props) {
   return (
     <>
       <Container className="my-5">
-        <h1>Sản Phẩm</h1>
+        <h1 className="heading">Sản Phẩm</h1>
       </Container>
       <ProductFrame />
     </>

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Form from "../components/LoginForm";
+
 import "../Assets/SCSS/login.scss";
 export default function Login({ typeForm }) {
   const [type, setType] = useState("login");
@@ -34,6 +35,11 @@ export default function Login({ typeForm }) {
           minHeight: "100vh",
         }}
       >
+        <div className="position-absolute" style={{ bottom: 30, left: 30 }}>
+          <a className="custom-btn primary-blue d-block my-auto" href="/">
+            Trang chủ
+          </a>
+        </div>
         <Container>
           <div id="heading-container">
             <h1>HR</h1>

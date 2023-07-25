@@ -4,6 +4,7 @@ const router = express.Router();
 const { validateToken } = require("../middleware/Authentication");
 const multer = require("multer");
 const path = require("path");
+const User = require("../app/models/User");
 
 const storage = multer.diskStorage({
   destination: (req, file, callback) => {
@@ -82,6 +83,14 @@ router.get("/single/:id", validateToken, async (req, res) => {
 
   const product = await Product.findById(id)
     .then((response) => response.toObject())
+    .then(async (response) => {
+      await User.findById(response.userId)
+        .then((user) => user.toObject())
+        .then((user) => {
+          response.username = user.username;
+        });
+      return response;
+    })
     .catch((err) => {
       console.log(err);
     });

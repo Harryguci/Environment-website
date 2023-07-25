@@ -203,6 +203,7 @@ export default function Account({ props }) {
                       placeholder="Cập nhật số ĐT"
                       value={userPhone}
                       onChange={(e) => setUserPhone(e.target.value)}
+                      disabled={authState.id !== user.id}
                     />
                   </li>
                   <li className="list-group-item d-flex">
@@ -213,9 +214,19 @@ export default function Account({ props }) {
                       placeholder="Cập nhật trang web của bạn"
                       value={userWebsite}
                       onChange={(e) => setUserWebsite(e.target.value)}
+                      disabled={authState.id !== user.id}
                     />
                   </li>
-                  <Button className="custom-btn" onClick={handleChangeUserInfo}>
+                  <Button
+                    className="custom-btn primary-blue"
+                    style={
+                      authState.id === user.id
+                        ? { display: "block" }
+                        : { display: "none" }
+                    }
+                    onClick={handleChangeUserInfo}
+                    disabled={authState.id !== user.id}
+                  >
                     Lưu
                   </Button>
                 </ul>

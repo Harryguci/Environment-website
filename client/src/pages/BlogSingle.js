@@ -5,10 +5,14 @@ import { Container, Row, Col } from "react-bootstrap";
 import ReactPlayer from "react-player";
 import "../Assets/SCSS/blogSingle.scss";
 import ActiveNavLink from "../helpers/ActiveNavLink";
+import { useNavigate } from "react-router-dom";
+import AlertDismissible from "../components/AlertDismissable";
 export default function BlogSingle(props) {
   const [blog, setBlog] = useState({});
-  const blogId = useParams().id;
+  const [alert, setAlert] = useState({});
 
+  const blogId = useParams().id;
+  let navigate = useNavigate();
   useEffect(() => {
     ActiveNavLink("blogs");
   }, []);
@@ -22,15 +26,30 @@ export default function BlogSingle(props) {
         },
       })
       .then((response) => {
-        setBlog(response.data);
-        console.log(response.data);
+        if (response.data.error) {
+          setAlert({
+            type: "danger",
+            heading: "Login",
+            content: "Bạn phải đăng nhập để xem",
+            hide: () => {
+              setAlert({});
+              navigate("/login");
+            },
+          });
+        } else {
+          setBlog(response.data);
+          // console.log(response.data);
+        }
       })
       .catch((err) => console.log(err));
-  }, [blogId]);
+  }, [blogId, navigate]);
 
   return (
     <React.Fragment>
-      <Container className="blog-single-container">
+      <Container
+        className="blog-single-container"
+        style={{ minHeight: 50 + "vh" }}
+      >
         <Row>
           <Col md={4} className="media">
             {blog.files &&
@@ -67,11 +86,12 @@ export default function BlogSingle(props) {
                 <h1 className="heading">{blog.title.substring(0, 50)}...</h1>
               )}
             </div>
-            <p className="opacity-50">Author: {blog.userId}</p>
+            <p className="opacity-50">Author: {blog.username || blog.userId}</p>
             <p style={{ whiteSpace: "pre-line" }}>{blog.detail}</p>
           </Col>
         </Row>
       </Container>
+      {alert && alert.heading && <AlertDismissible {...alert} />}
     </React.Fragment>
   );
 }

@@ -14,6 +14,7 @@ import {
   Badge,
 } from "react-bootstrap";
 import axios from "axios";
+import DisplayPrice from "../helpers/DisplayPrice";
 
 export default function ProductFrame({ limits, className }) {
   const [products, setProducts] = useState([]);
@@ -28,7 +29,7 @@ export default function ProductFrame({ limits, className }) {
       .then((data) => {
         if (data.data.error) return console.log(data.data.error);
         else {
-          console.log(data.data);
+          // console.log(data.data);
           setProducts(data.data.reverse());
         }
       })
@@ -98,7 +99,7 @@ export default function ProductFrame({ limits, className }) {
                 />
               </div>
               <div className="mt-3 d-flex gap-2">
-                <Button className="custom-btn" type="submit">
+                <Button className="custom-btn primary" type="submit">
                   Tìm
                 </Button>
                 <Button className="custom-btn" type="submit">
@@ -147,7 +148,7 @@ export default function ProductFrame({ limits, className }) {
                           <h3 className="fs-3">{product.name}</h3>
                         </a>
                         <p>
-                          Giá bán:<b> {product.cost}</b>
+                          Giá bán:<b> {DisplayPrice(product.cost)}</b>
                         </p>
                       </div>
                     </Card>
