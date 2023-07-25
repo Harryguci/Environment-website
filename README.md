@@ -46,5 +46,9 @@
 - Client: npm install
 - Server: npm install
 
-3. Run: At root folder: npm start
+3. Run: (At root folder)
+
+- Client: cd ./client; npm start
+- Server: cd ./server; npm start
+
 4. Access: <a href='http://localhost:3000'>http://localhost:3000</a>
