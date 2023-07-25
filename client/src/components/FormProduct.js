@@ -94,8 +94,8 @@ export default function FormProduct() {
         />
       </div>
 
-      <FormLabel className="d-block">
-        Giá bán
+      <FormLabel className="d-block my-4">
+        <b>Giá bán</b>
         <FormControl
           className="w-100"
           type="number"
@@ -106,8 +106,8 @@ export default function FormProduct() {
         />
       </FormLabel>
 
-      <FormLabel className="d-block">
-        Số lượng
+      <FormLabel className="d-block my-4">
+        <b>Số lượng</b>
         <FormControl
           className="w-100"
           type="number"
@@ -117,6 +117,52 @@ export default function FormProduct() {
           placeholder="Number"
         />
       </FormLabel>
+
+      <div className="my-4">
+        <p className="fw-bold">Loại hàng</p>
+        <Form.Check
+          type="checkbox"
+          name={`type`}
+          id={`thoi-trang`}
+          label={`Thời trang`}
+        />
+        <Form.Check
+          type="checkbox"
+          name={`type`}
+          id={`do-gia-dung`}
+          label={`Đồ gia dụng`}
+        />
+        <Form.Check
+          type="checkbox"
+          name={`type`}
+          id={`do-dung-hoc-tap`}
+          label={`Đồ dùng học tập`}
+        />
+        <Form.Check
+          type="checkbox"
+          name={`type`}
+          id={`phu-kien`}
+          label={`Phụ kiện`}
+        />
+        <Form.Check
+          type="checkbox"
+          name={`type`}
+          id={`trang-tri`}
+          label={`Decor - Trang trí`}
+        />
+        <Form.Check
+          type="checkbox"
+          name={`type`}
+          id={`do-luu-niem`}
+          label={`Đồ lưu niệm`}
+        />
+        <Form.Check
+          type="checkbox"
+          name={`other`}
+          id={`other`}
+          label={`Khác`}
+        />
+      </div>
 
       {showPreview && previewUrl && previewUrl.length && (
         <div className="preview-container">

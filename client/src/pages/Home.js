@@ -2,8 +2,11 @@ import { useState, useEffect } from "react";
 import { Container } from "react-bootstrap";
 import BlogList from "../components/BlogList";
 import ProductFrame from "../components/ProductFrame";
-
+import ActiveNavLink from "../helpers/ActiveNavLink";
 export default function Home(props) {
+  useEffect(() => {
+    ActiveNavLink("home");
+  }, []);
   return (
     <div className="App">
       <section className="section-blogs">

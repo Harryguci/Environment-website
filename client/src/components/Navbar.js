@@ -1,12 +1,24 @@
 import { useState, useContext, useEffect } from "react";
-import { Container, Navbar, Nav, FormControl, Button } from "react-bootstrap";
+import {
+  Container,
+  Navbar,
+  Nav,
+  FormControl,
+  Button,
+  ButtonGroup,
+} from "react-bootstrap";
 import React from "react";
 import "../Assets/SCSS/navbar.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faMagnifyingGlass, faBars } from "@fortawesome/free-solid-svg-icons";
+import {
+  faMagnifyingGlass,
+  faBars,
+  faRightFromBracket,
+  faCartShopping,
+} from "@fortawesome/free-solid-svg-icons";
 import AuthContext from "../helpers/Authcontext";
 import { useNavigate } from "react-router-dom";
-
+import axios from "axios";
 function NavbarCustom({ user }, props) {
   const [search, setSearch] = useState("");
   const handleSearchFormSubmit = (e) => {
@@ -19,6 +31,10 @@ function NavbarCustom({ user }, props) {
 
   const { authState, setAuthSate } = useContext(AuthContext);
 
+  const sendSearch = () => {
+    navigate(`/search/${search}`);
+  };
+
   return (
     <React.Fragment>
       <Navbar collapseOnSelect expand="lg" data-bs-theme="light">
@@ -29,13 +45,21 @@ function NavbarCustom({ user }, props) {
           </Navbar.Toggle>
           <Navbar.Collapse id="responsive-navbar-nav">
             <Nav className="me-auto" style={{ marginBottom: 1 + "rem" }}>
-              <Nav.Link className="active" href="/">
+              <Nav.Link name="home" className="active" href="/">
                 Home
               </Nav.Link>
-              <Nav.Link href="/about">About</Nav.Link>
-              <Nav.Link href="/products">Products</Nav.Link>
-              <Nav.Link href="/blogs">Blogs</Nav.Link>
-              <Nav.Link href="/contact">Contact</Nav.Link>
+              <Nav.Link name="about" href="/about">
+                About
+              </Nav.Link>
+              <Nav.Link name="products" href="/products">
+                Products
+              </Nav.Link>
+              <Nav.Link name="blogs" href="/blogs">
+                Blogs
+              </Nav.Link>
+              <Nav.Link name="contact" href="/contact">
+                Contact
+              </Nav.Link>
             </Nav>
             <div className="d-flex gap-3">
               <form
@@ -53,8 +77,8 @@ function NavbarCustom({ user }, props) {
                   onChange={(e) => setSearch(e.target.value)}
                 />
                 <Button
-                  type="submit"
                   style={{ border: "1px solid white", marginLeft: "1rem" }}
+                  onClick={(e) => sendSearch()}
                 >
                   <FontAwesomeIcon icon={faMagnifyingGlass} />
                 </Button>
@@ -79,23 +103,47 @@ function NavbarCustom({ user }, props) {
                       <div>
                         <a
                           href={`/account?user=${authState.username}`}
-                          className="btn"
+                          className="btn fw-bold"
                           style={{ color: "rgb(70,70,255)", fontSize: 16 }}
                         >
                           {authState.username}
                         </a>
                       </div>
-                      <Button
-                        className="d-block w-100"
-                        style={{ fontSize: "16px" }}
-                        onClick={() => {
-                          localStorage.removeItem("accessToken");
-                          setAuthSate({ ...authState, status: false });
-                          navigate("/login");
-                        }}
-                      >
-                        Logout
-                      </Button>
+                      <ButtonGroup className="d-flex gap-2">
+                        <Button
+                          className="d-block w-100 bg-danger border-0"
+                          style={{ fontSize: "16px" }}
+                          onClick={() => {
+                            localStorage.removeItem("accessToken");
+                            setAuthSate({ ...authState, status: false });
+                            try {
+                              navigate("/login");
+                            } catch (e) {
+                              console.log(e);
+                            }
+                          }}
+                        >
+                          <FontAwesomeIcon icon={faRightFromBracket} />
+                        </Button>
+                        <Button
+                          className="d-block w-100 border-0"
+                          style={{
+                            fontSize: "16px",
+                            background: "rgb(50, 230, 50)",
+                          }}
+                          onClick={() => {
+                            localStorage.removeItem("accessToken");
+                            setAuthSate({ ...authState, status: false });
+                            try {
+                              navigate("/login");
+                            } catch (e) {
+                              console.log(e);
+                            }
+                          }}
+                        >
+                          <FontAwesomeIcon icon={faCartShopping} />
+                        </Button>
+                      </ButtonGroup>
                     </>
                   ))}
               </div>

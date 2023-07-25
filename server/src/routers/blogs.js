@@ -79,6 +79,19 @@ router.get("/all", async (req, res, next) => {
     .catch((err) => next(err));
 });
 
+router.get("/single/:id", validateToken, async (req, res) => {
+  const id = req.params.id;
+  console.log(req.params);
+  
+  const blog = await Blog.findById(id)
+    .then((blog) => blog.toObject())
+    .catch((err) => {
+      console.log(err);
+    });
+
+  res.send(blog);
+});
+
 router.post("/", upload.array("files", 12), async (req, res) => {
   const data = req.body;
   console.log("BLOGS POST", req.files);

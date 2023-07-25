@@ -86,11 +86,11 @@ export default function Footer(props) {
                     </div>
                     <div className="p-3">
                       <a
-                        href={`/blogs/${blog._id}`}
+                        href={`/blogs/single/${blog._id}`}
                         style={{ textDecoration: "none", color: "white" }}
                       >
                         <p className="footer__section-container__item__title">
-                          {blog.title}
+                          {blog.title.substring(0, 30)}...
                         </p>
                       </a>
                       <p className="footer__section-container__item__content">

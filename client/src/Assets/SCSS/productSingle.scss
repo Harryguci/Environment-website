@@ -1,0 +1,15 @@
+button.add-cart-btn {
+  background: rgb(200, 50, 50);
+  font-size: 2rem;
+  border: none;
+  padding: 1rem 2rem;
+  margin-top: 2rem;
+  transition: all 0.3s ease-in-out;
+
+  &:hover,
+  &:focus,
+  &:active {
+    background: rgb(230, 20, 20);
+    box-shadow: 10px 10px 0 rgb(0, 0, 0, 0.2);
+  }
+}

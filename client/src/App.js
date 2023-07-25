@@ -3,16 +3,20 @@ import React, { useState, useEffect, lazy } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import "./Assets/SCSS/index.scss";
+// import "./Assets/SCSS/custom/custom.scss";
 
 import AuthContext from "./helpers/Authcontext";
 import axios from "axios";
 
-const Layout = lazy(() => import("./layouts/Layout"));
-const Home = lazy(() => import("./pages/Home"));
-const Blogs = lazy(() => import("./pages/Blogs"));
-const Products = lazy(() => import("./pages/Products"));
-const Login = lazy(() => import("./pages/Login"));
-const Account = lazy(() => import("./pages/Account"));
+import Layout from "./layouts/Layout";
+import Home from "./pages/Home";
+import Blogs from "./pages/Blogs";
+import Products from "./pages/Products";
+import Login from "./pages/Login";
+import Account from "./pages/Account";
+import BlogSingle from "./pages/BlogSingle";
+import ProductSingle from "./pages/ProductSingle";
+import Search from "./pages/Search";
 
 function App() {
   const [authState, setAuthSate] = useState({
@@ -78,6 +82,14 @@ function App() {
               }
             />
             <Route
+              path="/blogs/single/:id"
+              element={
+                <Layout>
+                  <BlogSingle />
+                </Layout>
+              }
+            />
+            <Route
               path="/products"
               element={
                 <Layout>
@@ -86,10 +98,34 @@ function App() {
               }
             />
             <Route
+              path="/products/single/:id"
+              element={
+                <Layout>
+                  <ProductSingle />
+                </Layout>
+              }
+            />
+            <Route
               path="/account"
               element={
                 <Layout>
                   <Account />
+                </Layout>
+              }
+            />
+            <Route
+              path="/search/:q"
+              element={
+                <Layout>
+                  <Search />
+                </Layout>
+              }
+            />
+            <Route
+              path="/search"
+              element={
+                <Layout>
+                  <Search />
                 </Layout>
               }
             />

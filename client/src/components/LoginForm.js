@@ -5,6 +5,7 @@ import Button from "react-bootstrap/Button";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import AuthContext from "../helpers/Authcontext";
+import AlertDismissible from "./AlertDismissable";
 
 export default function LoginForm({ type, changeType }) {
   const [form, setForm] = useState({
@@ -19,6 +20,8 @@ export default function LoginForm({ type, changeType }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
+
+  const [alert, setAlert] = useState({});
 
   useEffect(() => {
     if (type === "signup") {
@@ -43,19 +46,41 @@ export default function LoginForm({ type, changeType }) {
     await axios
       .post("http://localhost:3001/auth/login", data)
       .then((response) => {
-        if (response.data.error) alert(response.data.error);
-        else {
+        if (response.data.error) {
+          alert(response.data.error);
+          setAlert({
+            type: "danger",
+            heading: "Đăng nhập không thành công !!",
+            content:
+              "Đăng nhập không thành công, hãy kiểm tra lại thông tin của bạn.",
+            hide: () => setAlert({}),
+          });
+        } else {
           localStorage.setItem("accessToken", response.data);
           setAuthSate({
             username: response.data.username,
             id: response.data.id,
             status: true,
           });
+          setAlert({
+            type: "success",
+            heading: "Đăng nhập thành công !!",
+            content: "Đăng nhập thành công !!",
+            hide: () => setAlert({}),
+          });
+
+          navigate("/");
         }
       })
-      .catch((error) => alert(error));
-
-    navigate("/");
+      .catch((error) =>
+        setAlert({
+          type: "danger",
+          heading: "Đăng nhập không thành công !!",
+          content:
+            "Đăng nhập không thành công, hãy kiểm tra lại thông tin của bạn.",
+          hide: () => setAlert({}),
+        })
+      );
   };
 
   const SignupHandle = async (e) => {
@@ -63,17 +88,40 @@ export default function LoginForm({ type, changeType }) {
     await axios
       .post("http://localhost:3001/auth/signup", data)
       .then((response) => {
-        if (response.data.error) alert(response.data.error);
-        else {
+        if (response.data.error) {
+          setAlert({
+            type: "danger",
+            heading: "Đăng ký tài khoản không thành công",
+            content:
+              "Đăng ký tài khoản không thành công, hãy kiểm tra lại thông tin của bạn",
+            hide: () => setAlert({}),
+          });
+        } else {
           localStorage.setItem("accessToken", response.data.token);
           setAuthSate({
             username: response.data.username,
             id: response.data.id,
             status: true,
           });
+
+          setAlert({
+            type: "success",
+            heading: "Đăng ký tài khoản thành công",
+            content: "Đăng ký tài khoản thành công !!",
+            hide: () => setAlert({}),
+          });
         }
       })
-      .catch((error) => alert(error));
+      .catch((error) => {
+        alert(error);
+        setAlert({
+          type: "danger",
+          heading: "Đăng ký tài khoản không thành công",
+          content:
+            "Đăng ký tài khoản không thành công, hãy kiểm tra lại thông tin của bạn",
+          hide: () => setAlert({}),
+        });
+      });
 
     navigate("/");
   };
@@ -88,6 +136,7 @@ export default function LoginForm({ type, changeType }) {
 
   return (
     <React.Fragment>
+      {alert && alert.heading && <AlertDismissible {...alert} />}
       <Form
         name={form.name}
         id={form.id}

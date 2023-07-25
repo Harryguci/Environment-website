@@ -27,10 +27,23 @@ export default function ProductFrame({ limits, className }) {
       })
       .then((data) => {
         if (data.data.error) return console.log(data.data.error);
-        else setProducts(data.data.reverse());
+        else {
+          console.log(data.data);
+          setProducts(data.data.reverse());
+        }
       })
       .catch((error) => console.error(error));
   }, []);
+
+  const [productType, setProductType] = useState([
+    ["thoi-trang", "Thời trang"],
+    ["do-gia-dung", "Đồ gia dụng"],
+    ["do-dung-hoc-tap", "Đồ dùng học tập"],
+    ["phu-kien", "Phụ kiện"],
+    ["trang-tri", "Decor - Trang trí"],
+    ["do-luu-niem", "Đồ lưu niệm"],
+    ["other", "Khác"],
+  ]);
 
   return (
     <Container fluid className={"product-frame " + className}>
@@ -39,18 +52,18 @@ export default function ProductFrame({ limits, className }) {
           <div>
             <p className="selector-title">Loại sản phẩm</p>
             <ListGroup>
-              <ListGroupItem>
-                <a href="/products/tui-xach">Túi xách</a>
-              </ListGroupItem>
-              <ListGroupItem>
-                <a href="/products/do-luu-niem">Đồ lưu niệm</a>
-              </ListGroupItem>
-              <ListGroupItem>
-                <a href="/products/do-gia-dung">Đồ gia dụng</a>
-              </ListGroupItem>
-              <ListGroupItem>
-                <a href="/products/all">Xem thêm</a>
-              </ListGroupItem>
+              {productType &&
+                productType.length &&
+                productType.map((item) => (
+                  <ListGroupItem key={item[0]}>
+                    <a
+                      style={{ textDecoration: "none" }}
+                      href={`/products/${item[0]}`}
+                    >
+                      {item[1]}
+                    </a>
+                  </ListGroupItem>
+                ))}
             </ListGroup>
           </div>
           <div className="mt-5">
@@ -100,47 +113,45 @@ export default function ProductFrame({ limits, className }) {
             {(products && (
               <Row className="" style={{ rowGap: "1.5rem" }}>
                 {products.map((product, index) => (
-                  <>
-                    <Col
-                      sm={4}
-                      md={3}
-                      xl={2}
-                      key={product._id}
-                      className="col-6 position-relative"
-                    >
-                      {index < 2 && (
-                        <Badge
-                          className="position-absolute d-block bg-danger"
-                          style={{
-                            top: "0",
-                            right: 0,
-                            zIndex: 10,
-                          }}
+                  <Col
+                    sm={4}
+                    md={3}
+                    xl={2}
+                    key={index + 1}
+                    className="col-6 position-relative"
+                  >
+                    {index < 2 && (
+                      <Badge
+                        className="position-absolute d-block bg-danger"
+                        style={{
+                          top: "0",
+                          right: 0,
+                          zIndex: 10,
+                        }}
+                      >
+                        new
+                      </Badge>
+                    )}
+                    <Card className="product-frame__main__item position-relative">
+                      <div className="thumbnail">
+                        <img
+                          src={`http://localhost:3001/blogs/${product.imageUrl}`}
+                          alt={product.name}
+                        />
+                      </div>
+                      <div className="p-3">
+                        <a
+                          href={`http://localhost:3000/products/single/${product._id}`}
+                          className="text-decoration-none"
                         >
-                          new
-                        </Badge>
-                      )}
-                      <Card className="product-frame__main__item position-relative">
-                        <div className="thumbnail">
-                          <img
-                            src={`http://localhost:3001/blogs/${product.imageUrl}`}
-                            alt={product.name}
-                          />
-                        </div>
-                        <div className="p-3">
-                          <a
-                            href={`http://localhost:3001/products/${products.userId}/${products.name}`}
-                            className="text-decoration-none"
-                          >
-                            <h3 className="fs-3">{product.name}</h3>
-                          </a>
-                          <p>
-                            Giá bán:<b> {product.cost}</b>
-                          </p>
-                        </div>
-                      </Card>
-                    </Col>
-                  </>
+                          <h3 className="fs-3">{product.name}</h3>
+                        </a>
+                        <p>
+                          Giá bán:<b> {product.cost}</b>
+                        </p>
+                      </div>
+                    </Card>
+                  </Col>
                 ))}
               </Row>
             )) || <h2>Not found</h2>}

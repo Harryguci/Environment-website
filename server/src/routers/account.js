@@ -22,9 +22,30 @@ router.get("/:username", async function (req, res) {
     id: currentUser._id,
     username: currentUser.username,
     email: currentUser.email,
+    phone: currentUser.phone,
+    website: currentUser.website,
+    birthday: currentUser.birthday,
   });
 });
 
+router.post("/change", validateToken, async function (req, res) {
+  const data = req.body;
+  const id = req.body.id;
+  console.log(data);
+
+  const user = await User.findOneAndUpdate(
+    { _id: id },
+    {
+      phone: data.phone,
+      website: data.website,
+    },
+    {
+      new: true,
+    }
+  ).then((user) => user.toObject());
+
+  res.send(user);
+});
 
 router.get("/", validateToken, async function (req, res) {
   const currentUser = await User.findOne({ username: req.user.username }).then(
@@ -35,6 +56,9 @@ router.get("/", validateToken, async function (req, res) {
     id: currentUser._id,
     username: currentUser.username,
     email: currentUser.email,
+    phone: currentUser.phone,
+    website: currentUser.website,
+    birthday: { type: Date, default: "" },
   });
 });
 

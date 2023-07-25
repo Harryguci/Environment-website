@@ -3,10 +3,16 @@ import Widget from "./Widget";
 import "../Assets/SCSS/index.scss";
 import axios from "axios";
 import { Button } from "react-bootstrap";
+import ActiveNavLink from "../helpers/ActiveNavLink";
 
 export default function BlogList({ limits, children, typeBlog }, ...props) {
   const [blogs, setBlogs] = useState([]);
   const [limitState, setLimitState] = useState(limits || 10);
+
+  useEffect(() => {
+    ActiveNavLink("blogs");
+  }, []);
+
   useEffect(() => {
     var type = "moi-truong";
     if (typeBlog) type = typeBlog;
@@ -46,9 +52,12 @@ export default function BlogList({ limits, children, typeBlog }, ...props) {
               index={index}
               key={index + 1}
               typeWidget={index % 2 === 0 ? `left` : "right"}
-              heading={blog.title.trim()}
+              heading={
+                blog.title.trim().substring(0, 50) +
+                (blog.title.length >= 50 ? "..." : "")
+              }
               description={blog.detail.trim()}
-              link={`http://localhost:3000/blogs/${blog.userId}/${blog.title}`}
+              link={`http://localhost:3000/blogs/single/${blog._id}`}
               imageUrl={`http://localhost:3001/blogs/${blog.imageUrl}`}
               author={blog.username}
             />

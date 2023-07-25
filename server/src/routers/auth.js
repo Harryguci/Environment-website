@@ -73,7 +73,7 @@ router.post(
   async (req, res, next) => {
     const user = await User.findOne({ username: req.user.username });
 
-    // console.log("LOGIN post", user._id);
+    console.log("LOGIN post", user._id);
 
     const accessToken = sign(
       { username: user.username, id: user._id },
@@ -120,7 +120,7 @@ router.post("/signup", async function (req, res, next) {
 });
 
 router.get("/auth", validateToken, (req, res) => {
-  console.log("Auth GET", req.user);
+  // console.log("Auth GET", req.user);
   res.send(req.user);
 });
 

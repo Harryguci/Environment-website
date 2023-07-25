@@ -76,6 +76,19 @@ router.post("/", upload.array("files", 12), async (req, res) => {
   res.redirect("http://localhost:3000/account");
 });
 
+router.get("/single/:id", validateToken, async (req, res) => {
+  const id = req.params.id;
+  console.log(req.params);
+
+  const product = await Product.findById(id)
+    .then((response) => response.toObject())
+    .catch((err) => {
+      console.log(err);
+    });
+
+  res.send(product);
+});
+
 router.get("/", async function (req, res) {
   await Product.find({})
     .then((query) => {
