@@ -26,7 +26,7 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 
 // /products
-router.get("/all", async function (req, res) {
+router.get("/all", async function (req, res, next) {
   await Product.find({})
     .then((query) => {
       query = Array.from(query);
@@ -36,7 +36,7 @@ router.get("/all", async function (req, res) {
     .catch((err) => next(err));
 });
 
-router.get("/user/:id", validateToken, async function (req, res) {
+router.get("/user/:id", validateToken, async function (req, res, next) {
   const userId = req.params.id;
 
   const products = await Product.find({ userId: userId }).then(function (
@@ -49,7 +49,22 @@ router.get("/user/:id", validateToken, async function (req, res) {
   res.send(products);
 });
 
-router.post("/", upload.array("files", 12), async (req, res) => {
+router.post("/delete/single", validateToken, async (req, res, next) => {
+  const user = req.user;
+  const data = req.body;
+
+  if (user.id !== data.userId || !data.productId) {
+    res.send({
+      error: "Invalid",
+    });
+  } else {
+    await Product.findByIdAndDelete(data.productId)
+      .then((value) => res.send({ ...value, success: true }))
+      .catch((err) => res.send(err));
+  }
+});
+
+router.post("/", upload.array("files", 12), async (req, res, next) => {
   const data = req.body;
   // console.log("PRODUCTS POST", req.files);
   console.log("PRODUCTS POST", req.body);
@@ -74,10 +89,10 @@ router.post("/", upload.array("files", 12), async (req, res) => {
 
   await product.save().catch((err) => console.log(err));
 
-  res.redirect("http://localhost:3000/account");
+  res.redirect("http://localhost:3000/account/products");
 });
 
-router.get("/single/:id", validateToken, async (req, res) => {
+router.get("/single/:id", validateToken, async (req, res, next) => {
   const id = req.params.id;
   console.log(req.params);
 
@@ -98,7 +113,7 @@ router.get("/single/:id", validateToken, async (req, res) => {
   res.send(product);
 });
 
-router.get("/", async function (req, res) {
+router.get("/", async function (req, res, next) {
   await Product.find({})
     .then((query) => {
       query = Array.from(query);

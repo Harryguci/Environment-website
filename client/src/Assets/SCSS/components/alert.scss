@@ -8,6 +8,10 @@
   bottom: 10vh;
   left: 50%;
 
+  button {
+    margin-right: 1.5rem;
+  }
+
   @keyframes show-alert {
     0% {
       opacity: 0;

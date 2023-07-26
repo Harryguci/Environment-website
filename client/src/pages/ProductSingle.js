@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import { Container, Row, Col, Button } from "react-bootstrap";
@@ -9,13 +9,18 @@ import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCartArrowDown } from "@fortawesome/free-solid-svg-icons";
 import DisplayPrice from "../helpers/DisplayPrice";
+import AuthContext from "../helpers/Authcontext";
+import CartContext from "../helpers/CartContext";
+
 export default function BlogSingle(props) {
   const [product, setBlog] = useState({});
   const productId = useParams().id;
   let navigate = useNavigate();
 
+  const { cartState, setCartState } = useContext(CartContext);
+  const { authState } = useContext(AuthContext);
+
   useEffect(() => {
-    console.log("params", productId);
     axios
       .get(`http://localhost:3001/products/single/${productId}`, {
         headers: {
@@ -34,6 +39,20 @@ export default function BlogSingle(props) {
         navigate("/login");
       });
   }, [navigate, productId]);
+
+  const handleAddCart = async () => {
+    if (authState.id) {
+      setCartState([...cartState, productId]);
+      await fetch(`http://localhost:3001/cart/add/${authState.id}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          accessToken: localStorage.getItem("accessToken"),
+        },
+        body: JSON.stringify({ product_id: productId }),
+      }).then((response) => console.log(response.json()));
+    }
+  };
 
   return (
     <React.Fragment>
@@ -69,13 +88,32 @@ export default function BlogSingle(props) {
               ))}
 
             <div>
-              <Button className="add-cart-btn gap-4 d-flex justify-content-center align-content-center">
-                <FontAwesomeIcon
-                  icon={faCartArrowDown}
-                  className="d-block my-auto"
-                />
-                <span style={{ fontSize: 1.5 + "rem" }}>Thêm vào giỏ hàng</span>
-              </Button>
+              {authState.id !== product.userId ? (
+                <>
+                  <Button
+                    className="add-cart-btn gap-4 d-flex justify-content-center align-content-center"
+                    onClick={handleAddCart}
+                  >
+                    <FontAwesomeIcon
+                      icon={faCartArrowDown}
+                      className="d-block my-auto"
+                    />
+                    <span style={{ fontSize: 1.5 + "rem" }}>
+                      Thêm vào giỏ hàng
+                    </span>
+                  </Button>
+                </>
+              ) : (
+                <>
+                  <a
+                    href="/account/products"
+                    className="add-cart-btn gap-4 d-flex justify-content-center align-content-center default-link"
+                    onClick={handleAddCart}
+                  >
+                    Đi đến sản phẩm của bạn
+                  </a>
+                </>
+              )}
             </div>
           </Col>
           <Col>

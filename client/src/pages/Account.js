@@ -17,21 +17,27 @@ import FormProduct from "../components/FormProduct";
 import "../Assets/SCSS/account.scss";
 import ReactPlayer from "react-player";
 import AuthContext from "../helpers/Authcontext";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import AlertDismissible from "../components/AlertDismissable";
 import ActiveNavLink from "../helpers/ActiveNavLink";
+
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrash } from "@fortawesome/free-solid-svg-icons";
+import AlertConfirm from "../components/AlertConfirm";
 
 export default function Account({ props }) {
   const [slugState, setSlugState] = useState("");
   const { authState } = useContext(AuthContext);
+  const { tab } = useParams();
 
-  const [currentTab, setCurrentTab] = useState("blogs");
+  const [currentTab, setCurrentTab] = useState(tab ? tab : "blogs");
 
   const [user, setUser] = useState({});
   const [blogs, setBlogs] = useState([]);
   const [products, setProducts] = useState([]);
 
   const [alert, setAlert] = useState({});
+  const [alertState, setAlertState] = useState({});
 
   let navigate = useNavigate();
 
@@ -172,6 +178,52 @@ export default function Account({ props }) {
             hide: () => setAlert({}),
           });
         });
+  };
+
+  const handleDeleteProduct = (product) => {
+    if (product._id) {
+      setAlertState({
+        heading: "Delete Order",
+        content: "Bạn có chắc chắn muốn xóa ?",
+        accept: async () => {
+          // [POST] to delete this product
+          await fetch("http://localhost:3001/products/delete/single", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              accessToken: localStorage.getItem("accessToken"),
+            },
+            body: JSON.stringify({
+              userId: authState.id,
+              productId: product._id,
+            }),
+          })
+            .then((response) => console.log(response))
+            .catch((error) => console.log(error));
+
+          refreshProducts(); // update front end in products tab
+          setAlertState({});
+        },
+        cancel: () => {
+          setAlertState({});
+        },
+      });
+    }
+  };
+
+  const refreshProducts = () => {
+    // [GET] products
+    axios
+      .get(`http://localhost:3001/products/user/${user.id}`, {
+        headers: {
+          accessToken: localStorage.getItem("accessToken"),
+        },
+      })
+      .then((response) => {
+        if (response.data.error) console.log("Can not get products");
+        else setProducts(response.data.reverse());
+      })
+      .catch((error) => console.log("Can not get Products", error));
   };
 
   return (
@@ -393,6 +445,31 @@ export default function Account({ props }) {
                               </div>
                             ))}
                         </div>
+                        <div className="control mt-3 d-flex">
+                          <Button
+                            className="custom-btn primary"
+                            onClick={(e) =>
+                              setAlert({
+                                heading: "ERROR",
+                                type: "danger",
+                                content: "Tính năng đang được nâng cấp",
+                                hide: () => setAlert({}),
+                              })
+                            }
+                          >
+                            Cập nhật
+                          </Button>
+                          <Button
+                            className="custom-btn"
+                            style={{
+                              marginLeft: "auto",
+                              marginRight: 0,
+                            }}
+                            onClick={(e) => handleDeleteProduct(product)}
+                          >
+                            <FontAwesomeIcon icon={faTrash} />
+                          </Button>
+                        </div>
                       </li>
                     ))}
                   </ul>
@@ -412,6 +489,7 @@ export default function Account({ props }) {
         </Row>
       </Container>
       {alert && alert.heading && <AlertDismissible {...alert} />}
+      {alertState && alertState.heading && <AlertConfirm {...alertState} />}
     </>
   );
 }

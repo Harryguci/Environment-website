@@ -42,7 +42,7 @@ export default function Login({ typeForm }) {
         </div>
         <Container>
           <div id="heading-container">
-            <h1>HR</h1>
+            <h1>SFIT</h1>
           </div>
           <Row style={centerFlex}>
             <Form type={type} changeType={setType} />

@@ -14,13 +14,10 @@ export default function LoginForm({ type, changeType }) {
     action: "http://localhost:3001/auth/login",
     method: "POST",
   });
-
-  const { setAuthSate } = useContext(AuthContext);
-
+  const { authState, setAuthSate } = useContext(AuthContext);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
-
   const [alert, setAlert] = useState({});
 
   useEffect(() => {
@@ -40,7 +37,9 @@ export default function LoginForm({ type, changeType }) {
       });
     }
   }, [type]);
-  let navigate = useNavigate();
+
+  const navigate = useNavigate();
+
   const LoginHandle = async (e) => {
     const data = { username: username, password: password };
     await axios
@@ -91,9 +90,10 @@ export default function LoginForm({ type, changeType }) {
         if (response.data.error) {
           setAlert({
             type: "danger",
-            heading: "Đăng ký tài khoản không thành công",
+            heading: "Không thành công",
             content:
-              "Đăng ký tài khoản không thành công, hãy kiểm tra lại thông tin của bạn",
+              "Đăng ký tài khoản không thành công, hãy kiểm tra lại thông tin của bạn, " +
+              response.data.error,
             hide: () => setAlert({}),
           });
         } else {
@@ -108,12 +108,14 @@ export default function LoginForm({ type, changeType }) {
             type: "success",
             heading: "Đăng ký tài khoản thành công",
             content: "Đăng ký tài khoản thành công !!",
-            hide: () => setAlert({}),
+            hide: () => {
+              setAlert({});
+              navigate("/");
+            },
           });
         }
       })
       .catch((error) => {
-        alert(error);
         setAlert({
           type: "danger",
           heading: "Đăng ký tài khoản không thành công",
@@ -123,7 +125,19 @@ export default function LoginForm({ type, changeType }) {
         });
       });
 
-    navigate("/");
+    await fetch("http://localhost:3001/cart/create", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        accessToken: localStorage.getItem("accessToken"),
+      },
+      body: JSON.stringify({
+        id: authState.id,
+        products_id: [],
+      }),
+    })
+      .then((response) => console.log(response))
+      .catch((error) => console.log(error.message));
   };
 
   const formHandleSubmit = async (e) => {

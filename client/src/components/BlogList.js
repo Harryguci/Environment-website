@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Widget from "./Widget";
 import "../Assets/SCSS/index.scss";
 import axios from "axios";
-import { Button } from "react-bootstrap";
+import { Button, Container } from "react-bootstrap";
 import ActiveNavLink from "../helpers/ActiveNavLink";
 
 export default function BlogList({ limits, children, typeBlog }, ...props) {
@@ -45,6 +45,7 @@ export default function BlogList({ limits, children, typeBlog }, ...props) {
   return (
     <>
       {(blogs &&
+        blogs.length &&
         blogs
           .slice(0, limitState)
           .map((blog, index) => (
@@ -61,17 +62,27 @@ export default function BlogList({ limits, children, typeBlog }, ...props) {
               imageUrl={`http://localhost:3001/blogs/${blog.imageUrl}`}
               author={blog.username}
             />
-          ))) ||
-        "Not found"}
-      <div className="d-flex justify-content-center">
-        <Button
-          className="custom-btn"
-          // style={{ fontSize: 16 }}
-          onClick={(e) => setLimitState((prev) => prev + 5)}
-        >
-          Xem thêm..
-        </Button>
-      </div>
+          ))) || (
+        <Container>
+          <h2
+            className="fs-2 text-center my-5 px-3 py-4 rounded-3 opacity-50"
+            style={{ background: "rgba(0,0,0,0.05)" }}
+          >
+            Chưa có blog nào
+          </h2>
+        </Container>
+      )}
+      {blogs.length > limitState && (
+        <div className="d-flex justify-content-center">
+          <Button
+            className="custom-btn"
+            // style={{ fontSize: 16 }}
+            onClick={(e) => setLimitState((prev) => prev + 5)}
+          >
+            Xem thêm..
+          </Button>
+        </div>
+      )}
     </>
   );
 }

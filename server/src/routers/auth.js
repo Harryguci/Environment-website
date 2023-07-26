@@ -97,7 +97,15 @@ router.get("/signup", function (req, res, next) {
   res.render("signup");
 });
 
-router.post("/signup", async function (req, res, next) {
+async function CheckAccountExist(req, res, next) {
+  const data = req.body;
+
+  await User.findOne({ username: data.username }).then((user) =>
+    user ? res.send({ error: "Tài khoản đã tồn tại" }) : next()
+  );
+}
+
+router.post("/signup", CheckAccountExist, async function (req, res, next) {
   const data = req.body;
 
   const user = new User({

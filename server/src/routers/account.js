@@ -10,13 +10,13 @@ router.get("/:username", async function (req, res) {
   console.log("USERNAME ", queryUsername);
 
   if (queryUsername) {
-    currentUser = await User.findOne({ username: queryUsername }).then((user) =>
-      user.toObject()
-    );
+    currentUser = await User.findOne({ username: queryUsername })
+      .then((user) => user.toObject())
+      .catch((err) => err);
   } else {
-    currentUser = await User.findOne({ username: req.user.username }).then(
-      (user) => user.toObject()
-    );
+    currentUser = await User.findOne({ username: req.user.username })
+      .then((user) => user.toObject())
+      .catch((err) => err);
   }
   res.send({
     id: currentUser._id,
@@ -42,9 +42,23 @@ router.post("/change", validateToken, async function (req, res) {
     {
       new: true,
     }
-  ).then((user) => user.toObject());
+  )
+    .then((user) => user.toObject())
+    .catch((error) => error);
 
   res.send(user);
+});
+
+router.get("/all/delete", async (req, res) => {
+  await User.deleteMany({})
+    .then((response) => res.send(response))
+    .catch((err) => res.send(err));
+});
+
+router.get("/all/info", async (req, res) => {
+  await User.find({})
+    .then((response) => res.send(response))
+    .catch((err) => res.send(err));
 });
 
 router.get("/", validateToken, async function (req, res) {

@@ -6,19 +6,22 @@ import {
   FormControl,
   Button,
   ButtonGroup,
+  Badge,
 } from "react-bootstrap";
-import React from "react";
-import "../Assets/SCSS/navbar.scss";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faMagnifyingGlass,
   faBars,
   faRightFromBracket,
   faCartShopping,
 } from "@fortawesome/free-solid-svg-icons";
+import React from "react";
+import "../Assets/SCSS/navbar.scss";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import AuthContext from "../helpers/Authcontext";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import CartContext from "../helpers/CartContext";
+
 function NavbarCustom({ user }, props) {
   const [search, setSearch] = useState("");
   const handleSearchFormSubmit = (e) => {
@@ -26,10 +29,30 @@ function NavbarCustom({ user }, props) {
     if (!search) alert("Please enter some content");
     else e.target.submit();
   };
-
-  let navigate = useNavigate();
-
+  const navigate = useNavigate();
   const { authState, setAuthSate } = useContext(AuthContext);
+  const { cartState, setCartState } = useContext(CartContext);
+
+  const [cartNumber, setCartNumber] = useState(cartState.length || 0);
+
+  useEffect(() => {
+    if (authState.id)
+      axios
+        .get(`http://localhost:3001/cart/single/${authState.id}`, {
+          headers: {
+            accessToken: localStorage.getItem("accessToken"),
+          },
+        })
+        .then((response) => {
+          // console.log(response.data.products.length);
+          if (response.data.error) console.log(response.data.error);
+          else {
+            // console.log("NAVBAR ", response.data.products.length);
+            if (response.data.products)
+              setCartNumber(response.data.products.length);
+          }
+        });
+  }, [authState.id, cartState]);
 
   const sendSearch = () => {
     navigate(`/search/${search}`);
@@ -132,16 +155,20 @@ function NavbarCustom({ user }, props) {
                             background: "rgb(50, 230, 50)",
                           }}
                           onClick={() => {
-                            localStorage.removeItem("accessToken");
-                            setAuthSate({ ...authState, status: false });
                             try {
-                              navigate("/login");
+                              navigate("/cart");
                             } catch (e) {
                               console.log(e);
                             }
                           }}
                         >
                           <FontAwesomeIcon icon={faCartShopping} />
+                          <Badge
+                            className="position-absolute"
+                            style={{ right: -15 }}
+                          >
+                            {cartNumber || 0}
+                          </Badge>
                         </Button>
                       </ButtonGroup>
                     </>
