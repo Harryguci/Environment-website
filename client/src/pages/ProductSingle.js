@@ -108,7 +108,7 @@ export default function BlogSingle(props) {
                   <a
                     href="/account/products"
                     className="add-cart-btn gap-4 d-flex justify-content-center align-content-center default-link"
-                    onClick={handleAddCart}
+                    // onClick={handleAddCart}
                   >
                     Đi đến sản phẩm của bạn
                   </a>

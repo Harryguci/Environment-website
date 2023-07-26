@@ -24,7 +24,7 @@ import ActiveNavLink from "../helpers/ActiveNavLink";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import AlertConfirm from "../components/AlertConfirm";
-
+import ItemBlog from "../components/ItemBlog";
 export default function Account({ props }) {
   const [slugState, setSlugState] = useState("");
   const { authState } = useContext(AuthContext);
@@ -39,7 +39,7 @@ export default function Account({ props }) {
   const [alert, setAlert] = useState({});
   const [alertState, setAlertState] = useState({});
 
-  let navigate = useNavigate();
+  const navigate = useNavigate();
 
   useEffect(() => {
     ActiveNavLink("account");
@@ -211,6 +211,37 @@ export default function Account({ props }) {
     }
   };
 
+  const handleDeleteBlog = (blog) => {
+    if (blog._id) {
+      setAlertState({
+        heading: "Delete Blog",
+        content: "Bạn có chắc chắn muốn xóa ?",
+        accept: async () => {
+          // [POST] to delete this product
+          await fetch("http://localhost:3001/blogs/delete/single", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              accessToken: localStorage.getItem("accessToken"),
+            },
+            body: JSON.stringify({
+              userId: authState.id,
+              blogId: blog._id,
+            }),
+          })
+            .then((response) => console.log(response))
+            .catch((error) => console.log(error));
+
+          refreshBlogs(); // update front end in products tab
+          setAlertState({});
+        },
+        cancel: () => {
+          setAlertState({});
+        },
+      });
+    }
+  };
+
   const refreshProducts = () => {
     // [GET] products
     axios
@@ -224,6 +255,20 @@ export default function Account({ props }) {
         else setProducts(response.data.reverse());
       })
       .catch((error) => console.log("Can not get Products", error));
+  };
+  const refreshBlogs = () => {
+    // [GET] products
+    axios
+      .get(`http://localhost:3001/blogs/user/${user.id}`, {
+        headers: {
+          accessToken: localStorage.getItem("accessToken"),
+        },
+      })
+      .then((response) => {
+        if (response.data.error) console.log("Can not get blogs");
+        else setBlogs(response.data.reverse());
+      })
+      .catch((error) => console.log("Can not get blogs", error));
   };
 
   return (
@@ -315,47 +360,13 @@ export default function Account({ props }) {
                 </div>
                 {blogs && blogs.length ? (
                   <ul className="list-group mt-5 user-blog-container__list">
-                    {blogs.reverse().map((blog) => (
-                      <li
-                        key={blog._id}
-                        className="list-group-item border-0 mb-5 user-blog-container__list__item"
-                      >
-                        <div className="info">
-                          <h3>{user.username}</h3>
-                          <p style={{ whiteSpace: "pre-line" }}>
-                            {blog.detail}
-                          </p>
-                        </div>
-                        <div className="d-flex media">
-                          {blog.files &&
-                            blog.files.length &&
-                            blog.files.map((file) => (
-                              <div key={file.filename}>
-                                {file.mimetype.indexOf("video") !== -1 ? (
-                                  <div className="video-section">
-                                    <ReactPlayer
-                                      url={`http://localhost:3001/blogs/${file.filename}`}
-                                      width="100%"
-                                      height="auto"
-                                      playing={false}
-                                      controls={true}
-                                    />
-                                  </div>
-                                ) : (
-                                  <div className="thumbnail h-100 d-flex justify-content-center align-items-center">
-                                    <img
-                                      src={`http://localhost:3001/blogs/${file.filename}`}
-                                      alt="SFIT"
-                                      width={100 + "%"}
-                                      height={100 + "%"}
-                                      style={{ objectFit: "cover" }}
-                                    />
-                                  </div>
-                                )}
-                              </div>
-                            ))}
-                        </div>
-                      </li>
+                    {blogs.reverse().map((blog, index) => (
+                      <ItemBlog
+                        key={index}
+                        blog={blog}
+                        user={user}
+                        handleDeleteBlog={(e) => handleDeleteBlog(blog)}
+                      />
                     ))}
                   </ul>
                 ) : (

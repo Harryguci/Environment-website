@@ -19,7 +19,7 @@ import { faTrash } from "@fortawesome/free-solid-svg-icons";
 
 import AlertConfirm from "../components/AlertConfirm";
 import AlertDismissable from "../components/AlertDismissable";
-
+import OrderForm from "../components/OrderForm";
 export default function Cart() {
   const { authState } = useContext(AuthContext);
   const { setCartState } = useContext(CartContext);
@@ -28,6 +28,8 @@ export default function Cart() {
   const [alertState, setAlertState] = useState({}); // Alert confirm
   const [alertDismissState, setAlertDismissState] = useState({}); // Alert dismiss
 
+  const [showOrderForm, setShowOrderForm] = useState(false);
+  const [orderForm, setOrderForm] = useState({});
   useEffect(() => {
     if (authState.id) {
       axios
@@ -110,15 +112,23 @@ export default function Cart() {
     }
   }, [cart, cart.products_id, setCartState]);
 
+  const handleOrderProduct = (product) => {
+    setShowOrderForm(true);
+    setOrderForm({
+      product: product,
+      user: authState,
+      hide: () => setShowOrderForm(false),
+      CbSuccess: () => refreshCart(),
+    });
+  };
+
   return (
     <>
+      {showOrderForm && <OrderForm {...orderForm} />}
       <Container className="cart-container">
         {(cart && (
           <Row>
-            <Col md={2}>
-              <div>Some control</div>
-            </Col>
-            <Col md={10}>
+            <Col md={12}>
               <ListGroup className="cart-container__list">
                 {(cart.products &&
                   cart.products.length &&
@@ -134,11 +144,19 @@ export default function Cart() {
                         />
                       </div>
                       <div className="cart-container__item__info">
-                        <h3 className="fs-3 fw-bold">{product.name}</h3>
-                        <p>{product.description}</p>
+                        <a
+                          href={`/products/single/${product._id}`}
+                          className="fs-3 fw-bold default-link text-dark"
+                        >
+                          {product.name}
+                        </a>
+                        <p>{product.description.substring(0, 200) + "..."}</p>
                       </div>
                       <div className="cart-container__item__control">
-                        <Button className="custom-btn primary-blue">
+                        <Button
+                          className="custom-btn primary-blue"
+                          onClick={(e) => handleOrderProduct(product)}
+                        >
                           Đặt hàng
                         </Button>
                         <Button
@@ -149,7 +167,16 @@ export default function Cart() {
                         </Button>
                       </div>
                     </ListGroupItem>
-                  ))) || <h2>Not found products</h2>}
+                  ))) || (
+                  <Container className="h-100">
+                    <h2
+                      className="fs-2 text-center my-5 px-3 py-4 rounded-3 opacity-50"
+                      style={{ background: "rgba(0,0,0,0.05)" }}
+                    >
+                      Chưa có mặt hàng nào
+                    </h2>
+                  </Container>
+                )}
               </ListGroup>
             </Col>
           </Row>

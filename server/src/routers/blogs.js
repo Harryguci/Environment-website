@@ -97,6 +97,21 @@ router.get("/single/:id", validateToken, async (req, res) => {
   res.send(blog);
 });
 
+router.post("/delete/single", validateToken, async (req, res, next) => {
+  const user = req.user;
+  const data = req.body;
+
+  if (user.id !== data.userId || !data.blogId) {
+    res.send({
+      error: "Invalid",
+    });
+  } else {
+    await Blog.findByIdAndDelete(data.blogId)
+      .then((value) => res.send({ ...value, success: true }))
+      .catch((err) => res.send(err));
+  }
+});
+
 router.post("/", upload.array("files", 12), async (req, res) => {
   const data = req.body;
   console.log("BLOGS POST", req.files);

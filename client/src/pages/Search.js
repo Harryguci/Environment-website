@@ -150,7 +150,7 @@ export default function Search() {
                     <ListGroupItem key={product._id}>
                       <a
                         className="fs-2 fw-bold text-decoration-none"
-                        href={`products/single/${product._id}`}
+                        href={`/products/single/${product._id}`}
                       >
                         {product.name}
                       </a>

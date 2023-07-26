@@ -1,0 +1,51 @@
+.order-form-container {
+  *,
+  input,
+  button {
+    font-size: 16px !important;
+  }
+
+  position: fixed !important;
+  background: rgb(255, 255, 255);
+  padding: 3rem 4rem;
+  border-radius: 1rem;
+  z-index: 100;
+  min-width: 500px;
+  width: 50vw;
+  max-width: 90vw;
+  box-shadow: 1rem 1rem 4rem rgba(0, 0, 0, 0.2);
+
+  .form-label {
+    display: block;
+    margin-bottom: 1rem;
+  }
+
+  .form-control {
+    padding: 1rem 2rem;
+  }
+
+  button {
+    margin-top: 1rem;
+  }
+
+  .heading {
+    margin: 0 auto 2rem auto;
+    text-align: center;
+    font-size: 4rem !important;
+  }
+
+  .custom-btn {
+    padding: 1rem 2rem;
+  }
+  
+}
+
+.background-dark {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.3);
+  z-index: 50;
+}

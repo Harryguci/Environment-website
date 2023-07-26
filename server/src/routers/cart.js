@@ -57,8 +57,10 @@ router.post("/delete/single", validateToken, async (req, res, next) => {
       .then((cart) => cart.toObject())
       .then((cart) => cart.products_id);
     // console.log("\n\n\t\t\t[current products]", current);
-
     current = current.filter((product) => product !== data.productId);
+    
+    console.log(data.productId);
+
     await Cart.findOneAndUpdate(
       { buyer_id: req.user.id },
       { products_id: [...current] }

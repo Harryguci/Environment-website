@@ -17,6 +17,7 @@ export default function LoginForm({ type, changeType }) {
   const { authState, setAuthSate } = useContext(AuthContext);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [repassword, setRepassword] = useState("");
   const [email, setEmail] = useState("");
   const [alert, setAlert] = useState({});
 
@@ -38,10 +39,39 @@ export default function LoginForm({ type, changeType }) {
     }
   }, [type]);
 
+  const validateLogin = ({ username, password }) => {
+    let usernameReg = /[a-zA-Z0-9_]{3,50}/;
+    let passwordReg = /[a-zA-Z0-9_]{6,}/;
+    return usernameReg.test(username) && passwordReg.test(password);
+  };
+
+  const validateSign = ({ username, password, repassword, email }) => {
+    let usernameReg = /[a-zA-Z0-9_]{3,50}/;
+    let passwordReg = /[a-zA-Z0-9_]{6,50}/;
+    console.log(password, repassword);
+    return (
+      usernameReg.test(username) &&
+      passwordReg.test(password) &&
+      password === repassword
+    );
+  };
+
   const navigate = useNavigate();
 
   const LoginHandle = async (e) => {
     const data = { username: username, password: password };
+
+    if (!validateLogin(data)) {
+      setAlert({
+        heading: "Không thành công",
+        type: "danger",
+        content:
+          "Thông tin không hợp lệ. Username phải có độ dài trên 3 ký tự và không chứa ký tự đặc biệt. Password có độ dài trên 6 ký tự và không có ký tự đặc biệt",
+        hide: () => setAlert({}),
+      });
+      return;
+    }
+
     await axios
       .post("http://localhost:3001/auth/login", data)
       .then((response) => {
@@ -84,6 +114,18 @@ export default function LoginForm({ type, changeType }) {
 
   const SignupHandle = async (e) => {
     const data = { username: username, password: password, email: email };
+
+    if (!validateSign({ username, password, repassword, email })) {
+      setAlert({
+        heading: "Signup failed",
+        type: "danger",
+        content:
+          "Thông tin không hợp lệ. Username phải có độ dài trên 3 ký tự và không chứa ký tự đặc biệt. Password có độ dài trên 6 ký tự và không có ký tự đặc biệt",
+        hide: () => setAlert({}),
+      });
+      return;
+    }
+
     await axios
       .post("http://localhost:3001/auth/signup", data)
       .then((response) => {
@@ -179,9 +221,11 @@ export default function LoginForm({ type, changeType }) {
         {type !== "login" && (
           <>
             <FormControl
-              type="re-password"
+              type="password"
               name="re-password"
               placeholder="again password"
+              value={repassword}
+              onChange={(e) => setRepassword(e.target.value)}
               style={{ fontSize: 16 + "px" }}
             />
             <FormControl

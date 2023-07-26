@@ -4,7 +4,9 @@ const Schema = mongoose.Schema;
 const Order = new Schema({
   buyer_id: { type: String, default: "", require: true },
   product_id: { type: String, default: "", require: true },
+  cost: { type: Number, default: 0 },
   address: { type: String, default: "", require: true },
+  phone: { type: String, default: "", require: true },
   status: { type: String, default: "Đang chuẩn bị hàng", require: true },
   done: { type: Boolean, default: false },
   note: { type: String, default: "" },
