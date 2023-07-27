@@ -1,5 +1,6 @@
 .cart-container {
   min-height: 50vh;
+
   &__list {
     position: relative;
   }
@@ -31,6 +32,13 @@
     &__info {
       margin-right: 1.5rem;
       flex: 100% 0 0;
+
+      @media (max-width: 767px) {
+        p {
+          max-height: 10rem;
+          overflow-y: auto;
+        }
+      }
     }
 
     &__control {
@@ -38,6 +46,7 @@
       flex-direction: column;
       gap: 1rem;
     }
+
     button {
       width: max-content;
     }
