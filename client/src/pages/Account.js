@@ -375,7 +375,9 @@ export default function Account({ props }) {
                       className="text-center p-4 rounded-2 mt-4"
                       style={{ background: "rgb(220, 255, 220)" }}
                     >
-                      Bạn chưa đăng blog nào
+                      {authState.id === user.id
+                        ? "Bạn chưa đăng blog nào"
+                        : `${user.username} chưa có blog nào`}
                     </h3>
                   </div>
                 )}
@@ -456,31 +458,42 @@ export default function Account({ props }) {
                               </div>
                             ))}
                         </div>
-                        <div className="control mt-3 d-flex">
-                          <Button
-                            className="custom-btn primary"
-                            onClick={(e) =>
-                              setAlert({
-                                heading: "ERROR",
-                                type: "danger",
-                                content: "Tính năng đang được nâng cấp",
-                                hide: () => setAlert({}),
-                              })
-                            }
-                          >
-                            Cập nhật
-                          </Button>
-                          <Button
-                            className="custom-btn"
-                            style={{
-                              marginLeft: "auto",
-                              marginRight: 0,
-                            }}
-                            onClick={(e) => handleDeleteProduct(product)}
-                          >
-                            <FontAwesomeIcon icon={faTrash} />
-                          </Button>
-                        </div>
+                        {(authState.id === user.id && (
+                          <div className="control mt-3 d-flex">
+                            <Button
+                              className="custom-btn primary"
+                              onClick={(e) =>
+                                setAlert({
+                                  heading: "ERROR",
+                                  type: "danger",
+                                  content: "Tính năng đang được nâng cấp",
+                                  hide: () => setAlert({}),
+                                })
+                              }
+                            >
+                              Cập nhật
+                            </Button>
+                            <Button
+                              className="custom-btn"
+                              style={{
+                                marginLeft: "auto",
+                                marginRight: 0,
+                              }}
+                              onClick={(e) => handleDeleteProduct(product)}
+                            >
+                              <FontAwesomeIcon icon={faTrash} />
+                            </Button>
+                          </div>
+                        )) || (
+                          <div className="control mt-3 d-flex">
+                            <a
+                              className="default-link custom-btn primary-blue"
+                              href={`/products/single/${product._id}`}
+                            >
+                              Chi tiết
+                            </a>
+                          </div>
+                        )}
                       </li>
                     ))}
                   </ul>
@@ -490,7 +503,9 @@ export default function Account({ props }) {
                       className="text-center p-4 rounded-2 mt-4"
                       style={{ background: "rgb(220, 255, 220)" }}
                     >
-                      Bạn chưa đăng sản phẩm nào
+                      {authState.id === user.id
+                        ? "Bạn chưa đăng sản phẩm nào"
+                        : `${user.username} chưa có sản phẩm nào`}
                     </h3>
                   </div>
                 )}
