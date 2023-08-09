@@ -1,6 +1,6 @@
 # Giới thiệu/Quy mô:
 
--Trang website về bảo vệ môi trường cho phép người dùng mua bán, trao đổi các sản phẩm thân thiện với môi trường. Người dùng có thể đăng tải các bài viết nhằm cung cấp thông tin và kêu gọi cộng đồng bảo vệ môi trường.
+-Trang website về bảo vệ môi trường cho phép người dùng mua bán, trao đổi các sản phẩm thân thiện với môi trường. Người dùng có thể đăng tải các bài viết như một mạng xã hội nhằm cung cấp thông tin và kêu gọi cộng đồng bảo vệ môi trường.
 
 # User case:
 

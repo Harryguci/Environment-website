@@ -20,6 +20,8 @@ import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import AlertConfirm from "../components/AlertConfirm";
 import AlertDismissable from "../components/AlertDismissable";
 import OrderForm from "../components/OrderForm";
+import OrderList from "../components/OrderList";
+
 export default function Cart() {
   const { authState } = useContext(AuthContext);
   const { setCartState } = useContext(CartContext);
@@ -30,6 +32,9 @@ export default function Cart() {
 
   const [showOrderForm, setShowOrderForm] = useState(false);
   const [orderForm, setOrderForm] = useState({});
+
+  const [showOrderList, setShowOrderList] = useState(false);
+
   useEffect(() => {
     if (authState.id) {
       axios
@@ -186,6 +191,8 @@ export default function Cart() {
           </Row>
         )}
       </Container>
+      <OrderList />
+
       {alertState && alertState.heading && <AlertConfirm {...alertState} />}
       {alertDismissState && alertDismissState.heading && (
         <AlertDismissable {...alertDismissState} />
