@@ -25,20 +25,34 @@ class AccountController {
         const data = req.body;
         const id = req.body.id;
 
-        const user = await User.findOneAndUpdate(
-            { _id: id },
-            {
-                phone: data.phone,
-                website: data.website,
-            },
-            {
-                new: true,
-            }
-        )
-            .then((user) => user.toObject())
-            .catch((error) => error);
+        const checkInfo =
+            await User.find({
+                phone: data.phone
+            })
+                .then(users => users.map(user => user.toObject()))
+                .then(users => users.length === 0
+                    ? true
+                    : users[0]._id.toString() === id
+                );
 
-        res.send(user);
+        if (checkInfo) {
+            const user = await User.findOneAndUpdate(
+                { _id: id },
+                {
+                    phone: data.phone,
+                    website: data.website,
+                },
+                {
+                    new: true,
+                }
+            )
+                .then((user) => user.toObject())
+                .catch((error) => error);
+
+            res.send(user);
+        } else {
+            res.send({ error: 'SĐT đã được sử dụng' });
+        }
     }
 
     // [GET] /account

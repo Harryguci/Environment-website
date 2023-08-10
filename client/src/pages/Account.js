@@ -162,20 +162,30 @@ export default function Account({ props }) {
       })
         .then((response) => response.json())
         .then((data) => {
-          setAlert({
-            type: "success",
-            heading: "Thành công",
-            content: "Thay đổi thông tin thành công !!",
-            hide: () => setAlert({}),
-          });
-          setUser(prev => ({
-            id: prev.id,
-            username: prev.username,
-            email: data.email,
-            phone: data.phone,
-            website: data.website,
-            birthday: data.birthday,
-          }))
+          if (data.error) {
+            setAlert({
+              type: "danger",
+              heading: "Lưu không thành công",
+              content: data.error,
+              hide: () => setAlert({}),
+            })
+            setUserPhone("");
+          } else {
+            setAlert({
+              type: "success",
+              heading: "Thành công",
+              content: "Thay đổi thông tin thành công !!",
+              hide: () => setAlert({}),
+            });
+            setUser(prev => ({
+              id: prev.id,
+              username: prev.username,
+              email: data.email,
+              phone: data.phone,
+              website: data.website,
+              birthday: data.birthday,
+            }))
+          }
         })
         .catch((err) => {
           console.log(err);
