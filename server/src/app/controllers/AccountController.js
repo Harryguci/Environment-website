@@ -7,7 +7,7 @@ class AccountController {
         const queryUsername = req.params.username;
         var currentUser;
 
-        console.log("USERNAME ", queryUsername);
+        // console.log("USERNAME ", queryUsername);
 
         if (queryUsername) {
             currentUser = await User.findOne({ username: queryUsername })
@@ -32,7 +32,7 @@ class AccountController {
     changeInfo = async function (req, res) {
         const data = req.body;
         const id = req.body.id;
-        console.log(data);
+        // console.log(data);
 
         const user = await User.findOneAndUpdate(
             { _id: id },

@@ -162,7 +162,7 @@ export default function ProductFrame({ limits, className }) {
           </Col>
           <Col md={10}>
             <div className="product-frame__main">
-              {(products && (
+              {(products && products.length && (
                 <Row className="" style={{ rowGap: "1.5rem" }}>
                   {products.map((product, index) => (
                     <Col
@@ -218,22 +218,29 @@ export default function ProductFrame({ limits, className }) {
                               <FontAwesomeIcon icon={faCartShopping} />
                             </Button>
                           )) || (
-                            <span
-                              style={{
-                                marginLeft: "auto",
-                                marginRight: "0",
-                                color: "rgb(200, 200, 200)",
-                              }}
-                            >
-                              Sản phẩm của bạn
-                            </span>
-                          )}
+                              <span
+                                style={{
+                                  marginLeft: "auto",
+                                  marginRight: "0",
+                                  color: "rgb(200, 200, 200)",
+                                }}
+                              >
+                                Sản phẩm của bạn
+                              </span>
+                            )}
                         </div>
                       </Card>
                     </Col>
                   ))}
                 </Row>
-              )) || <h2>Not found</h2>}
+              )) ||
+                <h2
+                  className="fs-2 text-center my-5 px-3 py-4 rounded-3 opacity-50"
+                  style={{ background: "rgba(0,0,0,0.05)" }}
+                >
+                  Chưa có sản phẩm nào
+                </h2>
+              }
             </div>
           </Col>
         </Row>

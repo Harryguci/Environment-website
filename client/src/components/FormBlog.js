@@ -76,7 +76,6 @@ export default function FormBlog() {
       action="http://localhost:3001/blogs/"
       method="POST"
       enctype="multipart/form-data"
-      // onSubmit={HandleSubmit}
     >
       <div>
         <FormControl
@@ -90,6 +89,7 @@ export default function FormBlog() {
           }
           onChange={(e) => setDetailState(e.target.value)}
           onFocus={() => setIsChangeTextarea(true)}
+          required
         />
       </div>
       {showPreview && previewUrl && previewUrl.length && (
@@ -142,7 +142,11 @@ export default function FormBlog() {
             onChange={(e) => setUser({ ...user, id: e.target.id })}
           />
         </div>
-        <Button type="submit" style={{ flex: "0 0 20%" }}>
+        <Button
+          type="submit"
+          style={{ flex: "0 0 20%" }}
+          disabled={detailState ? false : true}
+        >
           Post
         </Button>
       </div>

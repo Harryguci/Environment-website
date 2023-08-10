@@ -168,6 +168,14 @@ export default function Account({ props }) {
             content: "Thay đổi thông tin thành công !!",
             hide: () => setAlert({}),
           });
+          setUser(prev => ({
+            id: prev.id,
+            username: prev.username,
+            email: data.email,
+            phone: data.phone,
+            website: data.website,
+            birthday: data.birthday,
+          }))
         })
         .catch((err) => {
           console.log(err);
@@ -384,134 +392,134 @@ export default function Account({ props }) {
               </div>
             </Col>
           )) || (
-            <Col xl={8}>
-              <div>
-                {!slugState && (
-                  <div className="mb-5">
-                    <h2>Đăng sản phẩm mới</h2>
-                    <FormProduct />
-                  </div>
-                )}
-                <ButtonGroup className="d-flex col-12 col-md-6">
-                  <Button
-                    className="custom-btn"
-                    onClick={(e) => setCurrentTab("blogs")}
-                  >
-                    Blogs
-                  </Button>
-                  <h2
-                    className="fs-3 btn m-0 p-0 d-flex justify-content-center align-items-center text-white"
-                    style={{
-                      background: "rgb(120, 120, 255)",
-                    }}
-                  >
-                    Products
-                  </h2>
-                </ButtonGroup>
-                {products && products.length ? (
-                  <ul className="list-group mt-5 user-blog-container__list">
-                    {products.reverse().map((product) => (
-                      <li
-                        key={product._id}
-                        className="list-group-item border-0 mb-5 user-blog-container__list__item"
-                      >
-                        <div className="info">
-                          <h3>{user.username}</h3>
-                          <ListGroup>
-                            <ListGroupItem>
-                              Mô tả: {product.description}
-                            </ListGroupItem>
-                            <ListGroupItem>
-                              Giá bán: {product.cost}
-                            </ListGroupItem>
-                            <ListGroupItem>
-                              Số lượng: {product.remain || 0}
-                            </ListGroupItem>
-                          </ListGroup>
-                        </div>
-                        <div className="d-flex media">
-                          {product.files &&
-                            product.files.length &&
-                            product.files.map((file) => (
-                              <div key={file.filename}>
-                                {file.mimetype.indexOf("video") !== -1 ? (
-                                  <div className="video-section">
-                                    <ReactPlayer
-                                      url={`http://localhost:3001/blogs/${file.filename}`}
-                                      width="100%"
-                                      height="auto"
-                                      playing={false}
-                                      controls={true}
-                                    />
-                                  </div>
-                                ) : (
-                                  <div className="thumbnail h-100 d-flex justify-content-center align-items-center">
-                                    <img
-                                      src={`http://localhost:3001/blogs/${file.filename}`}
-                                      alt="SFIT"
-                                      width={100 + "%"}
-                                      height={100 + "%"}
-                                      style={{ objectFit: "cover" }}
-                                    />
-                                  </div>
-                                )}
-                              </div>
-                            ))}
-                        </div>
-                        {(authState.id === user.id && (
-                          <div className="control mt-3 d-flex">
-                            <Button
-                              className="custom-btn primary"
-                              onClick={(e) =>
-                                setAlert({
-                                  heading: "ERROR",
-                                  type: "danger",
-                                  content: "Tính năng đang được nâng cấp",
-                                  hide: () => setAlert({}),
-                                })
-                              }
-                            >
-                              Cập nhật
-                            </Button>
-                            <Button
-                              className="custom-btn"
-                              style={{
-                                marginLeft: "auto",
-                                marginRight: 0,
-                              }}
-                              onClick={(e) => handleDeleteProduct(product)}
-                            >
-                              <FontAwesomeIcon icon={faTrash} />
-                            </Button>
-                          </div>
-                        )) || (
-                          <div className="control mt-3 d-flex">
-                            <a
-                              className="default-link custom-btn primary-blue"
-                              href={`/products/single/${product._id}`}
-                            >
-                              Chi tiết
-                            </a>
-                          </div>
-                        )}
-                      </li>
-                    ))}
-                  </ul>
-                ) : (
-                  <div>
-                    <h3
-                      className="text-center p-4 rounded-2 mt-4"
-                      style={{ background: "rgb(220, 255, 220)" }}
+              <Col xl={8}>
+                <div>
+                  {!slugState && (
+                    <div className="mb-5">
+                      <h2>Đăng sản phẩm mới</h2>
+                      <FormProduct user={user} />
+                    </div>
+                  )}
+                  <ButtonGroup className="d-flex col-12 col-md-6">
+                    <Button
+                      className="custom-btn"
+                      onClick={(e) => setCurrentTab("blogs")}
                     >
-                      {authState.id === user.id
-                        ? "Bạn chưa đăng sản phẩm nào"
-                        : `${user.username} chưa có sản phẩm nào`}
-                    </h3>
-                  </div>
-                )}
-              </div>
-            </Col>
-          )}
+                      Blogs
+                    </Button>
+                    <h2
+                      className="fs-3 btn m-0 p-0 d-flex justify-content-center align-items-center text-white"
+                      style={{
+                        background: "rgb(120, 120, 255)",
+                      }}
+                    >
+                      Products
+                    </h2>
+                  </ButtonGroup>
+                  {products && products.length ? (
+                    <ul className="list-group mt-5 user-blog-container__list">
+                      {products.reverse().map((product) => (
+                        <li
+                          key={product._id}
+                          className="list-group-item border-0 mb-5 user-blog-container__list__item"
+                        >
+                          <div className="info">
+                            <h3>{user.username}</h3>
+                            <ListGroup>
+                              <ListGroupItem>
+                                Mô tả: {product.description}
+                              </ListGroupItem>
+                              <ListGroupItem>
+                                Giá bán: {product.cost}
+                              </ListGroupItem>
+                              <ListGroupItem>
+                                Số lượng: {product.remain || 0}
+                              </ListGroupItem>
+                            </ListGroup>
+                          </div>
+                          <div className="d-flex media">
+                            {product.files &&
+                              product.files.length &&
+                              product.files.map((file) => (
+                                <div key={file.filename}>
+                                  {file.mimetype.indexOf("video") !== -1 ? (
+                                    <div className="video-section">
+                                      <ReactPlayer
+                                        url={`http://localhost:3001/blogs/${file.filename}`}
+                                        width="100%"
+                                        height="auto"
+                                        playing={false}
+                                        controls={true}
+                                      />
+                                    </div>
+                                  ) : (
+                                    <div className="thumbnail h-100 d-flex justify-content-center align-items-center">
+                                      <img
+                                        src={`http://localhost:3001/blogs/${file.filename}`}
+                                        alt="SFIT"
+                                        width={100 + "%"}
+                                        height={100 + "%"}
+                                        style={{ objectFit: "cover" }}
+                                      />
+                                    </div>
+                                  )}
+                                </div>
+                              ))}
+                          </div>
+                          {(authState.id === user.id && (
+                            <div className="control mt-3 d-flex">
+                              <Button
+                                className="custom-btn primary"
+                                onClick={(e) =>
+                                  setAlert({
+                                    heading: "ERROR",
+                                    type: "danger",
+                                    content: "Tính năng đang được nâng cấp",
+                                    hide: () => setAlert({}),
+                                  })
+                                }
+                              >
+                                Cập nhật
+                              </Button>
+                              <Button
+                                className="custom-btn"
+                                style={{
+                                  marginLeft: "auto",
+                                  marginRight: 0,
+                                }}
+                                onClick={(e) => handleDeleteProduct(product)}
+                              >
+                                <FontAwesomeIcon icon={faTrash} />
+                              </Button>
+                            </div>
+                          )) || (
+                              <div className="control mt-3 d-flex">
+                                <a
+                                  className="default-link custom-btn primary-blue"
+                                  href={`/products/single/${product._id}`}
+                                >
+                                  Chi tiết
+                                </a>
+                              </div>
+                            )}
+                        </li>
+                      ))}
+                    </ul>
+                  ) : (
+                    <div>
+                      <h3
+                        className="text-center p-4 rounded-2 mt-4"
+                        style={{ background: "rgb(220, 255, 220)" }}
+                      >
+                        {authState.id === user.id
+                          ? "Bạn chưa đăng sản phẩm nào"
+                          : `${user.username} chưa có sản phẩm nào`}
+                      </h3>
+                    </div>
+                  )}
+                </div>
+              </Col>
+            )}
         </Row>
       </Container>
       {alert && alert.heading && <AlertDismissible {...alert} />}

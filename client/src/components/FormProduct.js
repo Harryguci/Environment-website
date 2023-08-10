@@ -4,7 +4,7 @@ import "../Assets/SCSS/components/formBlog.scss";
 import AuthContext from "../helpers/Authcontext";
 import axios from "axios";
 
-export default function FormProduct() {
+export default function FormProduct({ user: userInfo }) {
   const { authState } = useContext(AuthContext);
   const [user, setUser] = useState({});
   const [detailState, setDetailState] = useState("");
@@ -21,8 +21,12 @@ export default function FormProduct() {
     setUser({
       username: authState.username,
       id: authState.id,
+      email: userInfo.email,
+      phone: userInfo.phone,
+      website: userInfo.website,
+      birthday: userInfo.birthday,
     });
-  }, [authState]);
+  }, [authState, userInfo.birthday, userInfo.email, userInfo.phone, userInfo.website]);
 
   useLayoutEffect(() => {
     var urls = [];
@@ -79,10 +83,11 @@ export default function FormProduct() {
       method="POST"
       enctype="multipart/form-data"
     >
-      <div>
+      <div className="position-relative">
         <FormControl
           as="textarea"
           name="detail"
+          className="position-relative"
           rows={3}
           value={
             !isChangeTextarea
@@ -91,7 +96,13 @@ export default function FormProduct() {
           }
           onChange={(e) => setDetailState(e.target.value)}
           onFocus={() => setIsChangeTextarea(true)}
+          disabled={user.phone ? false : true}
         />
+        {!user.phone && (
+          <p className="text-danger mt-3 fw-bold">
+            Bạn phải cập nhật SĐT để đăng sản phẩm
+          </p>
+        )}
       </div>
 
       <FormLabel className="d-block my-4">

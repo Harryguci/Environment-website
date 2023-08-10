@@ -30,7 +30,6 @@ function App() {
   const [cartState, setCartState] = useState([]);
 
   useEffect(() => {
-    // console.log("Get user information");
     axios
       .get("http://localhost:3001/auth/auth", {
         headers: {

@@ -36,3 +36,13 @@
     }
   }
 }
+
+.tooltip {
+  z-index: 1000;
+  display: block;
+  position: absolute;
+  padding: 1rem 2rem;
+  color: black !important;
+  background: rgb(245, 245, 245) !important;
+  top: 0;
+}
