@@ -322,18 +322,17 @@ export default function Account({ props }) {
                       disabled={authState.id !== user.id}
                     />
                   </li>
-                  <Button
-                    className="custom-btn primary-blue"
-                    style={
-                      authState.id === user.id
-                        ? { display: "block" }
-                        : { display: "none" }
-                    }
-                    onClick={handleChangeUserInfo}
-                    disabled={authState.id !== user.id}
-                  >
-                    Lưu
-                  </Button>
+                  {
+                    // TODO: Changing information is allowed only if this account is the current user of the account
+                    authState.id === user.id &&
+                    < Button
+                      className="custom-btn primary-blue"
+                      onClick={handleChangeUserInfo}
+                      disabled={authState.id !== user.id}
+                    >
+                      Lưu
+                    </Button>
+                  }
                 </ul>
               )}
             </div>
@@ -521,7 +520,7 @@ export default function Account({ props }) {
               </Col>
             )}
         </Row>
-      </Container>
+      </Container >
       {alert && alert.heading && <AlertDismissible {...alert} />}
       {alertState && alertState.heading && <AlertConfirm {...alertState} />}
     </>

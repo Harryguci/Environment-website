@@ -92,7 +92,7 @@ function NavbarCustom({ user }, props) {
               </Nav.Link>
               <Nav.Link name="contact" href="/contact" title="Contact">
                 <FontAwesomeIcon icon={faPhone} />
-                <span style={window.innerWidth < 768 ? { display: 'block' } : { display: 'none' }}>Phone</span>
+                <span style={window.innerWidth < 768 ? { display: 'block' } : { display: 'none' }}>Contact</span>
               </Nav.Link>
             </Nav>
             <div className="d-flex gap-3">
