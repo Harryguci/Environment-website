@@ -13,6 +13,11 @@ import {
   faBars,
   faRightFromBracket,
   faCartShopping,
+  faHome,
+  faBagShopping,
+  faCircleInfo,
+  faNewspaper,
+  faPhone
 } from "@fortawesome/free-solid-svg-icons";
 import React from "react";
 import "../Assets/SCSS/navbar.scss";
@@ -66,22 +71,28 @@ function NavbarCustom({ user }, props) {
           <Navbar.Toggle id="toggle-btn" aria-controls="responsive-navbar-nav">
             <FontAwesomeIcon icon={faBars} />
           </Navbar.Toggle>
-          <Navbar.Collapse id="responsive-navbar-nav">
-            <Nav className="me-auto" style={{ marginBottom: 1 + "rem" }}>
-              <Nav.Link name="home" className="active" href="/">
-                Home
+          <Navbar.Collapse id="responsive-navbar-nav"
+            style={{ justifyContent: 'center' }}>
+            <Nav className="me-auto mx-auto">
+              <Nav.Link name="home" className="active" title="Home" href="/">
+                <FontAwesomeIcon icon={faHome} />
+                <span style={window.innerWidth < 768 ? { display: 'block' } : { display: 'none' }}>Home</span>
               </Nav.Link>
-              <Nav.Link name="about" href="/about">
-                About
+              <Nav.Link name="about" href="/about" title="About">
+                <FontAwesomeIcon icon={faCircleInfo} />
+                <span style={window.innerWidth < 768 ? { display: 'block' } : { display: 'none' }}>About</span>
               </Nav.Link>
-              <Nav.Link name="products" href="/products">
-                Products
+              <Nav.Link name="products" href="/products" title="Products">
+                <FontAwesomeIcon icon={faBagShopping} />
+                <span style={window.innerWidth < 768 ? { display: 'block' } : { display: 'none' }}>Products</span>
               </Nav.Link>
-              <Nav.Link name="blogs" href="/blogs">
-                Blogs
+              <Nav.Link name="blogs" href="/blogs" title="Blogs">
+                <FontAwesomeIcon icon={faNewspaper} />
+                <span style={window.innerWidth < 768 ? { display: 'block' } : { display: 'none' }}>Blogs</span>
               </Nav.Link>
-              <Nav.Link name="contact" href="/contact">
-                Contact
+              <Nav.Link name="contact" href="/contact" title="Contact">
+                <FontAwesomeIcon icon={faPhone} />
+                <span style={window.innerWidth < 768 ? { display: 'block' } : { display: 'none' }}>Phone</span>
               </Nav.Link>
             </Nav>
             <div className="d-flex gap-3">

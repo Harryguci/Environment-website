@@ -4,20 +4,12 @@ class AccountController {
 
     // [GET] /account/:username
     showByUsername = async function (req, res) {
-        const queryUsername = req.params.username;
-        var currentUser;
+        const queryUsername = req.params.username || req.user.username;
 
-        // console.log("USERNAME ", queryUsername);
+        const currentUser = await User.findOne({ username: queryUsername })
+            .then((user) => user.toObject())
+            .catch((err) => err)
 
-        if (queryUsername) {
-            currentUser = await User.findOne({ username: queryUsername })
-                .then((user) => user.toObject())
-                .catch((err) => err);
-        } else {
-            currentUser = await User.findOne({ username: req.user.username })
-                .then((user) => user.toObject())
-                .catch((err) => err);
-        }
         res.send({
             id: currentUser._id,
             username: currentUser.username,
@@ -32,7 +24,6 @@ class AccountController {
     changeInfo = async function (req, res) {
         const data = req.body;
         const id = req.body.id;
-        // console.log(data);
 
         const user = await User.findOneAndUpdate(
             { _id: id },

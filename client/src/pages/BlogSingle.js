@@ -86,7 +86,13 @@ export default function BlogSingle(props) {
                 <h1 className="heading">{blog.title.substring(0, 50)}...</h1>
               )}
             </div>
-            <p className="opacity-50">Author: {blog.username || blog.userId}</p>
+            <p className="opacity-50">Author:
+              <a
+                href={`/account?user=${blog.username}`}
+                style={{ marginLeft: "1rem" }}
+              >
+                {blog.username || blog.userId}
+              </a></p>
             <p style={{ whiteSpace: "pre-line" }}>{blog.detail}</p>
           </Col>
         </Row>
