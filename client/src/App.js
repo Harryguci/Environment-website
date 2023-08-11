@@ -63,120 +63,24 @@ function App() {
         <CartContext.Provider value={{ cartState, setCartState }}>
           <BrowserRouter>
             <Routes>
-              <Route
-                index
-                element={
-                  <Layout>
-                    <Home />
-                  </Layout>
-                }
-              />
-              <Route
-                path="/"
-                element={
-                  <Layout>
-                    <Home />
-                  </Layout>
-                }
-              />
-              <Route
-                path="/blogs"
-                element={
-                  <Layout>
-                    <Blogs />
-                  </Layout>
-                }
-              />
-              <Route
-                path="/blogs/single/:id"
-                element={
-                  <Layout>
-                    <BlogSingle />
-                  </Layout>
-                }
-              />
-              <Route
-                path="/products"
-                element={
-                  <Layout>
-                    <Products />
-                  </Layout>
-                }
-              />
-              <Route
-                path="/products/single/:id"
-                element={
-                  <Layout>
-                    <ProductSingle />
-                  </Layout>
-                }
-              />
-              <Route
-                path="/account/:tab"
-                element={
-                  <Layout>
-                    <Account />
-                  </Layout>
-                }
-              />
-              <Route
-                path="/account"
-                element={
-                  <Layout>
-                    <Account />
-                  </Layout>
-                }
-              />
-              <Route
-                path="/search/:q"
-                element={
-                  <Layout>
-                    <Search />
-                  </Layout>
-                }
-              />
-              <Route
-                path="/search"
-                element={
-                  <Layout>
-                    <Search />
-                  </Layout>
-                }
-              />
-              <Route
-                path="/about"
-                element={
-                  <Layout>
-                    <About />
-                  </Layout>
-                }
-              />
-              <Route
-                path="/cart"
-                element={
-                  <Layout>
-                    <Cart />
-                  </Layout>
-                }
-              />
-              <Route
-                path="/contact"
-                element={
-                  <Layout>
-                    <Contact />
-                  </Layout>
-                }
-              />
               <Route path="/login" element={<Login typeForm={"login"} />} />
               <Route path="/signup" element={<Login typeForm={"signup"} />} />
-              <Route
-                path="*"
-                element={
-                  <Layout>
-                    <NoPage />
-                  </Layout>
-                }
-              />
+              <Route path="/" element={<Layout />}>
+                <Route index element={<Home />} />
+                <Route path="/" element={<Home />} />
+                <Route path="/blogs" element={<Blogs />} />
+                <Route path="/blogs/single/:id" element={<BlogSingle />} />
+                <Route path="/products" element={<Products />} />
+                <Route path="/products/single/:id" element={<ProductSingle />} />
+                <Route path="/account/:tab" element={<Account />} />
+                <Route path="/account" element={<Account />} />
+                <Route path="/search/:q" element={<Search />} />
+                <Route path="/search" element={<Search />} />
+                <Route path="/about" element={<About />} />
+                <Route path="/cart" element={<Cart />} />
+                <Route path="/contact" element={<Contact />} />
+                <Route path="*" element={<NoPage />} />
+              </Route>
             </Routes>
           </BrowserRouter>
         </CartContext.Provider>

@@ -66,7 +66,11 @@ export default function LoginForm({ type, changeType }) {
         heading: "Không thành công",
         type: "danger",
         content:
-          "Thông tin không hợp lệ. Username phải có độ dài trên 3 ký tự và không chứa ký tự đặc biệt. Password có độ dài trên 6 ký tự và không có ký tự đặc biệt",
+          `Thông tin không hợp lệ. 
+          Username phải có độ dài trên 3
+           ký tự và không chứa ký tự đặc biệt. 
+           Password có độ dài trên 6 ký tự và 
+           không có ký tự đặc biệt`,
         hide: () => setAlert({}),
       });
       return;
@@ -86,11 +90,13 @@ export default function LoginForm({ type, changeType }) {
           });
         } else {
           localStorage.setItem("accessToken", response.data);
+
           setAuthSate({
             username: response.data.username,
             id: response.data.id,
             status: true,
           });
+
           setAlert({
             type: "success",
             heading: "Đăng nhập thành công !!",
@@ -99,6 +105,10 @@ export default function LoginForm({ type, changeType }) {
           });
 
           navigate("/");
+          // After replacing the url, 
+          // manually calling navigate(0) 
+          // will refresh the page automatically!
+          navigate(0);
         }
       })
       .catch((error) =>
@@ -153,6 +163,7 @@ export default function LoginForm({ type, changeType }) {
             hide: () => {
               setAlert({});
               navigate("/");
+              navigate(0);
             },
           });
         }

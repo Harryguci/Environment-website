@@ -1,4 +1,4 @@
-import { useState, useContext, useEffect } from "react";
+import { useState, useContext, useEffect, useCallback } from "react";
 import {
   Container,
   Navbar,
@@ -27,7 +27,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import CartContext from "../helpers/CartContext";
 
-function NavbarCustom({ user }, props) {
+function NavbarCustom({ user }) {
   const [search, setSearch] = useState("");
   const handleSearchFormSubmit = (e) => {
     e.preventDefault();
@@ -57,15 +57,15 @@ function NavbarCustom({ user }, props) {
               setCartNumber(response.data.products.length);
           }
         });
-  }, [authState.id, cartState]);
+  }, [authState, cartState]);
 
-  const sendSearch = () => {
+  const sendSearch = useCallback(() => {
     navigate(`/search/${search}`);
-  };
+  }, [navigate, search]);
 
   return (
     <React.Fragment>
-      <Navbar collapseOnSelect expand="lg" data-bs-theme="light">
+      <Navbar key={`${authState.id}`} collapseOnSelect expand="lg" data-bs-theme="light">
         <Container>
           <Navbar.Brand href="/">SFIT</Navbar.Brand>
           <Navbar.Toggle id="toggle-btn" aria-controls="responsive-navbar-nav">
@@ -189,7 +189,7 @@ function NavbarCustom({ user }, props) {
           </Navbar.Collapse>
         </Container>
       </Navbar>
-    </React.Fragment>
+    </React.Fragment >
   );
 }
 
