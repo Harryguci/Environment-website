@@ -25,11 +25,11 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import AlertConfirm from "../components/AlertConfirm";
 import ItemBlog from "../components/ItemBlog";
-export default function Account({ props }) {
-  const [slugState, setSlugState] = useState("");
+export default function Account() {
   const { authState } = useContext(AuthContext);
   const { tab } = useParams();
-
+  
+  const [slugState, setSlugState] = useState("");
   const [currentTab, setCurrentTab] = useState(tab ? tab : "blogs");
 
   const [user, setUser] = useState({});
@@ -66,15 +66,15 @@ export default function Account({ props }) {
           if (response.data.error) {
             alert("Bạn phải đăng nhập để truy cập trang web này");
             navigate("http://localhost:3000/login");
-          } else console.log(response.data);
-          setUser({
-            id: response.data.id,
-            username: response.data.username,
-            email: response.data.email,
-            phone: response.data.phone,
-            website: response.data.website,
-            birthday: response.data.birthday,
-          });
+          } else
+            setUser({
+              id: response.data.id,
+              username: response.data.username,
+              email: response.data.email,
+              phone: response.data.phone,
+              website: response.data.website,
+              birthday: response.data.birthday,
+            });
         });
     } else {
       axios

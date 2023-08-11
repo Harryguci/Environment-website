@@ -156,7 +156,7 @@ function FormProduct({ user: userInfo }) {
       className="blog-posting-form mx-sm-2 mx-md-5"
       action="/products/"
       method="POST"
-      enctype="multipart/form-data"
+      encType="multipart/form-data"
     >
       <div className="position-relative">
         <FormControl

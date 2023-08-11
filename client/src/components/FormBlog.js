@@ -1,8 +1,20 @@
-import { useState, useEffect, useContext, useLayoutEffect, memo, useMemo, useCallback } from "react";
-import { Form, FormControl, FormLabel, Button } from "react-bootstrap";
+import {
+  useState,
+  useEffect,
+  useContext,
+  useLayoutEffect,
+  memo,
+  useMemo,
+  useCallback
+} from "react";
+import {
+  Form,
+  FormControl,
+  FormLabel,
+  Button
+} from "react-bootstrap";
 import "../Assets/SCSS/components/formBlog.scss";
 import AuthContext from "../helpers/Authcontext";
-import axios from "axios";
 
 function FormBlog() {
   const { authState } = useContext(AuthContext);
@@ -95,27 +107,12 @@ function FormBlog() {
     });
   };
 
-  // eslint-disable-next-line no-unused-vars
-  const HandleSubmit = (e) => {
-    e.preventDefault();
-    axios.post("/blogs", {
-      title: detailState,
-      description: detailState,
-      detail: detailState,
-      userId: user.id,
-      files: files,
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    });
-  };
-
   return (
     <Form
       className="blog-posting-form mx-sm-2 mx-md-5"
       action="/blogs/"
       method="POST"
-      enctype="multipart/form-data"
+      encType="multipart/form-data"
     >
       <div>
         <FormControl
@@ -146,6 +143,7 @@ function FormBlog() {
             name="files"
             accept=".jpg, .jpeg, .png, .mp3, .mp4"
             multiple
+            // value={files}
             onChange={HandleChangeFiles}
           />
           <span className="d-block py-3 w-100 text-center">
