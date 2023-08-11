@@ -1,13 +1,15 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, memo } from "react";
 import "../Assets/CSS/About.scss";
 import ActiveNavLink from "../helpers/ActiveNavLink";
-export default function About() {
+
+function About() {
   let [htmlFileString, setHtmlFileString] = useState();
   useEffect(() => ActiveNavLink("about"), []);
 
   async function fetchHtml() {
     setHtmlFileString(await (await fetch(`/AboutHTML/index.html`)).text());
   }
+
   useEffect(() => {
     fetchHtml();
   }, []);
@@ -20,3 +22,8 @@ export default function About() {
     </div>
   );
 }
+
+export default memo(About)
+
+
+
