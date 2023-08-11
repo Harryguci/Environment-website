@@ -19,6 +19,7 @@ import Search from "./pages/Search";
 import NoPage from "./pages/NoPage";
 import About from "./pages/About";
 import Cart from "./pages/Cart";
+import Contact from "./pages/Contact";
 
 function App() {
   const [authState, setAuthSate] = useState({
@@ -155,6 +156,14 @@ function App() {
                 element={
                   <Layout>
                     <Cart />
+                  </Layout>
+                }
+              />
+              <Route
+                path="/contact"
+                element={
+                  <Layout>
+                    <Contact />
                   </Layout>
                 }
               />

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import "../Assets/CSS/style.scss";
+import "../Assets/CSS/About.scss";
 import ActiveNavLink from "../helpers/ActiveNavLink";
 export default function About() {
   let [htmlFileString, setHtmlFileString] = useState();

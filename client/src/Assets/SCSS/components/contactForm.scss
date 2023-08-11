@@ -1,0 +1,18 @@
+.contact-form {
+  max-width: 70rem;
+  width: 90vw;
+  padding: 2rem 4rem;
+  border-radius: 0.5rem;
+  margin: 3rem auto 1rem auto;
+
+  .form-control {
+    font-size: 1.6rem;
+    padding: 1rem;
+  }
+
+  box-shadow: 5px 5px 5rem rgba(0, 0, 255, 0.1);
+
+  @media (max-width: 767px) {
+    padding: 1rem 2rem;
+  }
+}
