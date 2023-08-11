@@ -41,14 +41,12 @@
 # Configuration
 
 1. Install Node Js, npm, mongodb (connected)
-2. Install dependencies in folder:
+2. Install dependencies in folder (At root folder):
 
-- Client: npm install
-- Server: npm install
+- Run command: npm run build
 
 3. Run: (At root folder)
 
-- Client: cd ./client; npm start
-- Server: cd ./server; npm start
+- Run command: npm start
 
 4. Access: <a href='http://localhost:3000'>http://localhost:3000</a>
