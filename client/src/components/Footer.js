@@ -14,10 +14,10 @@ import {
   faHome,
   faCircleInfo,
 } from "@fortawesome/free-solid-svg-icons";
-import { useState, useEffect } from "react";
+import { useState, useEffect, memo } from "react";
 import axios from "axios";
 
-export default function Footer(props) {
+function Footer() {
   const [blogs, setBlogs] = useState([]);
   const [contactInformation, setContactInformation] = useState({});
   const [products, setProducts] = useState([]);
@@ -231,3 +231,5 @@ export default function Footer(props) {
     </Container>
   );
 }
+
+export default memo(Footer);

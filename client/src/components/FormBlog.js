@@ -1,10 +1,10 @@
-import { useState, useEffect, useContext, useLayoutEffect } from "react";
+import { useState, useEffect, useContext, useLayoutEffect, memo, useMemo, useCallback } from "react";
 import { Form, FormControl, FormLabel, Button } from "react-bootstrap";
 import "../Assets/SCSS/components/formBlog.scss";
 import AuthContext from "../helpers/Authcontext";
 import axios from "axios";
 
-export default function FormBlog() {
+function FormBlog() {
   const { authState } = useContext(AuthContext);
   const [user, setUser] = useState({});
   const [detailState, setDetailState] = useState("");
@@ -23,7 +23,7 @@ export default function FormBlog() {
   }, [authState]);
 
   useLayoutEffect(() => {
-    var urls = [];
+    let urls = [];
 
     if (files && files.length) {
       for (let i = 0; i < files.length; i++) {
@@ -43,6 +43,46 @@ export default function FormBlog() {
       }
     };
   }, [files]);
+
+  const HandlePreview = useCallback(
+    () => (
+      <div className="preview-container">
+        {previewUrl.map((url, index) => (
+          <div
+            key={index + 1}
+            className="thumbnail"
+            style={{ width: 300, height: 300 }}
+          >
+            <img className="preview" src={url} alt="SFIT" />
+          </div>
+        ))}
+      </div>),
+    [previewUrl]);
+
+
+  const defaultUserInfo = useMemo(() => (
+    <>
+      <input
+        type="text"
+        name="description"
+        value={detailState}
+        onChange={(e) => setDetailState(e.target.value)}
+      />
+      <input
+        type="text"
+        name="title"
+        value={detailState}
+        onChange={(e) => setDetailState(e.target.value)}
+      />
+      <input
+        type="text"
+        name="userId"
+        value={user.id}
+        onChange={(e) => setUser({ ...user, id: e.target.id })}
+      />
+    </>
+  ), [detailState, user]);
+
 
   const HandleChangeFiles = (e) => {
     setFiles((prev) => {
@@ -93,17 +133,7 @@ export default function FormBlog() {
         />
       </div>
       {showPreview && previewUrl && previewUrl.length && (
-        <div className="preview-container">
-          {previewUrl.map((url, index) => (
-            <div
-              key={index + 1}
-              className="thumbnail"
-              style={{ width: 300, height: 300 }}
-            >
-              <img className="preview" src={url} alt="SFIT" />
-            </div>
-          ))}
-        </div>
+        <HandlePreview />
       )}
 
       <div className="d-flex gap-2">
@@ -123,24 +153,7 @@ export default function FormBlog() {
           </span>
         </FormLabel>
         <div className="d-none">
-          <input
-            type="text"
-            name="description"
-            value={detailState}
-            onChange={(e) => setDetailState(e.target.value)}
-          />
-          <input
-            type="text"
-            name="title"
-            value={detailState}
-            onChange={(e) => setDetailState(e.target.value)}
-          />
-          <input
-            type="text"
-            name="userId"
-            value={user.id}
-            onChange={(e) => setUser({ ...user, id: e.target.id })}
-          />
+          {defaultUserInfo}
         </div>
         <Button
           type="submit"
@@ -153,3 +166,6 @@ export default function FormBlog() {
     </Form>
   );
 }
+
+
+export default memo(FormBlog);

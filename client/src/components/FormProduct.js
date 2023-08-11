@@ -1,10 +1,23 @@
-import { useState, useEffect, useContext, useLayoutEffect } from "react";
-import { Form, FormControl, FormLabel, Button } from "react-bootstrap";
+import {
+  useState,
+  useEffect,
+  useContext,
+  useLayoutEffect,
+  useMemo,
+  useCallback,
+  memo
+} from "react";
+import {
+  Form,
+  FormControl,
+  FormLabel,
+  Button
+} from "react-bootstrap";
 import "../Assets/SCSS/components/formBlog.scss";
 import AuthContext from "../helpers/Authcontext";
 import axios from "axios";
 
-export default function FormProduct({ user: userInfo }) {
+function FormProduct({ user: userInfo }) {
   const { authState } = useContext(AuthContext);
   const [user, setUser] = useState({});
   const [detailState, setDetailState] = useState("");
@@ -76,6 +89,68 @@ export default function FormProduct({ user: userInfo }) {
     });
   };
 
+  const typeList = useMemo(() => (
+    <div className="my-4">
+      <p className="fw-bold">Loại hàng</p>
+      <Form.Check
+        type="checkbox"
+        name={`type`}
+        id={`thoi-trang`}
+        label={`Thời trang`}
+      />
+      <Form.Check
+        type="checkbox"
+        name={`type`}
+        id={`do-gia-dung`}
+        label={`Đồ gia dụng`}
+      />
+      <Form.Check
+        type="checkbox"
+        name={`type`}
+        id={`do-dung-hoc-tap`}
+        label={`Đồ dùng học tập`}
+      />
+      <Form.Check
+        type="checkbox"
+        name={`type`}
+        id={`phu-kien`}
+        label={`Phụ kiện`}
+      />
+      <Form.Check
+        type="checkbox"
+        name={`type`}
+        id={`trang-tri`}
+        label={`Decor - Trang trí`}
+      />
+      <Form.Check
+        type="checkbox"
+        name={`type`}
+        id={`do-luu-niem`}
+        label={`Đồ lưu niệm`}
+      />
+      <Form.Check
+        type="checkbox"
+        name={`other`}
+        id={`other`}
+        label={`Khác`}
+      />
+    </div>
+  ), []);
+
+  const HandlePreview = useCallback(() => (
+    <div className="preview-container">
+      {previewUrl.map((url, index) => (
+        <div
+          key={index + 1}
+          className="thumbnail"
+          style={{ width: 300, height: 300 }}
+        >
+          <img className="preview" src={url} alt="SFIT" />
+        </div>
+      ))}
+    </div>
+  ), [previewUrl])
+
   return (
     <Form
       className="blog-posting-form mx-sm-2 mx-md-5"
@@ -129,64 +204,10 @@ export default function FormProduct({ user: userInfo }) {
         />
       </FormLabel>
 
-      <div className="my-4">
-        <p className="fw-bold">Loại hàng</p>
-        <Form.Check
-          type="checkbox"
-          name={`type`}
-          id={`thoi-trang`}
-          label={`Thời trang`}
-        />
-        <Form.Check
-          type="checkbox"
-          name={`type`}
-          id={`do-gia-dung`}
-          label={`Đồ gia dụng`}
-        />
-        <Form.Check
-          type="checkbox"
-          name={`type`}
-          id={`do-dung-hoc-tap`}
-          label={`Đồ dùng học tập`}
-        />
-        <Form.Check
-          type="checkbox"
-          name={`type`}
-          id={`phu-kien`}
-          label={`Phụ kiện`}
-        />
-        <Form.Check
-          type="checkbox"
-          name={`type`}
-          id={`trang-tri`}
-          label={`Decor - Trang trí`}
-        />
-        <Form.Check
-          type="checkbox"
-          name={`type`}
-          id={`do-luu-niem`}
-          label={`Đồ lưu niệm`}
-        />
-        <Form.Check
-          type="checkbox"
-          name={`other`}
-          id={`other`}
-          label={`Khác`}
-        />
-      </div>
+      {typeList}
 
       {showPreview && previewUrl && previewUrl.length && (
-        <div className="preview-container">
-          {previewUrl.map((url, index) => (
-            <div
-              key={index + 1}
-              className="thumbnail"
-              style={{ width: 300, height: 300 }}
-            >
-              <img className="preview" src={url} alt="SFIT" />
-            </div>
-          ))}
-        </div>
+        <HandlePreview />
       )}
 
       <div className="d-flex gap-2">
@@ -220,3 +241,5 @@ export default function FormProduct({ user: userInfo }) {
     </Form>
   );
 }
+
+export default memo(FormProduct);

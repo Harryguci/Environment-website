@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, memo } from "react";
 import Widget from "./Widget";
 import "../Assets/SCSS/index.scss";
 import axios from "axios";
 import { Button, Container } from "react-bootstrap";
 import ActiveNavLink from "../helpers/ActiveNavLink";
 
-export default function BlogList({ limits, children, typeBlog }, ...props) {
+function BlogList({ limits, typeBlog }, ...props) {
   const [blogs, setBlogs] = useState([]);
   const [limitState, setLimitState] = useState(limits || 10);
 
@@ -14,7 +14,7 @@ export default function BlogList({ limits, children, typeBlog }, ...props) {
   }, []);
 
   useEffect(() => {
-    var type = "moi-truong";
+    let type = "moi-truong";
     if (typeBlog) type = typeBlog;
 
     axios
@@ -63,20 +63,19 @@ export default function BlogList({ limits, children, typeBlog }, ...props) {
               author={blog.username}
             />
           ))) || (
-        <Container>
-          <h2
-            className="fs-2 text-center my-5 px-3 py-4 rounded-3 opacity-50"
-            style={{ background: "rgba(0,0,0,0.05)" }}
-          >
-            Chưa có blog nào
-          </h2>
-        </Container>
-      )}
+          <Container>
+            <h2
+              className="fs-2 text-center my-5 px-3 py-4 rounded-3 opacity-50"
+              style={{ background: "rgba(0,0,0,0.05)" }}
+            >
+              Chưa có blog nào
+            </h2>
+          </Container>
+        )}
       {blogs.length > limitState && (
         <div className="d-flex justify-content-center">
           <Button
             className="custom-btn"
-            // style={{ fontSize: 16 }}
             onClick={(e) => setLimitState((prev) => prev + 5)}
           >
             Xem thêm..
@@ -86,3 +85,6 @@ export default function BlogList({ limits, children, typeBlog }, ...props) {
     </>
   );
 }
+
+
+export default memo(BlogList);

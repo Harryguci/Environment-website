@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useCallback, memo } from "react";
 import Alert from "react-bootstrap/Alert";
 import Button from "react-bootstrap/Button";
 import "../Assets/SCSS/components/alert.scss";
@@ -8,19 +8,20 @@ function AlertConfirm({ accept, cancel, heading, content, type }) {
 
   const [show] = useState(true);
 
-  const handleHide = (e) => {
+  const handleHide = useCallback((e) => {
     document.getElementById(id.current).classList.add("hidden");
 
     setTimeout(() => {
       cancel();
     }, 500);
-  };
-  const handleAccept = (e) => {
+  }, [cancel]);
+
+  const handleAccept = useCallback((e) => {
     document.getElementById(id.current).classList.add("hidden");
     setTimeout(() => {
       accept();
     }, 500);
-  };
+  }, [accept]);
 
   return (
     <>
@@ -65,4 +66,4 @@ function AlertConfirm({ accept, cancel, heading, content, type }) {
   );
 }
 
-export default AlertConfirm;
+export default memo(AlertConfirm);

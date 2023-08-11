@@ -35,9 +35,17 @@ class BlogsController {
             .then((query) => {
                 query = Array.from(query);
                 query = query.map((blog) => blog.toObject());
-
-                res.send(query);
+                return query;
             })
+            .then(async (blogs) => {
+                for (let i = 0; i < blogs.length; i++) {
+                    blogs[i].username = await User.findById(blogs[i].userId)
+                        .then(user => user.toObject())
+                        .then(user => user.username);
+                }
+                return blogs
+            })
+            .then(blogs => { res.send(blogs) })
             .catch((err) => next(err));
     }
 
@@ -49,10 +57,8 @@ class BlogsController {
                 query = query.map((blog) => blog.toObject());
 
                 for (var i = 0; i < query.length; i++) {
-                    var username = await User.findById(query[i].userId).then(
-                        (user) => user.toObject().username
-                    );
-                    query[i].username = username;
+                    query[i].username = await User.findById(query[i].userId)
+                        .then((user) => user.toObject().username);
                 }
 
                 res.send(query);
