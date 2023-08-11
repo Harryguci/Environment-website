@@ -1,11 +1,5 @@
 node_modules
 
-*.jpg
-
-*.png
-
-*.mp4
-
-*.mp3
+/server/public/blogs/*
 
 .env
