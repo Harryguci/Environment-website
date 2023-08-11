@@ -36,14 +36,14 @@ function NavbarCustom({ user }, props) {
   };
   const navigate = useNavigate();
   const { authState, setAuthSate } = useContext(AuthContext);
-  const { cartState, setCartState } = useContext(CartContext);
+  const { cartState } = useContext(CartContext);
 
   const [cartNumber, setCartNumber] = useState(cartState.length || 0);
 
   useEffect(() => {
     if (authState.id)
       axios
-        .get(`http://localhost:3001/cart/single/${authState.id}`, {
+        .get(`/cart/single/${authState.id}`, {
           headers: {
             accessToken: localStorage.getItem("accessToken"),
           },

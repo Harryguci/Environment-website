@@ -64,7 +64,7 @@ export default function FormProduct({ user: userInfo }) {
   // eslint-disable-next-line no-unused-vars
   const HandleSubmit = (e) => {
     e.preventDefault();
-    axios.post("http://localhost:3001/products", {
+    axios.post("/products", {
       title: detailState,
       description: detailState,
       detail: detailState,
@@ -79,7 +79,7 @@ export default function FormProduct({ user: userInfo }) {
   return (
     <Form
       className="blog-posting-form mx-sm-2 mx-md-5"
-      action="http://localhost:3001/products/"
+      action="/products/"
       method="POST"
       enctype="multipart/form-data"
     >

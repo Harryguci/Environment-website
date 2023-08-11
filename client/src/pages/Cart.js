@@ -33,12 +33,10 @@ export default function Cart() {
   const [showOrderForm, setShowOrderForm] = useState(false);
   const [orderForm, setOrderForm] = useState({});
 
-  const [showOrderList, setShowOrderList] = useState(false);
-
   useEffect(() => {
     if (authState.id) {
       axios
-        .get(`http://localhost:3001/cart/single/${authState.id}`, {
+        .get(`/cart/single/${authState.id}`, {
           headers: {
             accessToken: localStorage.getItem("accessToken"),
           },
@@ -67,7 +65,7 @@ export default function Cart() {
         content: "Bạn có chắc chắn muốn xóa ?",
         accept: async () => {
           // [POST] to delete this product
-          await fetch("http://localhost:3001/cart/delete/single", {
+          await fetch("/cart/delete/single", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
@@ -94,14 +92,13 @@ export default function Cart() {
   const refreshCart = () => {
     if (authState.id) {
       axios
-        .get(`http://localhost:3001/cart/single/${authState.id}`, {
+        .get(`/cart/single/${authState.id}`, {
           headers: {
             accessToken: localStorage.getItem("accessToken"),
           },
         })
         .then((response) => {
           if (response.data.error) {
-            // console.log(response.data.error);
             // Call alert show error
           } else {
             setCart(response.data);
@@ -144,7 +141,7 @@ export default function Cart() {
                     >
                       <div className="cart-container__item__thumbnail">
                         <img
-                          src={`http://localhost:3001/blogs/${product.imageUrl}`}
+                          src={`/blogs/${product.imageUrl}`}
                           alt="SFIT"
                         />
                       </div>
@@ -173,23 +170,23 @@ export default function Cart() {
                       </div>
                     </ListGroupItem>
                   ))) || (
-                  <Container className="h-100">
-                    <h2
-                      className="fs-2 text-center my-5 px-3 py-4 rounded-3 opacity-50"
-                      style={{ background: "rgba(0,0,0,0.05)" }}
-                    >
-                      Chưa có mặt hàng nào
-                    </h2>
-                  </Container>
-                )}
+                    <Container className="h-100">
+                      <h2
+                        className="fs-2 text-center my-5 px-3 py-4 rounded-3 opacity-50"
+                        style={{ background: "rgba(0,0,0,0.05)" }}
+                      >
+                        Chưa có mặt hàng nào
+                      </h2>
+                    </Container>
+                  )}
               </ListGroup>
             </Col>
           </Row>
         )) || (
-          <Row>
-            <h1>Something was wrong</h1>
-          </Row>
-        )}
+            <Row>
+              <h1>Something was wrong</h1>
+            </Row>
+          )}
       </Container>
       <OrderList />
 

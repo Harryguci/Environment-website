@@ -34,7 +34,7 @@ export default function Search() {
     const sendSearch = () => {
       //   console.log(search);
       axios
-        .get(`http://localhost:3001/search?q=${search}`, {
+        .get(`/search?q=${search}`, {
           headers: {
             accessToken: localStorage.getItem("accessToken"),
           },

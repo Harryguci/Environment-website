@@ -16,7 +16,7 @@ export default function OrderList() {
   useEffect(() => {
     if (authState.id)
       axios
-        .get(`http://localhost:3001/order/user/${authState.id}`, {
+        .get(`/order/user/${authState.id}`, {
           headers: {
             accessToken: localStorage.getItem("accessToken"),
           },
@@ -29,7 +29,7 @@ export default function OrderList() {
         });
   }, [authState.id]);
 
-//   useEffect(() => console.log(orders), [orders]);
+  //   useEffect(() => console.log(orders), [orders]);
 
   return (
     <Container>
@@ -39,7 +39,7 @@ export default function OrderList() {
       <Row>
         <Col>
           <div>
-            {orders && orders.length && (
+            {orders && orders.length ? (
               <Table>
                 <thead>
                   <tr>
@@ -69,6 +69,12 @@ export default function OrderList() {
                   
                 ))} */}
               </Table>
+            ) : (
+              <h2
+                className="text-center my-4 fs-2 opacity-50"
+              >
+                Chưa có đơn hàng nào
+              </h2>
             )}
           </div>
         </Col>

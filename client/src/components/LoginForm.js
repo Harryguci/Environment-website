@@ -11,7 +11,7 @@ export default function LoginForm({ type, changeType }) {
   const [form, setForm] = useState({
     name: "login-form",
     id: "login-form",
-    action: "http://localhost:3001/auth/login",
+    action: "/auth/login",
     method: "POST",
   });
   const { authState, setAuthSate } = useContext(AuthContext);
@@ -26,14 +26,14 @@ export default function LoginForm({ type, changeType }) {
       setForm((prev) => ({
         name: "signup-form",
         id: "login-form",
-        action: "http://localhost:3001/auth/signup",
+        action: "/auth/signup",
         method: prev.method,
       }));
     } else {
       setForm({
         name: "login-form",
         id: "login-form",
-        action: "http://localhost:3001/auth/login",
+        action: "/auth/login",
         method: "POST",
       });
     }
@@ -73,7 +73,7 @@ export default function LoginForm({ type, changeType }) {
     }
 
     await axios
-      .post("http://localhost:3001/auth/login", data)
+      .post("/auth/login", data)
       .then((response) => {
         if (response.data.error) {
           alert(response.data.error);
@@ -127,7 +127,7 @@ export default function LoginForm({ type, changeType }) {
     }
 
     await axios
-      .post("http://localhost:3001/auth/signup", data)
+      .post("/auth/signup", data)
       .then((response) => {
         if (response.data.error) {
           setAlert({
@@ -167,7 +167,7 @@ export default function LoginForm({ type, changeType }) {
         });
       });
 
-    await fetch("http://localhost:3001/cart/create", {
+    await fetch("/cart/create", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

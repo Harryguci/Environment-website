@@ -42,7 +42,7 @@ export default function ItemBlog({ blog, user, handleDeleteBlog }, key) {
               {file.mimetype.indexOf("video") !== -1 ? (
                 <div className="video-section">
                   <ReactPlayer
-                    url={`http://localhost:3001/blogs/${file.filename}`}
+                    url={`/blogs/${file.filename}`}
                     width="100%"
                     height="auto"
                     playing={false}
@@ -52,7 +52,7 @@ export default function ItemBlog({ blog, user, handleDeleteBlog }, key) {
               ) : (
                 <div className="thumbnail h-100 d-flex justify-content-center align-items-center">
                   <img
-                    src={`http://localhost:3001/blogs/${file.filename}`}
+                    src={`/blogs/${file.filename}`}
                     alt="SFIT"
                     width={100 + "%"}
                     height={100 + "%"}

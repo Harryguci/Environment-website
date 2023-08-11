@@ -22,7 +22,7 @@ export default function BlogSingle(props) {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:3001/products/single/${productId}`, {
+      .get(`/products/single/${productId}`, {
         headers: {
           accessToken: localStorage.getItem("accessToken"),
         },
@@ -43,7 +43,7 @@ export default function BlogSingle(props) {
   const handleAddCart = async () => {
     if (authState.id) {
       setCartState([...cartState, productId]);
-      await fetch(`http://localhost:3001/cart/add/${authState.id}`, {
+      await fetch(`/cart/add/${authState.id}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -66,7 +66,7 @@ export default function BlogSingle(props) {
                   {file.mimetype.indexOf("video") !== -1 ? (
                     <div className="video-section">
                       <ReactPlayer
-                        url={`http://localhost:3001/blogs/${file.filename}`}
+                        url={`/blogs/${file.filename}`}
                         width="100%"
                         height="auto"
                         playing={false}
@@ -76,7 +76,7 @@ export default function BlogSingle(props) {
                   ) : (
                     <div className="thumbnail h-100 d-flex justify-content-center align-items-center">
                       <img
-                        src={`http://localhost:3001/blogs/${file.filename}`}
+                        src={`/blogs/${file.filename}`}
                         alt="SFIT"
                         width={100 + "%"}
                         height={100 + "%"}

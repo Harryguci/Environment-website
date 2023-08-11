@@ -24,7 +24,7 @@ export default function Footer(props) {
 
   useEffect(() => {
     axios
-      .get("http://localhost:3001/blogs/all", {
+      .get("/blogs/all", {
         headers: {
           accessToken: localStorage.getItem("accessToken"),
         },
@@ -37,7 +37,7 @@ export default function Footer(props) {
 
   useEffect(() => {
     axios
-      .get("http://localhost:3001/contact", {
+      .get("/contact", {
         headers: {
           accessToken: localStorage.getItem("accessToken"),
         },
@@ -50,7 +50,7 @@ export default function Footer(props) {
 
   useEffect(() => {
     axios
-      .get("http://localhost:3001/products", {
+      .get("/products", {
         headers: {
           accessToken: localStorage.getItem("accessToken"),
         },
@@ -78,7 +78,7 @@ export default function Footer(props) {
                       <div className="thumbnail">
                         <a href={`/blogs/${blog._id}`}>
                           <img
-                            src={`http://localhost:3001/blogs/${blog.files[0].filename}`}
+                            src={`/blogs/${blog.files[0].filename}`}
                             alt="SFIT"
                           />
                         </a>
@@ -116,7 +116,7 @@ export default function Footer(props) {
                       style={{ cursor: "pointer" }}
                     >
                       <img
-                        src={`http://localhost:3001/blogs/${product.imageUrl}`}
+                        src={`/blogs/${product.imageUrl}`}
                         alt={product.name}
                       />
                     </a>
@@ -145,7 +145,7 @@ export default function Footer(props) {
             <Form
               name="contact-form"
               className="contact-form"
-              action="http://localhost:3001/contact"
+              action="/contact"
               method="POST"
             >
               <div className="mt-5">

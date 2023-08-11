@@ -18,7 +18,7 @@ export default function BlogList({ limits, children, typeBlog }, ...props) {
     if (typeBlog) type = typeBlog;
 
     axios
-      .get(`http://localhost:3001/blogs/${type}`, {
+      .get(`/blogs/${type}`, {
         headers: {
           accessToken: localStorage.getItem("accessToken"),
         },
@@ -58,8 +58,8 @@ export default function BlogList({ limits, children, typeBlog }, ...props) {
                 (blog.title.length >= 50 ? "..." : "")
               }
               description={blog.detail.trim()}
-              link={`http://localhost:3000/blogs/single/${blog._id}`}
-              imageUrl={`http://localhost:3001/blogs/${blog.imageUrl}`}
+              link={`/blogs/single/${blog._id}`}
+              imageUrl={`/blogs/${blog.imageUrl}`}
               author={blog.username}
             />
           ))) || (

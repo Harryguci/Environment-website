@@ -57,7 +57,7 @@ export default function Account({ props }) {
   useLayoutEffect(() => {
     if (slugState) {
       axios
-        .get(`http://localhost:3001/account/${slugState}`, {
+        .get(`/account/${slugState}`, {
           headers: {
             accessToken: localStorage.getItem("accessToken"),
           },
@@ -78,7 +78,7 @@ export default function Account({ props }) {
         });
     } else {
       axios
-        .get("http://localhost:3001/account", {
+        .get("/account", {
           headers: {
             accessToken: localStorage.getItem("accessToken"),
           },
@@ -105,7 +105,7 @@ export default function Account({ props }) {
     if (user.id) {
       // [GET] blogs
       axios
-        .get(`http://localhost:3001/blogs/user/${user.id}`, {
+        .get(`/blogs/user/${user.id}`, {
           headers: {
             accessToken: localStorage.getItem("accessToken"),
           },
@@ -118,7 +118,7 @@ export default function Account({ props }) {
 
       // [GET] products
       axios
-        .get(`http://localhost:3001/products/user/${user.id}`, {
+        .get(`/products/user/${user.id}`, {
           headers: {
             accessToken: localStorage.getItem("accessToken"),
           },
@@ -143,7 +143,7 @@ export default function Account({ props }) {
 
   const handleChangeUserInfo = (e) => {
     if (userPhone || userWebsite)
-      fetch(`http://localhost:3001/account/change`, {
+      fetch(`/account/change`, {
         method: "post",
         headers: {
           Accept: "application/json",
@@ -205,7 +205,7 @@ export default function Account({ props }) {
         content: "Bạn có chắc chắn muốn xóa ?",
         accept: async () => {
           // [POST] to delete this product
-          await fetch("http://localhost:3001/products/delete/single", {
+          await fetch("/products/delete/single", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
@@ -236,7 +236,7 @@ export default function Account({ props }) {
         content: "Bạn có chắc chắn muốn xóa ?",
         accept: async () => {
           // [POST] to delete this product
-          await fetch("http://localhost:3001/blogs/delete/single", {
+          await fetch("/blogs/delete/single", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
@@ -263,7 +263,7 @@ export default function Account({ props }) {
   const refreshProducts = () => {
     // [GET] products
     axios
-      .get(`http://localhost:3001/products/user/${user.id}`, {
+      .get(`/products/user/${user.id}`, {
         headers: {
           accessToken: localStorage.getItem("accessToken"),
         },
@@ -277,7 +277,7 @@ export default function Account({ props }) {
   const refreshBlogs = () => {
     // [GET] products
     axios
-      .get(`http://localhost:3001/blogs/user/${user.id}`, {
+      .get(`/blogs/user/${user.id}`, {
         headers: {
           accessToken: localStorage.getItem("accessToken"),
         },
@@ -454,7 +454,7 @@ export default function Account({ props }) {
                                   {file.mimetype.indexOf("video") !== -1 ? (
                                     <div className="video-section">
                                       <ReactPlayer
-                                        url={`http://localhost:3001/blogs/${file.filename}`}
+                                        url={`/blogs/${file.filename}`}
                                         width="100%"
                                         height="auto"
                                         playing={false}
@@ -464,7 +464,7 @@ export default function Account({ props }) {
                                   ) : (
                                     <div className="thumbnail h-100 d-flex justify-content-center align-items-center">
                                       <img
-                                        src={`http://localhost:3001/blogs/${file.filename}`}
+                                        src={`/blogs/${file.filename}`}
                                         alt="SFIT"
                                         width={100 + "%"}
                                         height={100 + "%"}

@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import { Container, Row, Col } from "react-bootstrap";
@@ -7,6 +7,7 @@ import "../Assets/SCSS/blogSingle.scss";
 import ActiveNavLink from "../helpers/ActiveNavLink";
 import { useNavigate } from "react-router-dom";
 import AlertDismissible from "../components/AlertDismissable";
+
 export default function BlogSingle(props) {
   const [blog, setBlog] = useState({});
   const [alert, setAlert] = useState({});
@@ -20,7 +21,7 @@ export default function BlogSingle(props) {
   useEffect(() => {
     console.log("params", blogId);
     axios
-      .get(`http://localhost:3001/blogs/single/${blogId}`, {
+      .get(`/blogs/single/${blogId}`, {
         headers: {
           accessToken: localStorage.getItem("accessToken"),
         },
@@ -38,7 +39,6 @@ export default function BlogSingle(props) {
           });
         } else {
           setBlog(response.data);
-          // console.log(response.data);
         }
       })
       .catch((err) => console.log(err));
@@ -59,7 +59,7 @@ export default function BlogSingle(props) {
                   {file.mimetype.indexOf("video") !== -1 ? (
                     <div className="video-section">
                       <ReactPlayer
-                        url={`http://localhost:3001/blogs/${file.filename}`}
+                        url={`/blogs/${file.filename}`}
                         width="100%"
                         height="auto"
                         playing={false}
@@ -69,7 +69,7 @@ export default function BlogSingle(props) {
                   ) : (
                     <div className="thumbnail h-100 d-flex justify-content-center align-items-center">
                       <img
-                        src={`http://localhost:3001/blogs/${file.filename}`}
+                        src={`/blogs/${file.filename}`}
                         alt="SFIT"
                         width={100 + "%"}
                         height={100 + "%"}

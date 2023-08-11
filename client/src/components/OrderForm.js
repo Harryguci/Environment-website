@@ -17,7 +17,7 @@ export default function OrderForm({ product, user, hide, CbSuccess }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    await fetch("http://localhost:3001/order/create", {
+    await fetch("/order/create", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -49,7 +49,7 @@ export default function OrderForm({ product, user, hide, CbSuccess }) {
 
   useEffect(() => {
     if (successOrder) {
-      fetch("http://localhost:3001/cart/delete/single", {
+      fetch("/cart/delete/single", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

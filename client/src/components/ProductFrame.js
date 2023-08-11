@@ -28,7 +28,7 @@ export default function ProductFrame({ limits, className }) {
   const [otherAddress, setOtherAddress] = useState("");
   useEffect(() => {
     axios
-      .get("http://localhost:3001/products/all", {
+      .get("/products/all", {
         headers: {
           accessToken: localStorage.getItem("accessToken"),
         },
@@ -51,7 +51,7 @@ export default function ProductFrame({ limits, className }) {
   const AddToCart = async (product) => {
     if (authState.id) {
       setCartState([...cartState, product._id]);
-      await fetch(`http://localhost:3001/cart/add/${authState.id}`, {
+      await fetch(`/cart/add/${authState.id}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -187,13 +187,13 @@ export default function ProductFrame({ limits, className }) {
                       <Card className="product-frame__main__item position-relative">
                         <div className="thumbnail">
                           <img
-                            src={`http://localhost:3001/blogs/${product.imageUrl}`}
+                            src={`/blogs/${product.imageUrl}`}
                             alt={product.name}
                           />
                         </div>
                         <div className="product-frame__main__item__content">
                           <a
-                            href={`http://localhost:3000/products/single/${product._id}`}
+                            href={`/products/single/${product._id}`}
                             className="text-decoration-none"
                           >
                             <h3 className="fs-3">{product.name}</h3>

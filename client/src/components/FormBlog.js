@@ -58,7 +58,7 @@ export default function FormBlog() {
   // eslint-disable-next-line no-unused-vars
   const HandleSubmit = (e) => {
     e.preventDefault();
-    axios.post("http://localhost:3001/blogs", {
+    axios.post("/blogs", {
       title: detailState,
       description: detailState,
       detail: detailState,
@@ -73,7 +73,7 @@ export default function FormBlog() {
   return (
     <Form
       className="blog-posting-form mx-sm-2 mx-md-5"
-      action="http://localhost:3001/blogs/"
+      action="/blogs/"
       method="POST"
       enctype="multipart/form-data"
     >
