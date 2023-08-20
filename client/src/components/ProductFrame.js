@@ -95,20 +95,20 @@ export default function ProductFrame({ limits, className }) {
           <Col md={2} className="px-4">
             <div>
               <p className="selector-title">Loại sản phẩm</p>
-              <ListGroup>
+              <ul className="control-list">
                 {productType &&
                   productType.length &&
                   productType.map((item) => (
-                    <ListGroupItem key={item[0]}>
+                    <li className="control-list__item" key={item[0]}>
                       <a
                         style={{ textDecoration: "none" }}
                         href={`/products/${item[0]}`}
                       >
                         {item[1]}
                       </a>
-                    </ListGroupItem>
+                    </li>
                   ))}
-              </ListGroup>
+              </ul>
             </div>
             <div className="mt-5">
               <p className="selector-title">Địa chỉ</p>

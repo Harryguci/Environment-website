@@ -39,13 +39,12 @@ function App() {
       })
       .then((response) => {
         if (response.data.error) {
-          setAuthSate({
-            ...authState,
+          setAuthSate(prev => ({
+            ...prev,
             status: false,
-          });
+          }));
           console.log(response.data.error);
         } else {
-          // console.log("[App] get user information", response.data);
           setAuthSate({
             username: response.data.username,
             id: response.data.id,
@@ -54,7 +53,6 @@ function App() {
         }
       })
       .catch((error) => console.log(error));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const LoadingPage = useCallback(() => (

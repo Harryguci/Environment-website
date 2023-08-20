@@ -128,7 +128,6 @@ router.post("/signup", CheckAccountExist, async function (req, res, next) {
 });
 
 router.get("/auth", validateToken, (req, res) => {
-  // console.log("Auth GET", req.user);
   res.send(req.user);
 });
 
