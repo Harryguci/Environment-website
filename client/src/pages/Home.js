@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { Container } from "react-bootstrap";
 import BlogList from "../components/BlogList";
 import ProductFrame from "../components/ProductFrame";
