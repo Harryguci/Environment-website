@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import { Container, Row, Col } from "react-bootstrap";
 import ReactPlayer from "react-player";
 import "../Assets/SCSS/blogSingle.scss";
-import ActiveNavLink from "../helpers/ActiveNavLink";
 import { useNavigate } from "react-router-dom";
 import AlertDismissible from "../components/AlertDismissable";
+import CurrentPageContext from "../helpers/CurrentPageContext";
 
 export default function BlogSingle(props) {
   const [blog, setBlog] = useState({});
@@ -14,9 +14,9 @@ export default function BlogSingle(props) {
 
   const blogId = useParams().id;
   let navigate = useNavigate();
-  useEffect(() => {
-    ActiveNavLink("blogs");
-  }, []);
+
+  const { setPageState } = useContext(CurrentPageContext);
+  useEffect(() => setPageState("blogs"), [setPageState]);
 
   useEffect(() => {
     console.log("params", blogId);

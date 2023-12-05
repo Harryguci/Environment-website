@@ -11,6 +11,7 @@ import { faCartArrowDown } from "@fortawesome/free-solid-svg-icons";
 import DisplayPrice from "../helpers/DisplayPrice";
 import AuthContext from "../helpers/Authcontext";
 import CartContext from "../helpers/CartContext";
+import CurrentPageContext from "../helpers/CurrentPageContext";
 
 export default function BlogSingle(props) {
   const [product, setBlog] = useState({});
@@ -19,7 +20,10 @@ export default function BlogSingle(props) {
 
   const { cartState, setCartState } = useContext(CartContext);
   const { authState } = useContext(AuthContext);
-
+  const { setPageState } = useContext(CurrentPageContext);
+  
+  useEffect(() => setPageState("products"), [setPageState])
+  
   useEffect(() => {
     axios
       .get(`/products/single/${productId}`, {
@@ -108,7 +112,7 @@ export default function BlogSingle(props) {
                   <a
                     href="/account/products"
                     className="add-cart-btn gap-4 d-flex justify-content-center align-content-center default-link"
-                    // onClick={handleAddCart}
+                  // onClick={handleAddCart}
                   >
                     Đi đến sản phẩm của bạn
                   </a>

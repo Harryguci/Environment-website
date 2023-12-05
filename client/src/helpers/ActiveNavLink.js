@@ -1,14 +1,17 @@
+// Handle the active navbar link change
 export default function ActiveNavLink(type) {
-  var navItem = document.getElementsByClassName("nav-link");
-  navItem = [navItem[0], navItem[1], navItem[2], navItem[3], navItem[4]];
+  const navItems = document.getElementsByClassName("nav-link");
+  // console.log(navItems);
   try {
-    navItem.forEach((item) => {
-      item.classList.remove("active");
-      if (item.getAttribute("name") === type) {
-        item.classList.add("active");
-      }
-    });
+    for (let i = 0; i < navItems.length; i++) {
+      navItems[i].classList = ["nav-link"];
+      // console.log(navItems[i].classList);
+      if (navItems[i].getAttribute("name") === type)
+       navItems[i].classList.add("active");
+    }
   } catch (e) {
     console.log("[ActiveNavLink]", e);
+  } finally{
+    console.log(navItems);
   }
 }

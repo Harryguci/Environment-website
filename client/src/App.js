@@ -6,6 +6,7 @@ import "./Assets/SCSS/index.scss";
 
 import AuthContext from "./helpers/Authcontext";
 import CartContext from "./helpers/CartContext";
+import CurrentPageContext from "./helpers/CurrentPageContext";
 import axios from "axios";
 import Layout from "./layouts/Layout";
 import Home from "./pages/Home";
@@ -30,7 +31,10 @@ function App() {
 
   const [cartState, setCartState] = useState([]);
 
+  const [pageState, setPageState] = useState("home");
+
   useEffect(() => {
+    // Generate the current user's access-token to information about the account
     axios
       .get("/auth/auth", {
         headers: {
@@ -45,6 +49,7 @@ function App() {
           }));
           console.log(response.data.error);
         } else {
+          // Set AuthSate if this request is successful
           setAuthSate({
             username: response.data.username,
             id: response.data.id,
@@ -52,7 +57,7 @@ function App() {
           });
         }
       })
-      .catch((error) => console.log(error));
+      .catch((error) => console.log(error)); // error handling
   }, []);
 
   const LoadingPage = useCallback(() => (
@@ -74,30 +79,36 @@ function App() {
     <div className="App">
       <AuthContext.Provider value={{ authState, setAuthSate }}>
         <CartContext.Provider value={{ cartState, setCartState }}>
-          <BrowserRouter>
-            <Suspense fallback={<LoadingPage />}>
-              <Routes>
-                <Route path="/login" element={<Login typeForm={"login"} />} />
-                <Route path="/signup" element={<Login typeForm={"signup"} />} />
-                <Route path="/" element={<Layout />}>
-                  <Route index element={<Home />} />
-                  <Route path="/" element={<Home />} />
-                  <Route path="/blogs" element={<Blogs />} />
-                  <Route path="/blogs/single/:id" element={<BlogSingle />} />
-                  <Route path="/products" element={<Products />} />
-                  <Route path="/products/single/:id" element={<ProductSingle />} />
-                  <Route path="/account/:tab" element={<Account />} />
-                  <Route path="/account" element={<Account />} />
-                  <Route path="/search/:q" element={<Search />} />
-                  <Route path="/search" element={<Search />} />
-                  <Route path="/about" element={<About />} />
-                  <Route path="/cart" element={<Cart />} />
-                  <Route path="/contact" element={<Contact />} />
-                  <Route path="*" element={<NoPage />} />
-                </Route>
-              </Routes>
-            </Suspense>
-          </BrowserRouter>
+          <CurrentPageContext.Provider value={{ pageState, setPageState }}>
+            <BrowserRouter>
+              <Suspense fallback={<LoadingPage />}>
+                <Routes>
+
+                  {/* Not use a layout if the current page is Login or Sign Up */}
+                  <Route path="/login" element={<Login typeForm={"login"} />} />
+                  <Route path="/signup" element={<Login typeForm={"signup"} />} />
+
+                  {/* Use a Layout */}
+                  <Route path="/" element={<Layout />}>
+                    <Route index element={<Home />} />
+                    <Route path="/" element={<Home />} />
+                    <Route path="/blogs" element={<Blogs />} />
+                    <Route path="/blogs/single/:id" element={<BlogSingle />} />
+                    <Route path="/products" element={<Products />} />
+                    <Route path="/products/single/:id" element={<ProductSingle />} />
+                    <Route path="/account/:tab" element={<Account />} />
+                    <Route path="/account" element={<Account />} />
+                    <Route path="/search/:q" element={<Search />} />
+                    <Route path="/search" element={<Search />} />
+                    <Route path="/about" element={<About />} />
+                    <Route path="/cart" element={<Cart />} />
+                    <Route path="/contact" element={<Contact />} />
+                    <Route path="*" element={<NoPage />} />
+                  </Route>
+                </Routes>
+              </Suspense>
+            </BrowserRouter>
+          </CurrentPageContext.Provider>
         </CartContext.Provider>
       </AuthContext.Provider>
     </div>

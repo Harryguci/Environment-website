@@ -1,15 +1,19 @@
-import { useEffect, useState, memo } from "react";
+import { useEffect, useState, memo, useContext } from "react";
 import "../Assets/CSS/About.scss";
 import ActiveNavLink from "../helpers/ActiveNavLink";
+import CurrentPageContext from "../helpers/CurrentPageContext";
 
 function About() {
-  let [htmlFileString, setHtmlFileString] = useState();
-  useEffect(() => ActiveNavLink("about"), []);
+  const [htmlFileString, setHtmlFileString] = useState();
+  const { setPageState } = useContext(CurrentPageContext);
+
+  useEffect(() => setPageState("about"), [setPageState]);
 
   async function fetchHtml() {
     setHtmlFileString(await (await fetch(`/AboutHTML/index.html`)).text());
   }
-
+  
+  useEffect(() => ActiveNavLink("about"), []);
   useEffect(() => {
     fetchHtml();
   }, []);

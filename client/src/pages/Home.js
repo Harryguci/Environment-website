@@ -1,12 +1,13 @@
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
 import { Container } from "react-bootstrap";
 import BlogList from "../components/BlogList";
 import ProductFrame from "../components/ProductFrame";
-import ActiveNavLink from "../helpers/ActiveNavLink";
+import CurrentPageContext from "../helpers/CurrentPageContext";
 export default function Home(props) {
-  useEffect(() => {
-    ActiveNavLink("home");
-  }, []);
+  const { setPageState } = useContext(CurrentPageContext);
+
+  useEffect(() => setPageState("home"), [setPageState]);
+
   return (
     <div className="App">
       <section className="section-blogs">

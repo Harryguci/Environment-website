@@ -1,4 +1,4 @@
-import { useState, useContext, useEffect, useCallback } from "react";
+import { useState, useContext, useEffect, useCallback, useRef } from "react";
 import {
   Container,
   Navbar,
@@ -26,7 +26,7 @@ import AuthContext from "../helpers/Authcontext";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import CartContext from "../helpers/CartContext";
-
+import CurrentPageContext from "../helpers/CurrentPageContext";
 function NavbarCustom({ user }) {
   const [search, setSearch] = useState("");
   const handleSearchFormSubmit = (e) => {
@@ -37,8 +37,9 @@ function NavbarCustom({ user }) {
   const navigate = useNavigate();
   const { authState, setAuthSate } = useContext(AuthContext);
   const { cartState } = useContext(CartContext);
-
+  const { pageState, setPageState } = useContext(CurrentPageContext);
   const [cartNumber, setCartNumber] = useState(cartState.length || 0);
+  // const currentPage = useRef("home");
 
   useEffect(() => {
     if (authState.id)
@@ -63,6 +64,8 @@ function NavbarCustom({ user }) {
     navigate(`/search/${search}`);
   }, [navigate, search]);
 
+  useEffect(() => console.log(pageState), [pageState]);
+
   return (
     <React.Fragment>
       <Navbar key={`${authState.id}`} collapseOnSelect expand="lg" data-bs-theme="light">
@@ -74,23 +77,28 @@ function NavbarCustom({ user }) {
           <Navbar.Collapse id="responsive-navbar-nav"
             style={{ justifyContent: 'center' }}>
             <Nav className="me-auto mx-auto">
-              <Nav.Link name="home" className="active" title="Home" href="/">
+              <Nav.Link name="home" title="Home" href="/"
+                className={pageState === "home" ? "active" : ""}>
                 <FontAwesomeIcon icon={faHome} />
                 <span style={window.innerWidth < 768 ? { display: 'block' } : { display: 'none' }}>Home</span>
               </Nav.Link>
-              <Nav.Link name="about" href="/about" title="About">
+              <Nav.Link name="about" href="/about" title="About"
+                className={pageState === "about" ? "active" : ""} >
                 <FontAwesomeIcon icon={faCircleInfo} />
                 <span style={window.innerWidth < 768 ? { display: 'block' } : { display: 'none' }}>About</span>
               </Nav.Link>
-              <Nav.Link name="products" href="/products" title="Products">
+              <Nav.Link name="products" href="/products" title="Products"
+                className={pageState === "products" ? "active" : ""} >
                 <FontAwesomeIcon icon={faBagShopping} />
                 <span style={window.innerWidth < 768 ? { display: 'block' } : { display: 'none' }}>Products</span>
               </Nav.Link>
-              <Nav.Link name="blogs" href="/blogs" title="Blogs">
+              <Nav.Link name="blogs" href="/blogs" title="Blogs"
+                className={pageState === "blogs" ? "active" : ""} >
                 <FontAwesomeIcon icon={faNewspaper} />
                 <span style={window.innerWidth < 768 ? { display: 'block' } : { display: 'none' }}>Blogs</span>
               </Nav.Link>
-              <Nav.Link name="contact" href="/contact" title="Contact">
+              <Nav.Link name="contact" href="/contact" title="Contact"
+                className={pageState === "contact" ? "active" : ""} >
                 <FontAwesomeIcon icon={faPhone} />
                 <span style={window.innerWidth < 768 ? { display: 'block' } : { display: 'none' }}>Contact</span>
               </Nav.Link>

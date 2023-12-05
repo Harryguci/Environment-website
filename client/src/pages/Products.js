@@ -1,10 +1,11 @@
 import ProductFrame from "../components/ProductFrame";
-import React, { useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import { Container } from "react-bootstrap";
-import ActiveNavLink from "../helpers/ActiveNavLink";
+import CurrentPageContext from "../helpers/CurrentPageContext";
 export default function Products(props) {
-  useEffect(() => ActiveNavLink("products"), []);
-
+  const { setPageState } = useContext(CurrentPageContext);
+  useEffect(() => setPageState("products"), [setPageState]);
+  
   return (
     <>
       <Container className="my-5">
