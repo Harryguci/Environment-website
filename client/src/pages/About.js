@@ -1,5 +1,6 @@
 import { useEffect, useState, memo, useContext } from "react";
 import "../Assets/CSS/About.scss";
+import ActiveNavLink from "../helpers/ActiveNavLink";
 import CurrentPageContext from "../helpers/CurrentPageContext";
 
 function About() {
@@ -11,7 +12,11 @@ function About() {
   async function fetchHtml() {
     setHtmlFileString(await (await fetch(`/AboutHTML/index.html`)).text());
   }
-  useEffect(() => fetchHtml(), []);
+
+  useEffect(() => ActiveNavLink("about"), []);
+  useEffect(() => {
+    fetchHtml();
+  }, []);
 
   return (
     <div className="App">
