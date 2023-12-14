@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useLayoutEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, useCallback } from "react";
 import axios from "axios";
 import {
   Container,
@@ -25,39 +25,43 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import AlertConfirm from "../components/AlertConfirm";
 import ItemBlog from "../components/ItemBlog";
+
+import { useLocation } from "react-router-dom";
+import OrderList from "../components/OrderList";
+
 export default function Account() {
   const { authState } = useContext(AuthContext);
   const { tab } = useParams();
-  
+
   const [slugState, setSlugState] = useState("");
   const [currentTab, setCurrentTab] = useState(tab ? tab : "blogs");
 
   const [user, setUser] = useState({});
   const [blogs, setBlogs] = useState([]);
   const [products, setProducts] = useState([]);
+  const [orders, setOrders] = useState([]);
 
   const [alert, setAlert] = useState({});
   const [alertState, setAlertState] = useState({});
 
   const navigate = useNavigate();
+  const userId = useParams().id;
+
+  const location = useLocation();
 
   useEffect(() => {
     ActiveNavLink("account");
   }, []);
 
   useEffect(() => {
-    var url = window.location.href;
-    if (url.indexOf("user=") !== -1) {
-      var slug = url.substring(url.indexOf("user=")).split("=")[1];
-      if (slug && authState.username === slug) setSlugState("");
-      else setSlugState(slug);
-    }
-  }, [authState.username]);
+    setSlugState(userId);
+  }, [userId]);
 
-  useLayoutEffect(() => {
-    if (slugState) {
+  useEffect(() => {
+    console.log('User:' + userId);
+    if (userId) {
       axios
-        .get(`/account/${slugState}`, {
+        .get(`/account/${userId}`, {
           headers: {
             accessToken: localStorage.getItem("accessToken"),
           },
@@ -74,6 +78,7 @@ export default function Account() {
               phone: response.data.phone,
               website: response.data.website,
               birthday: response.data.birthday,
+              role: response.data.role,
             });
         });
     } else {
@@ -99,11 +104,17 @@ export default function Account() {
         });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [slugState]);
+  }, []);
 
   useEffect(() => {
-    if (user.id) {
-      // [GET] blogs
+    let params = new URLSearchParams(location.search); // create a URLSearchParams object
+    let tab = params.get("tab");
+    console.log(params);
+    if (tab) setCurrentTab(tab);
+  }, [location.search]);
+
+  useEffect(() => {
+    if (currentTab === 'blogs') {
       axios
         .get(`/blogs/user/${user.id}`, {
           headers: {
@@ -115,8 +126,7 @@ export default function Account() {
           else setBlogs(response.data.reverse());
         })
         .catch((error) => console.log("Can not get Blogs", error));
-
-      // [GET] products
+    } else if (currentTab === 'products') {
       axios
         .get(`/products/user/${user.id}`, {
           headers: {
@@ -128,8 +138,17 @@ export default function Account() {
           else setProducts(response.data.reverse());
         })
         .catch((error) => console.log("Can not get Products", error));
+    } else if (currentTab === 'orders') {
+      axios.get(`/order/user/${user.id}`, {
+        headers: {
+          accessToken: localStorage.getItem("accessToken"),
+        },
+      }).then((response) => {
+        if (response.data.error) console.log(response.data.error);
+        else setOrders(response.data.reverse());
+      }).catch((error) => console.log("Can not get orders", error));
     }
-  }, [user]);
+  }, [currentTab, user]);
 
   useEffect(() => {
     setUserPhone(user.phone);
@@ -274,6 +293,7 @@ export default function Account() {
       })
       .catch((error) => console.log("Can not get Products", error));
   };
+
   const refreshBlogs = () => {
     // [GET] products
     axios
@@ -288,6 +308,18 @@ export default function Account() {
       })
       .catch((error) => console.log("Can not get blogs", error));
   };
+
+  const ActiveTab = useCallback(({ text }) => {
+    return (<h2
+      className="fs-3 btn d-block m-0 p-0 d-flex justify-content-center align-items-center text-white"
+      style={{
+        background: "rgb(120, 120, 255)",
+        minWidth: '20rem'
+      }}
+    >
+      {text}
+    </h2>)
+  }, [])
 
   return (
     <>
@@ -351,27 +383,25 @@ export default function Account() {
             <Col xl={8}>
               {!slugState && (
                 <div className="mb-5">
-                  <h2>Đăng Blog mới</h2>
+                  <h2 className="heading-2">Đăng Blog mới</h2>
                   <FormBlog />
                 </div>
               )}
               <div className="user-blog-container">
                 <div className="d-flex gap-5">
                   <ButtonGroup className="d-flex col-12 col-md-6">
-                    <h2
-                      className="fs-3 btn m-0 p-0 d-flex justify-content-center align-items-center text-white"
-                      style={{
-                        background: "rgb(120, 120, 255)",
-                        flex: "0 0 50%",
-                      }}
-                    >
-                      Blogs
-                    </h2>
+                    <ActiveTab text={`Blogs`} />
                     <Button
                       className="custom-btn"
                       onClick={(e) => setCurrentTab("products")}
                     >
                       Products
+                    </Button>
+                    <Button
+                      className="custom-btn"
+                      onClick={(e) => setCurrentTab("orders")}
+                    >
+                      Orders
                     </Button>
                   </ButtonGroup>
                 </div>
@@ -400,13 +430,146 @@ export default function Account() {
                 )}
               </div>
             </Col>
-          )) || (
+          )) || (currentTab === "products" &&
+            <Col xl={8}>
+              <div>
+                {!slugState && (
+                  <div className="mb-5">
+                    <h2 className="heading-2">Đăng sản phẩm mới</h2>
+                    <FormProduct user={user} />
+                  </div>
+                )}
+                <ButtonGroup className="d-flex col-12 col-md-6">
+                  <Button
+                    className="custom-btn"
+                    onClick={(e) => setCurrentTab("blogs")}
+                  >
+                    Blogs
+                  </Button>
+                  <ActiveTab text="Products" />
+                  <Button
+                    className="custom-btn"
+                    onClick={(e) => setCurrentTab("orders")}
+                  >
+                    Orders
+                  </Button>
+                </ButtonGroup>
+                {products && products.length ? (
+                  <ul className="list-group mt-5 user-blog-container__list">
+                    {products.reverse().map((product) => (
+                      <li
+                        key={product._id}
+                        className="list-group-item border-0 mb-5 user-blog-container__list__item"
+                      >
+                        <div className="info">
+                          <h3>{user.username}</h3>
+                          <ListGroup>
+                            <ListGroupItem>
+                              Mô tả: {product.description}
+                              <Button style={{
+                                background: 'none', border: 'none',
+                                color: 'blueviolet', fontSize: '1rem',
+                                padding: '0'
+                              }}>
+                                show more
+                              </Button>
+                            </ListGroupItem>
+                            <ListGroupItem>
+                              Giá bán: {product.cost}
+                            </ListGroupItem>
+                            <ListGroupItem>
+                              Số lượng: {product.remain || 0}
+                            </ListGroupItem>
+                          </ListGroup>
+                        </div>
+                        <div className="d-flex media">
+                          {product.files &&
+                            product.files.length &&
+                            product.files.map((file) => (
+                              <div key={file.filename}>
+                                {file.mimetype.indexOf("video") !== -1 ? (
+                                  <div className="video-section">
+                                    <ReactPlayer
+                                      url={`/blogs/${file.filename}`}
+                                      width="100%"
+                                      height="auto"
+                                      playing={false}
+                                      controls={true}
+                                    />
+                                  </div>
+                                ) : (
+                                  <div className="thumbnail h-100 d-flex justify-content-center align-items-center">
+                                    <img
+                                      src={`/blogs/${file.filename}`}
+                                      alt="SFIT"
+                                      width={100 + "%"}
+                                      height={100 + "%"}
+                                      style={{ objectFit: "cover" }}
+                                    />
+                                  </div>
+                                )}
+                              </div>
+                            ))}
+                        </div>
+                        {(authState.id === user.id && (
+                          <div className="control mt-3 d-flex">
+                            <Button
+                              className="custom-btn primary"
+                              onClick={(e) =>
+                                setAlert({
+                                  heading: "ERROR",
+                                  type: "danger",
+                                  content: "Tính năng đang được nâng cấp",
+                                  hide: () => setAlert({}),
+                                })
+                              }
+                            >
+                              Cập nhật
+                            </Button>
+                            <Button
+                              className="custom-btn"
+                              style={{
+                                marginLeft: "auto",
+                                marginRight: 0,
+                              }}
+                              onClick={(e) => handleDeleteProduct(product)}
+                            >
+                              <FontAwesomeIcon icon={faTrash} />
+                            </Button>
+                          </div>
+                        )) || (
+                            <div className="control mt-3 d-flex">
+                              <a
+                                className="default-link custom-btn primary-blue"
+                                href={`/products/single/${product._id}`}
+                              >
+                                Chi tiết
+                              </a>
+                            </div>
+                          )}
+                      </li>
+                    ))}
+                  </ul>
+                ) : (
+                  <div>
+                    <h3
+                      className="text-center p-4 rounded-2 mt-4"
+                      style={{ background: "rgb(220, 255, 220)" }}
+                    >
+                      {authState.id === user.id
+                        ? "Bạn chưa đăng sản phẩm nào"
+                        : `${user.username} chưa có sản phẩm nào`}
+                    </h3>
+                  </div>
+                )}
+              </div>
+            </Col>
+            ) || (currentTab === "orders" &&
               <Col xl={8}>
                 <div>
                   {!slugState && (
                     <div className="mb-5">
-                      <h2>Đăng sản phẩm mới</h2>
-                      <FormProduct user={user} />
+                      <h2 className="heading-2">Tất cả đơn hàng của bạn</h2>
                     </div>
                   )}
                   <ButtonGroup className="d-flex col-12 col-md-6">
@@ -416,116 +579,17 @@ export default function Account() {
                     >
                       Blogs
                     </Button>
-                    <h2
-                      className="fs-3 btn m-0 p-0 d-flex justify-content-center align-items-center text-white"
-                      style={{
-                        background: "rgb(120, 120, 255)",
-                      }}
+                    <Button
+                      className="custom-btn"
+                      onClick={(e) => setCurrentTab("products")}
                     >
                       Products
-                    </h2>
+                    </Button>
+                    <ActiveTab text={`Orders`} />
                   </ButtonGroup>
-                  {products && products.length ? (
-                    <ul className="list-group mt-5 user-blog-container__list">
-                      {products.reverse().map((product) => (
-                        <li
-                          key={product._id}
-                          className="list-group-item border-0 mb-5 user-blog-container__list__item"
-                        >
-                          <div className="info">
-                            <h3>{user.username}</h3>
-                            <ListGroup>
-                              <ListGroupItem>
-                                Mô tả: {product.description}
-                              </ListGroupItem>
-                              <ListGroupItem>
-                                Giá bán: {product.cost}
-                              </ListGroupItem>
-                              <ListGroupItem>
-                                Số lượng: {product.remain || 0}
-                              </ListGroupItem>
-                            </ListGroup>
-                          </div>
-                          <div className="d-flex media">
-                            {product.files &&
-                              product.files.length &&
-                              product.files.map((file) => (
-                                <div key={file.filename}>
-                                  {file.mimetype.indexOf("video") !== -1 ? (
-                                    <div className="video-section">
-                                      <ReactPlayer
-                                        url={`/blogs/${file.filename}`}
-                                        width="100%"
-                                        height="auto"
-                                        playing={false}
-                                        controls={true}
-                                      />
-                                    </div>
-                                  ) : (
-                                    <div className="thumbnail h-100 d-flex justify-content-center align-items-center">
-                                      <img
-                                        src={`/blogs/${file.filename}`}
-                                        alt="SFIT"
-                                        width={100 + "%"}
-                                        height={100 + "%"}
-                                        style={{ objectFit: "cover" }}
-                                      />
-                                    </div>
-                                  )}
-                                </div>
-                              ))}
-                          </div>
-                          {(authState.id === user.id && (
-                            <div className="control mt-3 d-flex">
-                              <Button
-                                className="custom-btn primary"
-                                onClick={(e) =>
-                                  setAlert({
-                                    heading: "ERROR",
-                                    type: "danger",
-                                    content: "Tính năng đang được nâng cấp",
-                                    hide: () => setAlert({}),
-                                  })
-                                }
-                              >
-                                Cập nhật
-                              </Button>
-                              <Button
-                                className="custom-btn"
-                                style={{
-                                  marginLeft: "auto",
-                                  marginRight: 0,
-                                }}
-                                onClick={(e) => handleDeleteProduct(product)}
-                              >
-                                <FontAwesomeIcon icon={faTrash} />
-                              </Button>
-                            </div>
-                          )) || (
-                              <div className="control mt-3 d-flex">
-                                <a
-                                  className="default-link custom-btn primary-blue"
-                                  href={`/products/single/${product._id}`}
-                                >
-                                  Chi tiết
-                                </a>
-                              </div>
-                            )}
-                        </li>
-                      ))}
-                    </ul>
-                  ) : (
-                    <div>
-                      <h3
-                        className="text-center p-4 rounded-2 mt-4"
-                        style={{ background: "rgb(220, 255, 220)" }}
-                      >
-                        {authState.id === user.id
-                          ? "Bạn chưa đăng sản phẩm nào"
-                          : `${user.username} chưa có sản phẩm nào`}
-                      </h3>
-                    </div>
-                  )}
+                  <div className="mt-3 mt-md-5">
+                    <OrderList />
+                  </div>
                 </div>
               </Col>
             )}

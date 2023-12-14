@@ -1,20 +1,18 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useMemo } from "react";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
-import Form from "../components/LoginForm";
+import LoginForm from "../components/LoginForm";
+// import "../Assets/SCSS/login.scss";
+import "../Assets/CSS/login.scss";
+export default function Login() {
+  // const [type, setType] = useState("login");
 
-import "../Assets/SCSS/login.scss";
-export default function Login({ typeForm }) {
-  const [type, setType] = useState("login");
-
-  const centerFlex = {
+  const centerFlex = useMemo(() => ({
     display: "flex",
     justifyContent: "center",
-  };
-
-  useEffect(() => {
-    if (typeForm) setType(typeForm);
-  }, [typeForm]);
+    background: '#f6f5f7',
+    height: '100%',
+  }), []);
 
   useEffect(() => {
     return () => {
@@ -31,8 +29,10 @@ export default function Login({ typeForm }) {
       <main
         className="login-container"
         style={{
-          width: "100%",
+          width: "100vw",
           minHeight: "100vh",
+          display: "flex",
+          background: 'rgb(240, 240, 240)',
         }}
       >
         <div className="position-absolute" style={{ bottom: 30, left: 30 }}>
@@ -40,14 +40,8 @@ export default function Login({ typeForm }) {
             Trang chủ
           </a>
         </div>
-        <Container>
-          <div id="heading-container">
-            <h1>SFIT</h1>
-          </div>
-          <Row style={centerFlex}>
-            <Form type={type} changeType={setType} />
-          </Row>
-        </Container>
+        <LoginForm />
+
       </main>
     </React.Fragment>
   );

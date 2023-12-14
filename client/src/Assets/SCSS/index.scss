@@ -1,16 +1,37 @@
 @use "base";
 
-$light-green: rgb(100, 220, 100);
-
 .heading {
-  color: base.$primary;
+  // color: base.$primary;
+  font-weight: regular;
+  font-size: 3rem;
+  //background: rgb(250, 50, 50);
+  color: white;
+  width: max-content;
+  padding: 3px 1rem;
+  border-radius: 5px;
+  background: rgb(255, 118, 5);
+  background: linear-gradient(
+    110deg,
+    #ff4b2b 0%,
+    #ff416c 100%
+  );
+}
+
+.heading-2 {
   font-weight: bold;
-  font-size: 5rem;
+  font-size: 2rem;
+  color: rgb(255, 118, 5);
 }
 
 #footer {
   min-height: 50vh;
-  background: rgba(50, 200, 50, 0.8);
+  // background: rgba(255, 85, 0, 0.87);
+  background: rgb(255, 118, 5);
+  background: linear-gradient(
+    90deg,
+    #ff4b2b 50%,
+    #ff416c 100%
+  );
   padding: 6rem 10rem;
   font-size: 1.6rem;
   width: 100%;
@@ -103,7 +124,8 @@ $light-green: rgb(100, 220, 100);
 
     button {
       padding: 1rem 2.5rem;
-      background-color: rgb(50, 50, 250);
+      color: #ff4b2b;
+      background-color: rgb(240, 240, 240);
       font-weight: bold;
       position: relative;
       border: none;
@@ -126,6 +148,7 @@ $light-green: rgb(100, 220, 100);
       }
 
       &:hover {
+        color: white;
         background-color: rgba(100, 100, 250, 0);
         &::after {
           opacity: 1;

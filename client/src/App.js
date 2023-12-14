@@ -2,8 +2,6 @@ import "bootstrap/dist/css/bootstrap.css";
 import React, { Suspense, useState, useEffect, useCallback } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-import "./Assets/SCSS/index.scss";
-
 import AuthContext from "./helpers/Authcontext";
 import CartContext from "./helpers/CartContext";
 import CurrentPageContext from "./helpers/CurrentPageContext";
@@ -26,6 +24,7 @@ function App() {
   const [authState, setAuthSate] = useState({
     username: "",
     id: 0,
+    role: 'user',
     status: false,
   });
 
@@ -96,7 +95,7 @@ function App() {
                     <Route path="/blogs/single/:id" element={<BlogSingle />} />
                     <Route path="/products" element={<Products />} />
                     <Route path="/products/single/:id" element={<ProductSingle />} />
-                    <Route path="/account/:tab" element={<Account />} />
+                    <Route path="/account/:id" element={<Account />} />
                     <Route path="/account" element={<Account />} />
                     <Route path="/search/:q" element={<Search />} />
                     <Route path="/search" element={<Search />} />

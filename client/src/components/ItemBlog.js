@@ -1,10 +1,12 @@
 import ReactPlayer from "react-player";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext, memo } from "react";
 import { Button } from "react-bootstrap";
 import "../Assets/SCSS/components/showMoreBtn.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
-export default function ItemBlog({ blog, user, handleDeleteBlog }, key) {
+import AuthContext from "../helpers/Authcontext";
+
+function ItemBlog({ blog, user, handleDeleteBlog }, key) {
   const [showMore, setShowMore] = useState(false);
   const [blogState, setBlogState] = useState(blog);
   const [userState, setUserState] = useState(user);
@@ -16,6 +18,8 @@ export default function ItemBlog({ blog, user, handleDeleteBlog }, key) {
   useEffect(() => {
     setUserState(user);
   }, [user]);
+
+  const { authState } = useContext(AuthContext);
 
   return (
     <li
@@ -63,11 +67,14 @@ export default function ItemBlog({ blog, user, handleDeleteBlog }, key) {
             </div>
           ))}
       </div>
-      <div className="control mt-4 d-flex justify-content-end">
+
+      {authState.id === user.id && <div className="control mt-4 d-flex justify-content-end">
         <Button className="custom-btn" onClick={handleDeleteBlog}>
           <FontAwesomeIcon icon={faTrash} />
         </Button>
-      </div>
+      </div>}
     </li>
   );
 }
+
+export default memo(ItemBlog);

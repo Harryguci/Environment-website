@@ -124,3 +124,19 @@
     }
   }
 }
+
+.logout-btn {
+  background: rgb(200, 200, 200);
+}
+.logout-btn:hover {
+  background: rgb(150, 150, 150);
+}
+
+.search-btn {
+  background: rgb(50, 50, 250);
+  
+  &:hover {
+    background: rgb(10, 10, 100);
+  }
+}
+

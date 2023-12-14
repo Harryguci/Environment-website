@@ -21,9 +21,9 @@ export default function BlogSingle(props) {
   const { cartState, setCartState } = useContext(CartContext);
   const { authState } = useContext(AuthContext);
   const { setPageState } = useContext(CurrentPageContext);
-  
+
   useEffect(() => setPageState("products"), [setPageState])
-  
+
   useEffect(() => {
     axios
       .get(`/products/single/${productId}`, {
@@ -110,7 +110,7 @@ export default function BlogSingle(props) {
               ) : (
                 <>
                   <a
-                    href="/account/products"
+                    href="/account?tab=products"
                     className="add-cart-btn gap-4 d-flex justify-content-center align-content-center default-link"
                   // onClick={handleAddCart}
                   >
@@ -129,7 +129,7 @@ export default function BlogSingle(props) {
             <p className="opacity-50">
               Author:
               <a
-                href={`/account?user=${product.username}`}
+                href={`/account/${product.username}`}
                 style={{ marginLeft: "1rem" }}
               >
                 {product.username || product.userId}

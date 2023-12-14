@@ -19,7 +19,7 @@ export default function BlogSingle(props) {
   useEffect(() => setPageState("blogs"), [setPageState]);
 
   useEffect(() => {
-    console.log("params", blogId);
+    // console.log("params", blogId);
     axios
       .get(`/blogs/single/${blogId}`, {
         headers: {
@@ -83,12 +83,12 @@ export default function BlogSingle(props) {
           <Col>
             <div>
               {blog && blog.title && (
-                <h1 className="heading">{blog.title.substring(0, 50)}...</h1>
+                <h1 className="heading">{blog.title}</h1>
               )}
             </div>
             <p className="opacity-50">Author:
               <a
-                href={`/account?user=${blog.username}`}
+                href={`/account/${blog.username}`}
                 style={{ marginLeft: "1rem" }}
               >
                 {blog.username || blog.userId}

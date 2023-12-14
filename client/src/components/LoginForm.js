@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, memo } from "react";
 import Form from "react-bootstrap/Form";
 import FormControl from "react-bootstrap/FormControl";
 import Button from "react-bootstrap/Button";
@@ -7,13 +7,9 @@ import { useNavigate } from "react-router-dom";
 import AuthContext from "../helpers/Authcontext";
 import AlertDismissible from "./AlertDismissable";
 
-export default function LoginForm({ type, changeType }) {
-  const [form, setForm] = useState({
-    name: "login-form",
-    id: "login-form",
-    action: "/auth/login",
-    method: "POST",
-  });
+function LoginForm() {
+
+  // const [formType, setFormType] = useState("login");
   const { authState, setAuthSate } = useContext(AuthContext);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -22,22 +18,24 @@ export default function LoginForm({ type, changeType }) {
   const [alert, setAlert] = useState({});
 
   useEffect(() => {
-    if (type === "signup") {
-      setForm((prev) => ({
-        name: "signup-form",
-        id: "login-form",
-        action: "/auth/signup",
-        method: prev.method,
-      }));
-    } else {
-      setForm({
-        name: "login-form",
-        id: "login-form",
-        action: "/auth/login",
-        method: "POST",
+    const signUpButton = document.getElementById('signUp');
+    const signInButton = document.getElementById('signIn');
+    const container = document.getElementById('container');
+    signUpButton.addEventListener('click', () => {
+      container.classList.add("right-panel-active");
+    });
+    signInButton.addEventListener('click', () => {
+      container.classList.remove("right-panel-active");
+    });
+    return () => {
+      signUpButton.removeEventListener('click', () => {
+        container.classList.add("right-panel-active");
       });
-    }
-  }, [type]);
+      signInButton.removeEventListener('click', () => {
+        container.classList.remove("right-panel-active");
+      });
+    };
+  }, []);
 
   const validateLogin = ({ username, password }) => {
     let usernameReg = /[a-zA-Z0-9_]{3,50}/;
@@ -59,6 +57,7 @@ export default function LoginForm({ type, changeType }) {
   const navigate = useNavigate();
 
   const LoginHandle = async (e) => {
+    e.preventDefault();
     const data = { username: username, password: password };
 
     if (!validateLogin(data)) {
@@ -123,6 +122,7 @@ export default function LoginForm({ type, changeType }) {
   };
 
   const SignupHandle = async (e) => {
+    e.preventDefault();
     const data = { username: username, password: password, email: email };
 
     if (!validateSign({ username, password, repassword, email })) {
@@ -193,79 +193,58 @@ export default function LoginForm({ type, changeType }) {
       .catch((error) => console.log(error.message));
   };
 
-  const formHandleSubmit = async (e) => {
-    if (type === "login") {
-      await LoginHandle(e);
-    } else {
-      await SignupHandle(e);
-    }
-  };
-
   return (
     <React.Fragment>
       {alert && alert.heading && <AlertDismissible {...alert} />}
-      <Form
-        name={form.name}
-        id={form.id}
-        className="mt-3"
-        method={form.method}
-        action={form.action}
-        style={{ fontSize: 16 + "px" }}
-        onSubmit={(e) => e.preventDefault()}
-      >
-        <FormControl
-          type="text"
-          name="username"
-          placeholder="username"
-          value={username}
-          style={{ fontSize: 16 + "px" }}
-          onChange={(e) => setUsername(e.target.value)}
-        />
-        <FormControl
-          type="password"
-          name="password"
-          placeholder="password"
-          value={password}
-          style={{ fontSize: 16 + "px" }}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        {type !== "login" && (
-          <>
-            <FormControl
-              type="password"
-              name="re-password"
-              placeholder="again password"
-              value={repassword}
-              onChange={(e) => setRepassword(e.target.value)}
-              style={{ fontSize: 16 + "px" }}
-            />
-            <FormControl
-              type="email"
-              name="email"
-              placeholder="email"
-              value={email}
-              style={{ fontSize: 16 + "px" }}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-          </>
-        )}
-        <Button
-          className="mt-3"
-          type="button"
-          style={{ fontSize: 16 + "px" }}
-          onClick={formHandleSubmit}
-        >
-          {type === "login" ? "Login" : "Sign Up"}
-        </Button>
-        <Button
-          className="mt-3"
-          type="button"
-          style={{ fontSize: 16 + "px" }}
-          onClick={() => changeType(type === "login" ? "signup" : "login")}
-        >
-          {type !== "login" ? "Login" : "Sign Up"}
-        </Button>
-      </Form>
+      <div class="container my-auto" id="container">
+        <div class="form-container sign-up-container">
+          <form action="/auth/signup" onSubmit={(e) => SignupHandle(e)}>
+            <h1 style={{ fontSize: '3rem' }}>Create Account</h1>
+            {/* <div class="social-container">
+              <a href="/" class="social"><i class="fab fa-facebook-f"></i></a>
+              <a href="/" class="social"><i class="fab fa-google-plus-g"></i></a>
+              <a href="/" class="social"><i class="fab fa-linkedin-in"></i></a>
+            </div> */}
+            <span>or use your email for registration</span>
+            <input type="text" placeholder="Username" name='username' value={username} onChange={e => setUsername(e.target.value)} />
+            <input type="email" placeholder="Email" name="email" value={email} onChange={e => setEmail(e.target.value)} />
+            <input type="password" placeholder="Password" name="password" value={password} onChange={e => setPassword(e.target.value)} />
+            <input type="password" placeholder="Again Password" value={repassword} onChange={e => setRepassword(e.target.value)} />
+            <button type="submit">Sign Up</button>
+          </form>
+        </div>
+        <div class="form-container sign-in-container">
+          <form action="/auth/login" onSubmit={(e) => LoginHandle(e)}>
+            <h1 style={{ fontSize: '3rem' }}>Login</h1>
+            {/* <div class="social-container">
+              <a href="/" class="social"><i class="fab fa-facebook-f"></i></a>
+              <a href="/" class="social"><i class="fab fa-google-plus-g"></i></a>
+              <a href="/" class="social"><i class="fab fa-linkedin-in"></i></a>
+            </div> */}
+            <span>or use your account</span>
+            <input type="text" placeholder="Username" name="username" value={username} onChange={e => setUsername(e.target.value)} />
+            <input type="password" placeholder="Password" name="password" value={password} onChange={e => setPassword(e.target.value)} />
+            <a href="/">Forgot your password?</a>
+            <button type="submit">Login</button>
+          </form>
+        </div>
+        <div class="overlay-container">
+          <div class="overlay">
+            <div class="overlay-panel overlay-left">
+              <h1 style={{ fontSize: '3rem' }}>Welcome Back!</h1>
+              <p>To keep connected with us please login with your personal info</p>
+              <button class="ghost" id="signIn">Login</button>
+            </div>
+            <div class="overlay-panel overlay-right">
+              <h1>Hello, Friend!</h1>
+              <p>Enter your personal details and start journey with us</p>
+              <button class="ghost" id="signUp">Sign Up</button>
+            </div>
+          </div>
+        </div>
+      </div>
     </React.Fragment>
   );
 }
+
+export default memo(LoginForm);

@@ -4,9 +4,16 @@ const fs = require('fs');
 const path = require('path');
 
 class ProductController {
+    static PageSize = 10;
+
     // [GET] /products/all
     showAll = async function (req, res, next) {
+        var query = req.query;
+        var pageIndex = query.pageIndex || 1;
+        
         await Product.find({})
+            .skip((pageIndex - 1) * PageSize)
+            .take(PageSize)
             .then((query) => {
                 query = Array.from(query);
                 query = query.map((product) => product.toObject());
@@ -66,7 +73,7 @@ class ProductController {
     uploadNewProduct = async (req, res) => {
         const data = req.body;
         // console.log("PRODUCTS POST", req.files);
-        console.log("PRODUCTS POST", req.body);
+        // console.log("PRODUCTS POST", req.body);
         var imgUrl = "NoImage.jpg";
 
         if (
@@ -77,7 +84,7 @@ class ProductController {
             imgUrl = req.files[0].filename;
 
         var product = new Product({
-            name: data.detail.substring(0, 50),
+            name: data.name.toString(),
             description: data.detail.toString(),
             userId: data.userId,
             cost: data.cost,
@@ -88,7 +95,7 @@ class ProductController {
 
         await product.save().catch((err) => console.log(err));
 
-        res.redirect("http://localhost:3000/account/products");
+        res.redirect("https://localhost:3000/account/products");
     }
 
     // [GET] /products/single/:id

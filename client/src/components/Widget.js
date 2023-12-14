@@ -52,12 +52,12 @@ export default function Widget(
                 {index <= 1 && (
                   <Badge bg="secondary fs-5 bg-danger mb-2">New</Badge>
                 )}
-                <h1 style={heading.length > 20 ? { fontSize: "3rem" } : {}}>
+                <h3 style={{ fontSize: '5rem', fontWeight: 'bold', color: '#97d534' }}>
                   {heading || "HEADING"}
                   <p className="fw-light">
                     Tác giả: <b className="fw-bold">{author}</b>
                   </p>
-                </h1>
+                </h3>
               </a>
               <p className="widget__description">
                 {displayDescription || "some content..."}

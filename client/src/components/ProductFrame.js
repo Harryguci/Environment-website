@@ -99,9 +99,9 @@ export default function ProductFrame({ limits, className }) {
                 {productType &&
                   productType.length &&
                   productType.map((item) => (
-                    <li className="control-list__item" key={item[0]}>
+                    <li className="control-list__item p-0" key={item[0]}>
                       <a
-                        style={{ textDecoration: "none" }}
+                        style={{ textDecoration: "none", display: "block", padding: '1rem' }}
                         href={`/products/${item[0]}`}
                       >
                         {item[1]}

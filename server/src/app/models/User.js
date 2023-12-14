@@ -9,6 +9,7 @@ const User = new Schema({
   phone: { type: String, default: "" },
   website: { type: String, default: "" },
   birthday: { type: Date, default: "" },
+  role: { type: String, default: "user" }
 });
 
 const model = mongoose.model("users", User);

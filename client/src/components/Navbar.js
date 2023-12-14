@@ -64,13 +64,15 @@ function NavbarCustom({ user }) {
     navigate(`/search/${search}`);
   }, [navigate, search]);
 
-  useEffect(() => console.log(pageState), [pageState]);
+  useEffect(() =>
+    console.log(pageState),
+    [pageState]);
 
   return (
     <React.Fragment>
       <Navbar key={`${authState.id}`} collapseOnSelect expand="lg" data-bs-theme="light">
         <Container>
-          <Navbar.Brand href="/">SFIT</Navbar.Brand>
+          <Navbar.Brand href="/">HAR</Navbar.Brand>
           <Navbar.Toggle id="toggle-btn" aria-controls="responsive-navbar-nav">
             <FontAwesomeIcon icon={faBars} />
           </Navbar.Toggle>
@@ -92,10 +94,10 @@ function NavbarCustom({ user }) {
                 <FontAwesomeIcon icon={faBagShopping} />
                 <span style={window.innerWidth < 768 ? { display: 'block' } : { display: 'none' }}>Products</span>
               </Nav.Link>
-              <Nav.Link name="blogs" href="/blogs" title="Blogs"
+              <Nav.Link name="blogs" href="/blogs" title="News Feed"
                 className={pageState === "blogs" ? "active" : ""} >
                 <FontAwesomeIcon icon={faNewspaper} />
-                <span style={window.innerWidth < 768 ? { display: 'block' } : { display: 'none' }}>Blogs</span>
+                <span style={window.innerWidth < 768 ? { display: 'block' } : { display: 'none' }}>Feed</span>
               </Nav.Link>
               <Nav.Link name="contact" href="/contact" title="Contact"
                 className={pageState === "contact" ? "active" : ""} >
@@ -103,7 +105,7 @@ function NavbarCustom({ user }) {
                 <span style={window.innerWidth < 768 ? { display: 'block' } : { display: 'none' }}>Contact</span>
               </Nav.Link>
             </Nav>
-            <div className="d-flex gap-3">
+            <div className="d-flex gap-2 gap-md-5">
               <form
                 id="search-form"
                 action="/search"
@@ -117,9 +119,15 @@ function NavbarCustom({ user }) {
                   placeholder="Search"
                   value={search}
                   onChange={(e) => setSearch(e.target.value)}
+                  className="d-block my-auto"
+                  style={{ height: 'max-content', borderTopLeftRadius: '0', borderTopRightRadius: '0' }}
                 />
                 <Button
-                  style={{ border: "1px solid white", marginLeft: "1rem" }}
+                  className="search-btn d-block my-auto"
+                  style={{
+                    border: "1px solid white",
+                    height: 'max-content'
+                  }}
                   onClick={(e) => sendSearch()}
                 >
                   <FontAwesomeIcon icon={faMagnifyingGlass} />
@@ -146,14 +154,14 @@ function NavbarCustom({ user }) {
                         <a
                           href={`/account?user=${authState.username}`}
                           className="btn fw-bold"
-                          style={{ color: "rgb(70,70,255)", fontSize: 16 }}
+                          style={{ color: "rgb(100,100,255)", fontSize: 16 }}
                         >
                           {authState.username}
                         </a>
                       </div>
-                      <ButtonGroup className="d-flex gap-2">
+                      <ButtonGroup className="d-flex gap-1">
                         <Button
-                          className="d-block w-100 bg-danger border-0"
+                          className="d-block w-100 border-0 logout-btn"
                           style={{ fontSize: "16px" }}
                           onClick={() => {
                             localStorage.removeItem("accessToken");
@@ -171,7 +179,7 @@ function NavbarCustom({ user }) {
                           className="d-block w-100 border-0"
                           style={{
                             fontSize: "16px",
-                            background: "rgb(50, 230, 50)",
+                            background: "rgb(255, 50, 50)",
                           }}
                           onClick={() => {
                             try {

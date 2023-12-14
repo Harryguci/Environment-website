@@ -12,6 +12,6 @@ export default function ActiveNavLink(type) {
   } catch (e) {
     console.log("[ActiveNavLink]", e);
   } finally{
-    console.log(navItems);
+    // console.log(navItems);
   }
 }

@@ -35,7 +35,7 @@ function BlogList({ limits, typeBlog }, ...props) {
             }
             return blog;
           });
-
+          
           setBlogs(temps.reverse());
         }
       })

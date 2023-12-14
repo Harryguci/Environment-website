@@ -19,6 +19,7 @@ import AuthContext from "../helpers/Authcontext";
 function FormBlog() {
   const { authState } = useContext(AuthContext);
   const [user, setUser] = useState({});
+  const [titleState, setTitleState] = useState("");
   const [detailState, setDetailState] = useState("");
 
   const [isChangeTextarea, setIsChangeTextarea] = useState(false);
@@ -82,12 +83,6 @@ function FormBlog() {
       />
       <input
         type="text"
-        name="title"
-        value={detailState}
-        onChange={(e) => setDetailState(e.target.value)}
-      />
-      <input
-        type="text"
         name="userId"
         value={user.id}
         onChange={(e) => setUser({ ...user, id: e.target.id })}
@@ -116,12 +111,23 @@ function FormBlog() {
     >
       <div>
         <FormControl
+          style={{ fontWeight: 'bold' }}
+          name="title"
+          value={titleState}
+          onChange={(e) => setTitleState(e.target.value)}
+          onFocus={() => setIsChangeTextarea(true)}
+          placeholder={`${user.username}, hãy viết tiêu đề`}
+          required
+        />
+      </div>
+      <div>
+        <FormControl
           as="textarea"
           name="detail"
           rows={3}
           value={
             !isChangeTextarea
-              ? `${user.username}, bạn đang nghĩ gì`
+              ? `Bạn đang nghĩ gì`
               : detailState
           }
           onChange={(e) => setDetailState(e.target.value)}

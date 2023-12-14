@@ -96,7 +96,7 @@ export default function Search() {
                     <ListGroupItem key={user._id}>
                       <a
                         className="fs-2 fw-bold text-decoration-none"
-                        href={`/account?user=${user.username}`}
+                        href={`/account/${user.username}`}
                       >
                         {user.username}
                       </a>

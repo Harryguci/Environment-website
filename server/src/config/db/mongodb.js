@@ -1,8 +1,10 @@
 const mongoose = require("mongoose");
+// const { MongoClient, ServerApiVersion } = require('mongodb');
+const uri = 'mongodb+srv://harryguci:harryguci@cluster01.chrqhpv.mongodb.net/environment-website?retryWrites=true&w=majority';
 
 async function connect() {
   try {
-    await mongoose.connect("mongodb://127.0.0.1:27017/environment-website", {
+    await mongoose.connect(uri, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     });

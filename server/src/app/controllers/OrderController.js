@@ -28,7 +28,8 @@ class OrderController {
 
     // [GET] /order/user/:id
     showByUserId = async (req, res, next) => {
-        if (req.user.id !== req.params.id) res.send({ error: "Can not get" });
+        if (req.user.id !== req.params.id)
+            res.send({ error: "Can not get" });
         else {
             var query = await Order.find({ buyer_id: req.params.id })
                 .then((query) => query.map((order) => order.toObject()))
@@ -41,6 +42,9 @@ class OrderController {
 
                     res.send(query);
                 });
+            console.log('ORDERS: ' + query);
+
+            return query && res.send(query);
         }
     }
 

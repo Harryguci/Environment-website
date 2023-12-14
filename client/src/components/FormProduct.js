@@ -20,6 +20,7 @@ import axios from "axios";
 function FormProduct({ user: userInfo }) {
   const { authState } = useContext(AuthContext);
   const [user, setUser] = useState({});
+  const [nameProductState, setNameProductState] = useState("");
   const [detailState, setDetailState] = useState("");
   const [cost, setCost] = useState();
   const [remain, setRemain] = useState();
@@ -160,13 +161,32 @@ function FormProduct({ user: userInfo }) {
     >
       <div className="position-relative">
         <FormControl
+          name="name"
+          className="position-relative fw-bold"
+          value={
+            !isChangeTextarea
+              ? `${user.username}, Tiêu đề sản phẩm của bạn`
+              : nameProductState
+          }
+          onChange={(e) => setNameProductState(e.target.value)}
+          onFocus={() => setIsChangeTextarea(true)}
+          disabled={user.phone ? false : true}
+        />
+        {!user.phone && (
+          <p className="text-danger mt-3 fw-bold">
+            Bạn phải cập nhật SĐT để đăng sản phẩm
+          </p>
+        )}
+      </div>
+      <div className="position-relative">
+        <FormControl
           as="textarea"
           name="detail"
           className="position-relative"
           rows={3}
           value={
             !isChangeTextarea
-              ? `${user.username}, Mô tả sản phẩm của bạn`
+              ? `Mô tả sản phẩm của bạn`
               : detailState
           }
           onChange={(e) => setDetailState(e.target.value)}

@@ -68,7 +68,7 @@ router.get("/login", function (req, res, next) {
 router.post(
   "/login",
   passport.authenticate("local", {
-    failureRedirect: "http://localhost:3000/login",
+    failureRedirect: `${process.env.URI || 'https://localhost:3001'}/login`,
   }),
   async (req, res, next) => {
     const user = await User.findOne({ username: req.user.username });
@@ -76,7 +76,11 @@ router.post(
     console.log("LOGIN post", user._id);
 
     const accessToken = sign(
-      { username: user.username, id: user._id },
+      {
+        username: user.username,
+        id: user._id,
+        role: user.role
+      },
       "importantsecret"
     );
 
@@ -112,6 +116,7 @@ router.post("/signup", CheckAccountExist, async function (req, res, next) {
     username: data.username,
     password: data.password,
     email: data.email,
+    role: data.user || 'user'
   });
 
   await user
@@ -124,7 +129,7 @@ router.post("/signup", CheckAccountExist, async function (req, res, next) {
     "importantsecret"
   );
 
-  res.send({ token: accessToken, username: user.username, id: user._id });
+  res.send({ token: accessToken, username: user.username, id: user._id, role: user.role });
 });
 
 router.get("/auth", validateToken, (req, res) => {
