@@ -27,6 +27,9 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import CartContext from "../helpers/CartContext";
 import CurrentPageContext from "../helpers/CurrentPageContext";
+import AlertDismissible from "../components/AlertDismissable";
+import AlertConfirm from "../components/AlertConfirm";
+
 function NavbarCustom({ user }) {
   const [search, setSearch] = useState("");
   const handleSearchFormSubmit = (e) => {
@@ -40,6 +43,8 @@ function NavbarCustom({ user }) {
   const { pageState, setPageState } = useContext(CurrentPageContext);
   const [cartNumber, setCartNumber] = useState(cartState.length || 0);
   // const currentPage = useRef("home");
+  const [alert, setAlert] = useState("");
+  const [alertConfirm, setAlertConfirm] = useState("");
 
   useEffect(() => {
     if (authState.id)
@@ -68,8 +73,29 @@ function NavbarCustom({ user }) {
     console.log(pageState),
     [pageState]);
 
+  const HandleLogout = useCallback(() => {
+    setAlertConfirm({
+      heading: "Bạn có chắc muốn đăng xuất?",
+      content: '',
+      type: "danger",
+      accept: () => {
+        localStorage.removeItem("accessToken");
+        setAuthSate({ ...authState, status: false });
+
+        try {
+          navigate("/login");
+        } catch (e) {
+          console.log(e);
+        }
+      },
+      cancel: () => setAlertConfirm({}),
+    });
+  }, [authState, navigate, setAuthSate]);
+
   return (
     <React.Fragment>
+      {alert && alert.heading && <AlertDismissible {...alert} />}
+      {alertConfirm && alertConfirm.heading && <AlertConfirm {...alertConfirm} />}
       <Navbar key={`${authState.id}`} collapseOnSelect expand="lg" data-bs-theme="light">
         <Container>
           <Navbar.Brand href="/">HAR</Navbar.Brand>
@@ -152,7 +178,7 @@ function NavbarCustom({ user }) {
                     <>
                       <div>
                         <a
-                          href={`/account?user=${authState.username}`}
+                          href={`/account/${authState.username}`}
                           className="btn fw-bold"
                           style={{ color: "rgb(100,100,255)", fontSize: 16 }}
                         >
@@ -163,15 +189,7 @@ function NavbarCustom({ user }) {
                         <Button
                           className="d-block w-100 border-0 logout-btn"
                           style={{ fontSize: "16px" }}
-                          onClick={() => {
-                            localStorage.removeItem("accessToken");
-                            setAuthSate({ ...authState, status: false });
-                            try {
-                              navigate("/login");
-                            } catch (e) {
-                              console.log(e);
-                            }
-                          }}
+                          onClick={() => HandleLogout()}
                         >
                           <FontAwesomeIcon icon={faRightFromBracket} />
                         </Button>

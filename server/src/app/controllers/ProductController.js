@@ -8,10 +8,11 @@ class ProductController {
 
     // [GET] /products/all
     showAll = async function (req, res, next) {
-        var query = req.query;
+        var q = req.query.q;
+        console.log('Query ', q);
         var pageIndex = query.pageIndex || 1;
-        
-        await Product.find({})
+
+        await Product.find({ name: { "$regex": q, "$options": "i" } })
             .skip((pageIndex - 1) * PageSize)
             .take(PageSize)
             .then((query) => {
@@ -122,7 +123,12 @@ class ProductController {
 
     // [GET] /products
     showAll = async function (req, res, next) {
-        await Product.find({})
+        let q = req.query.q;
+        console.log('products' + q);
+        let filter = {};
+        if (q) filter = { name: { "$regex": q, "$options": "i" } };
+
+        await Product.find(filter)
             .then((query) => {
                 query = Array.from(query);
                 query = query.map((product) => product.toObject());

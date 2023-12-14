@@ -16,16 +16,23 @@ import {
 import axios from "axios";
 import DisplayPrice from "../helpers/DisplayPrice";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHeart, faCartShopping } from "@fortawesome/free-solid-svg-icons";
+import {
+  faHeart,
+  faCartShopping,
+  faMagnifyingGlass
+} from "@fortawesome/free-solid-svg-icons";
 
 import AuthContext from "../helpers/Authcontext";
 import CartContext from "../helpers/CartContext";
-
+import LoadingCard from '../components/LoadingCard';
 import AlertDismissible from "./AlertDismissable";
 
-export default function ProductFrame({ limits, className }) {
+export default function ProductFrame({ className }) {
   const [products, setProducts] = useState([]);
   const [otherAddress, setOtherAddress] = useState("");
+  const [search, setSearch] = useState("");
+  const [isFetch, setIsFetch] = useState(false);
+
   useEffect(() => {
     axios
       .get("/products/all", {
@@ -39,6 +46,8 @@ export default function ProductFrame({ limits, className }) {
           // console.log(data.data);
           setProducts(data.data.reverse());
         }
+
+        setIsFetch(true);
       })
       .catch((error) => console.error(error));
   }, []);
@@ -88,9 +97,46 @@ export default function ProductFrame({ limits, className }) {
     });
   };
 
+  const HandleFilerName = async (value) => {
+    await axios
+      .get(`/products/all?q=${value}`, {
+        headers: {
+          accessToken: localStorage.getItem("accessToken"),
+        },
+      })
+      .then((data) => {
+        if (data.data.error)
+          return console.log(data.data.error);
+        else {
+          console.log(data.data);
+          setProducts(data.data.reverse());
+        }
+      })
+      .catch((error) => console.error(error));
+  };
+
   return (
     <>
       <Container fluid className={"product-frame " + className}>
+        <Row>
+          <div className="d-flex search-container justify-content-center" >
+            <FormLabel className="d-flex my-3 my-md-5" style={{ alignItems: 'center', gap: '1rem' }}>
+              <Button className="custom-btn heading-2 my-auto" style={{ fontSize: '1.5rem', padding: '1rem' }}
+                onClick={() => HandleFilerName(search)}>
+                <FontAwesomeIcon icon={faMagnifyingGlass} />
+              </Button>
+              <FormControl
+                type="text" style={{
+                  maxWidth: '700px',
+                  width: '90vw',
+                  fontSize: '1.6rem',
+                  height: '100%'
+                }}
+                onChange={(e) => setSearch(e.target.value)}
+              />
+            </FormLabel>
+          </div>
+        </Row>
         <Row style={{ rowGap: "3rem" }}>
           <Col md={2} className="px-4">
             <div>
@@ -162,7 +208,7 @@ export default function ProductFrame({ limits, className }) {
           </Col>
           <Col md={10}>
             <div className="product-frame__main">
-              {(products && products.length && (
+              {products && products.length && (
                 <Row className="" style={{ rowGap: "1.5rem" }}>
                   {products.map((product, index) => (
                     <Col
@@ -233,14 +279,27 @@ export default function ProductFrame({ limits, className }) {
                     </Col>
                   ))}
                 </Row>
-              )) ||
+              )}
+              {isFetch && (!products || products.length === 0) &&
                 <h2
                   className="fs-2 text-center my-5 px-3 py-4 rounded-3 opacity-50"
                   style={{ background: "rgba(0,0,0,0.05)" }}
                 >
                   Chưa có sản phẩm nào
-                </h2>
-              }
+                </h2>}
+
+              {!isFetch &&
+                <div className="d-flex" style={{ flexWrap: 'wrap' }}>
+                  {Array.from({ length: 10 }).map((it, index) =>
+                    <LoadingCard
+                      key={index}
+                      style={{
+                        width: '20%',
+                        height: '30rem',
+                        marginBottom: '1rem'
+                      }}
+                    />)}
+                </div>}
             </div>
           </Col>
         </Row>

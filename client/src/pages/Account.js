@@ -397,12 +397,12 @@ export default function Account() {
                     >
                       Products
                     </Button>
-                    <Button
+                    {authState.id === user.id && <Button
                       className="custom-btn"
                       onClick={(e) => setCurrentTab("orders")}
                     >
                       Orders
-                    </Button>
+                    </Button>}
                   </ButtonGroup>
                 </div>
                 {blogs && blogs.length ? (
@@ -447,12 +447,12 @@ export default function Account() {
                     Blogs
                   </Button>
                   <ActiveTab text="Products" />
-                  <Button
+                  {authState.id === user.id && <Button
                     className="custom-btn"
                     onClick={(e) => setCurrentTab("orders")}
                   >
                     Orders
-                  </Button>
+                  </Button>}
                 </ButtonGroup>
                 {products && products.length ? (
                   <ul className="list-group mt-5 user-blog-container__list">

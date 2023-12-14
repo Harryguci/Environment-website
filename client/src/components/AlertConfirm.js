@@ -27,7 +27,7 @@ function AlertConfirm({ accept, cancel, heading, content, type }) {
     <>
       <div
         className="position-fixed w-100 h-100"
-        style={{ background: "rgba(0,0,0,0.5)", top: 0, left: 0 }}
+        style={{ background: "rgba(0,0,0,0.5)", top: 0, left: 0, zIndex: 1000 }}
         onClick={() => handleHide()}
       ></div>
       <Alert
@@ -36,7 +36,7 @@ function AlertConfirm({ accept, cancel, heading, content, type }) {
         variant={type}
         className="p-5"
         style={{
-          zIndex: 500,
+          zIndex: 1001,
           fontSize: "1.6rem",
           maxWidth: 500,
           boxShadow: "10px 10px 5rem rgba(0, 0, 255, 0.3)",

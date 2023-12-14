@@ -3,7 +3,7 @@ import { useState, useEffect, useContext, memo } from "react";
 import { Button } from "react-bootstrap";
 import "../Assets/SCSS/components/showMoreBtn.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faTrash, faComment } from "@fortawesome/free-solid-svg-icons";
 import AuthContext from "../helpers/Authcontext";
 
 function ItemBlog({ blog, user, handleDeleteBlog }, key) {
@@ -67,12 +67,21 @@ function ItemBlog({ blog, user, handleDeleteBlog }, key) {
             </div>
           ))}
       </div>
-
-      {authState.id === user.id && <div className="control mt-4 d-flex justify-content-end">
-        <Button className="custom-btn" onClick={handleDeleteBlog}>
-          <FontAwesomeIcon icon={faTrash} />
+      <div className="control mt-4 d-flex justify-content-end gap-1">
+        <Button className="btn text-primary" style={{
+          background: 'none',
+          border: 'none',
+        }}>
+          <FontAwesomeIcon style={{ fontSize: 2 + 'rem' }} icon={faComment} />
         </Button>
-      </div>}
+
+        {authState.id === user.id
+          &&
+          <Button className="custom-btn" onClick={handleDeleteBlog}>
+            <FontAwesomeIcon icon={faTrash} />
+          </Button>
+        }
+      </div>
     </li>
   );
 }
