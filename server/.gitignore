@@ -1,0 +1,11 @@
+node_modules
+
+*.JPG
+
+*.jpg
+
+*.png
+
+.env
+
+./src/config/db/mongoinfo.json

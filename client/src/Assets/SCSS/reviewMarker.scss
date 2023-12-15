@@ -1,0 +1,33 @@
+.leaflet-popup-close-button {
+  right: -20px !important;
+  top: 5px !important;
+  border-radius: 0 10px 10px 0;
+  background-color: rgb(255, 255, 255) !important;
+}
+
+.leaflet-popup-content {
+  width: max-content !important;
+  height: auto;
+  margin: 0;
+  padding: 5px 10px;
+
+  .thumbnail {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    max-width: 200px;
+    max-height: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    
+    min-height: 50px;
+    min-width: 50px;
+  }
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}

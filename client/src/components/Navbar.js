@@ -17,7 +17,8 @@ import {
   faBagShopping,
   faCircleInfo,
   faNewspaper,
-  faPhone
+  faPhone,
+  faMap
 } from "@fortawesome/free-solid-svg-icons";
 import React from "react";
 import "../Assets/SCSS/navbar.scss";
@@ -110,11 +111,12 @@ function NavbarCustom({ user }) {
                 <FontAwesomeIcon icon={faHome} />
                 <span style={window.innerWidth < 768 ? { display: 'block' } : { display: 'none' }}>Home</span>
               </Nav.Link>
-              <Nav.Link name="about" href="/about" title="About"
-                className={pageState === "about" ? "active" : ""} >
-                <FontAwesomeIcon icon={faCircleInfo} />
-                <span style={window.innerWidth < 768 ? { display: 'block' } : { display: 'none' }}>About</span>
+              <Nav.Link name="maps" href="/maps" title="Travel Maps"
+                className={pageState === "maps" ? "active" : ""} >
+                <FontAwesomeIcon icon={faMap} />
+                <span style={window.innerWidth < 768 ? { display: 'block' } : { display: 'none' }}>Travel Maps</span>
               </Nav.Link>
+              
               <Nav.Link name="products" href="/products" title="Products"
                 className={pageState === "products" ? "active" : ""} >
                 <FontAwesomeIcon icon={faBagShopping} />

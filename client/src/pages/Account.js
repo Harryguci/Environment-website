@@ -17,7 +17,7 @@ import FormProduct from "../components/FormProduct";
 import "../Assets/SCSS/account.scss";
 import ReactPlayer from "react-player";
 import AuthContext from "../helpers/Authcontext";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import AlertDismissible from "../components/AlertDismissable";
 import ActiveNavLink from "../helpers/ActiveNavLink";
 
@@ -381,7 +381,7 @@ export default function Account() {
           </Col>
           {(currentTab === "blogs" && (
             <Col xl={8}>
-              {!slugState && (
+              {authState.id === user.id && (
                 <div className="mb-5">
                   <h2 className="heading-2">Đăng Blog mới</h2>
                   <FormBlog />
@@ -433,7 +433,7 @@ export default function Account() {
           )) || (currentTab === "products" &&
             <Col xl={8}>
               <div>
-                {!slugState && (
+                {authState.id === user.id && (
                   <div className="mb-5">
                     <h2 className="heading-2">Đăng sản phẩm mới</h2>
                     <FormProduct user={user} />
@@ -464,6 +464,7 @@ export default function Account() {
                         <div className="info">
                           <h3>{user.username}</h3>
                           <ListGroup>
+                            <ListGroupItem>{product.name}</ListGroupItem>
                             <ListGroupItem>
                               Mô tả: {product.description}
                               <Button style={{
@@ -513,19 +514,7 @@ export default function Account() {
                         </div>
                         {(authState.id === user.id && (
                           <div className="control mt-3 d-flex">
-                            <Button
-                              className="custom-btn primary"
-                              onClick={(e) =>
-                                setAlert({
-                                  heading: "ERROR",
-                                  type: "danger",
-                                  content: "Tính năng đang được nâng cấp",
-                                  hide: () => setAlert({}),
-                                })
-                              }
-                            >
-                              Cập nhật
-                            </Button>
+                            <a className="btn custom-btn" href={`/products/edit/${product._id}`}>Edit</a>
                             <Button
                               className="custom-btn"
                               style={{
@@ -567,7 +556,7 @@ export default function Account() {
             ) || (currentTab === "orders" &&
               <Col xl={8}>
                 <div>
-                  {!slugState && (
+                  {authState.id === user.id && (
                     <div className="mb-5">
                       <h2 className="heading-2">Tất cả đơn hàng của bạn</h2>
                     </div>

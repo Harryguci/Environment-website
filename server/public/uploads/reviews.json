@@ -1,0 +1,62 @@
+[
+    {
+        "id": 0,
+        "user": "Harryguci",
+        "description": "Hà Nội thủ đô Việt Nam",
+        "location": {
+            "lat": "21.023997",
+            "lng": "105.806099"
+        },
+        "image": {
+            "fieldname": "image",
+            "originalname": "VIP_3273.jpg",
+            "encoding": "7bit",
+            "mimetype": "image/jpeg",
+            "destination": "F:\\My Project\\Weather-app\\server\\public\\uploads",
+            "filename": "VIP_3273.jpg",
+            "path": "F:\\My Project\\Weather-app\\server\\public\\uploads\\VIP_3273.jpg",
+            "size": 3084562,
+            "url": "/uploads/VIP_3273.jpg"
+        }
+    },
+    {
+        "id": 1,
+        "user": "Harryguci",
+        "description": "ĐH. Giao thông Vận tải Hà Nội",
+        "location": {
+            "lat": "21.02806992126223",
+            "lng": "105.80366134643556"
+        },
+        "image": {
+            "fieldname": "image",
+            "originalname": "IMG_0296.JPG",
+            "encoding": "7bit",
+            "mimetype": "image/jpeg",
+            "destination": "F:\\My Project\\Weather-app\\server\\public\\uploads",
+            "filename": "IMG_0296.JPG",
+            "path": "F:\\My Project\\Weather-app\\server\\public\\uploads\\IMG_0296.JPG",
+            "size": 7355065,
+            "url": "/uploads/IMG_0296.JPG"
+        }
+    },
+    {
+        "id": 2,
+        "user": "harryguci",
+        "description": "Mô tả",
+        "location": {
+            "lat": "21.03394211679488",
+            "lng": "105.78799321793412"
+        },
+        "image": {
+            "fieldname": "image",
+            "originalname": "z4787194480713_d0a8f6af2f53e44b7c92b88b2f02c210.jpg",
+            "encoding": "7bit",
+            "mimetype": "image/jpeg",
+            "destination": "F:\\MyProject\\Client-weather-app\\server\\public\\uploads",
+            "filename": "z4787194480713_d0a8f6af2f53e44b7c92b88b2f02c210.jpg",
+            "path": "F:\\MyProject\\Client-weather-app\\server\\public\\uploads\\z4787194480713_d0a8f6af2f53e44b7c92b88b2f02c210.jpg",
+            "size": 645370,
+            "url": "/uploads/z4787194480713_d0a8f6af2f53e44b7c92b88b2f02c210.jpg"
+        }
+    }
+]

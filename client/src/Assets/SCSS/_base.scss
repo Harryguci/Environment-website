@@ -8,12 +8,11 @@ $dark: #535353;
 * {
   box-sizing: border-box;
 }
-  
+
 html,
 body {
-  // font-family: "Nunito", sans-serif;
   font-family: "Roboto", sans-serif;
-} 
+}
 
 #root {
   overflow: hidden;
@@ -28,6 +27,11 @@ body {
   * {
     font-size: 1.6rem;
   }
+}
+
+input,
+.form-control {
+  font-size: 1.6rem;
 }
 
 .circle-layout {

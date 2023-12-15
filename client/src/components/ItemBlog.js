@@ -12,6 +12,7 @@ function ItemBlog({ blog, user, handleDeleteBlog }, key) {
   const [userState, setUserState] = useState(user);
 
   useEffect(() => {
+    console.log(blog);
     setBlogState(blog);
   }, [blog]);
 
@@ -39,7 +40,8 @@ function ItemBlog({ blog, user, handleDeleteBlog }, key) {
         </p>
       </div>
       <div className="d-flex media">
-        {blogState.files &&
+        {blogState &&
+          blogState.files &&
           blogState.files.length &&
           blogState.files.map((file) => (
             <div key={file.filename}>

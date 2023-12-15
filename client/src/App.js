@@ -19,6 +19,9 @@ import NoPage from "./pages/NoPage";
 import About from "./pages/About";
 import Cart from "./pages/Cart";
 import Contact from "./pages/Contact";
+import ProductEdit from "./pages/ProductEdit";
+import Maps from "./pages/Maps";
+import Travel from "./pages/Travel";
 
 function App() {
   const [authState, setAuthSate] = useState({
@@ -86,6 +89,7 @@ function App() {
                   {/* Not use a layout if the current page is Login or Sign Up */}
                   <Route path="/login" element={<Login typeForm={"login"} />} />
                   <Route path="/signup" element={<Login typeForm={"signup"} />} />
+                  <Route path="/maps" element={<Maps />} />
 
                   {/* Use a Layout */}
                   <Route path="/" element={<Layout />}>
@@ -94,6 +98,7 @@ function App() {
                     <Route path="/blogs" element={<Blogs />} />
                     <Route path="/blogs/single/:id" element={<BlogSingle />} />
                     <Route path="/products" element={<Products />} />
+                    <Route path="/products/edit/:id" element={<ProductEdit />} />
                     <Route path="/products/single/:id" element={<ProductSingle />} />
                     <Route path="/account/:id" element={<Account />} />
                     <Route path="/account" element={<Account />} />
@@ -102,6 +107,7 @@ function App() {
                     <Route path="/about" element={<About />} />
                     <Route path="/cart" element={<Cart />} />
                     <Route path="/contact" element={<Contact />} />
+
                     <Route path="*" element={<NoPage />} />
                   </Route>
                 </Routes>

@@ -97,9 +97,11 @@ export default function ProductFrame({ className }) {
     });
   };
 
-  const HandleFilerName = async (value) => {
+  const HandleFilerName = async (e) => {
+    e.preventDefault();
+    
     await axios
-      .get(`/products/all?q=${value}`, {
+      .get(`/products/all?q=${search}`, {
         headers: {
           accessToken: localStorage.getItem("accessToken"),
         },
@@ -120,21 +122,22 @@ export default function ProductFrame({ className }) {
       <Container fluid className={"product-frame " + className}>
         <Row>
           <div className="d-flex search-container justify-content-center" >
-            <FormLabel className="d-flex my-3 my-md-5" style={{ alignItems: 'center', gap: '1rem' }}>
-              <Button className="custom-btn heading-2 my-auto" style={{ fontSize: '1.5rem', padding: '1rem' }}
-                onClick={() => HandleFilerName(search)}>
-                <FontAwesomeIcon icon={faMagnifyingGlass} />
-              </Button>
-              <FormControl
-                type="text" style={{
-                  maxWidth: '700px',
-                  width: '90vw',
-                  fontSize: '1.6rem',
-                  height: '100%'
-                }}
-                onChange={(e) => setSearch(e.target.value)}
-              />
-            </FormLabel>
+            <Form onSubmit={(e) => HandleFilerName(e)}>
+              <FormLabel className="d-flex my-3 my-md-5" style={{ alignItems: 'center', gap: '1rem' }}>
+                <Button className="custom-btn heading-2 my-auto" style={{ fontSize: '1.5rem', padding: '1rem' }}>
+                  <FontAwesomeIcon icon={faMagnifyingGlass} />
+                </Button>
+                <FormControl
+                  type="text" style={{
+                    maxWidth: '700px',
+                    width: '90vw',
+                    fontSize: '1.6rem',
+                    height: '100%'
+                  }}
+                  onChange={(e) => setSearch(e.target.value)}
+                />
+              </FormLabel>
+            </Form>
           </div>
         </Row>
         <Row style={{ rowGap: "3rem" }}>

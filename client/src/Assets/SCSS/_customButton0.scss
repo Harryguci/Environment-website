@@ -1,0 +1,38 @@
+.custom-button {
+  padding: 0.5rem 1rem;
+  border: 1px solid rgba(50, 50, 50, 0);
+  outline: none;
+  border-radius: 5px;
+
+  background: rgb(170, 170, 170);
+  background-color: rgb(170, 170, 170);
+
+  color: white;
+  transition: all 0.3s ease-in-out;
+
+  &:hover {
+    color: rgb(50, 50, 50);
+    font-weight: bold;
+    background: rgba(170, 170, 170, 0.3);
+    border: 1px solid rgb(50, 50, 50);
+  }
+}
+
+.custom-button.primary {
+  background: rgb(120, 120, 250);
+  background-color: rgb(120, 120, 250);
+  &:hover {
+    color: rgb(120, 120, 250);
+    background: rgba(120, 120, 250, 0.3);
+    border: 1px solid rgb(50, 50, 255);
+  }
+}
+.custom-button.danger {
+  background: rgb(250, 120, 120);
+  background-color: rgb(250, 120, 120);
+  &:hover {
+    color: rgb(250, 120, 120);
+    background: rgba(250, 120, 120, 0.3);
+    border: 1px solid rgb(255, 50, 50);
+  }
+}

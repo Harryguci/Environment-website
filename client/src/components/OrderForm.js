@@ -75,8 +75,8 @@ export default function OrderForm({ product, user, hide, CbSuccess }) {
   return (
     <>
       {alert && alert.heading && <AlertDismissible {...alert} />}
-      <div className="background-dark" onClick={(e) => hide && hide()}></div>
-      <div className="order-form-container center" onSubmit={handleSubmit}>
+      <div className="background-dark" style={{zIndex: 500}} onClick={(e) => hide && hide()}></div>
+      <div className="order-form-container center" style={{zIndex: 600}} onSubmit={handleSubmit}>
         <Button
           className="position-absolute m-0 danger"
           style={{ right: -15, top: -15 }}

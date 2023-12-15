@@ -1,0 +1,134 @@
+@use "baseMaps";
+@use "customButton";
+
+#maps-container {
+  * {
+    font-size: 1.6rem !important;
+  }
+  .brand {
+    color: rgb(20, 20, 150);
+    margin-bottom: 1rem;
+    display: block;
+    width: 100%;
+    filter: drop-shadow(3px 3px 3px rgba(0, 0, 255, 0.5));
+  }
+
+  .information-box {
+    position: absolute;
+    right: 1rem;
+    bottom: 2rem;
+    box-shadow: 5px 5px 30px rgba(0, 0, 0, 0.3);
+    z-index: 2000;
+    font-size: 2rem;
+
+    @media (max-width: 767px) {
+      font-size: 1rem;
+
+      .list-group-item {
+        padding: 0.4rem 0.7rem;
+        font-size: 0.7rem !important;
+      }
+    }
+
+    .list-group-item {
+      font-size: 0.8rem;
+      padding-left: 1.5rem;
+      padding-right: 1.5rem;
+      border: none;
+      b {
+        color: rgb(50, 50, 230);
+      }
+    }
+  }
+
+  .maps-section {
+    z-index: 5;
+    position: relative;
+
+    > .row {
+      flex-direction: row;
+    }
+
+    &__control {
+      background: #ffffff;
+      position: fixed;
+      left: 0;
+      top: 0;
+      height: 100vh;
+      width: 50%;
+      max-width: 200px;
+      overflow-y: auto;
+
+      transition: all 0.3s ease-in-out;
+
+      animation-name: show-menu-control;
+      animation-duration: 0.3s;
+      animation-fill-mode: both;
+      animation-timing-function: ease-in-out;
+    }
+
+    &__control.hidden {
+      animation-name: hide-menu-control;
+    }
+
+    &__main {
+      position: relative;
+    }
+
+    @media (max-width: 767px) {
+      > .row {
+        flex-direction: column-reverse;
+      }
+    }
+
+    @keyframes show-menu-control {
+      0% {
+        opacity: 0;
+        transform: translate(-50%, 0);
+      }
+      100% {
+        opacity: 1;
+        transform: translate(0, 0);
+      }
+    }
+
+    @keyframes hide-menu-control {
+      0% {
+        opacity: 1;
+        transform: translate(0, 0);
+      }
+      100% {
+        opacity: 0;
+        transform: translate(-50%, 0);
+      }
+    }
+  }
+
+  .alert {
+    position: absolute !important;
+    z-index: 50;
+    left: 50%;
+    top: 0;
+    width: 50%;
+    min-width: 300px;
+    transform: translate(-50%, 0);
+  }
+
+  .background-dark {
+    position: fixed;
+    z-index: 500;
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.2);
+    z-index: 500;
+  }
+
+  .leaflet-control-geocoder-form {
+    input {
+      font-size: 16px !important;
+      padding: 0.5rem;
+    }
+  }
+}
