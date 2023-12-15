@@ -95,7 +95,8 @@ function BlogList({ limits, typeBlog }, ...props) {
               key={index}
               style={{ height: '30rem', marginBottom: '1rem' }}
             />)}
-        </Container>}
+        </Container>
+      }
 
       {blogs.length > limitState && (
         <div className="d-flex justify-content-center">
