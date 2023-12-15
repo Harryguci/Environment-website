@@ -99,7 +99,7 @@ export default function ProductFrame({ className }) {
 
   const HandleFilerName = async (e) => {
     e.preventDefault();
-    
+
     await axios
       .get(`/products/all?q=${search}`, {
         headers: {
@@ -307,7 +307,9 @@ export default function ProductFrame({ className }) {
           </Col>
         </Row>
       </Container>
-      {alertState && alertState.heading && <AlertDismissible {...alertState} />}
+      {alertState &&
+        alertState.heading &&
+        <AlertDismissible {...alertState} />}
     </>
   );
 }
