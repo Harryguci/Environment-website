@@ -1,22 +1,26 @@
 # Giới thiệu/Quy mô:
 
--Trang website về bảo vệ môi trường cho phép người dùng mua bán, trao đổi các sản phẩm thân thiện với môi trường. Người dùng có thể đăng tải các bài viết như một mạng xã hội nhằm cung cấp thông tin và kêu gọi cộng đồng bảo vệ môi trường.
+- Website mạng xã hội và thương mại điện tử.
+  Cung cấp môi trường mạng xã hội giúp mọi người đăng tải và tìm kiếm thông tin bài viết.
+  Người dùng còn có thể đăng bán và mua các sản phẩm như 1 sàn thương mại điện tử.
+
+- Tính năng bản đồ du lịch: mọi người chia sẻ những khoảng khắc ở nơi mình đi qua và xem các bài viết khác trên bản đồ
+
+<img src="./imgs/home1.png" />
+<img src="./imgs/home2.png" />
+<img src="./imgs/home3.png" />
+<img src="./imgs/account.png" />
+<img src="./imgs/login.png" />
 
 # User case:
 
 1. Home
-2. Products
-3. Blogs
-4. About
-5. Account
-
-# Tính năng:
-
-1. Đăng ký / đăng nhập tài khoản
-2. Đặt / sửa / xóa đơn hàng
-3. Tìm kiếm
-4. Đăng bán
-5. Đăng blog
+2. Travel Maps
+3. Products
+4. Blogs
+5. About
+6. Account
+7. Login / Sign Up
 
 # Models:
 

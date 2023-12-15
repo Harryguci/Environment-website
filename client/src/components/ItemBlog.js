@@ -12,7 +12,6 @@ function ItemBlog({ blog, user, handleDeleteBlog }, key) {
   const [userState, setUserState] = useState(user);
 
   useEffect(() => {
-    console.log(blog);
     setBlogState(blog);
   }, [blog]);
 
@@ -23,12 +22,13 @@ function ItemBlog({ blog, user, handleDeleteBlog }, key) {
   const { authState } = useContext(AuthContext);
 
   return (
-    <li
-      key={key}
-      className="list-group-item border-0 mb-5 user-blog-container__list__item"
-    >
+    <li key={key}
+      className="list-group-item border-0 mb-5 user-blog-container__list__item">
       <div className="info">
-        <h3>@{userState.username}</h3>
+        <h4 style={{ marginBottom: '1rem' }}>
+          @{userState.username}
+        </h4>
+        <h3>{blogState.title}</h3>
         <p style={{ whiteSpace: "pre-line" }}>
           {showMore ? blogState.detail : blogState.detail.substring(0, 400)}
           <button
