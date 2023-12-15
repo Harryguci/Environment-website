@@ -4,9 +4,9 @@ const { validateToken } = require("../middleware/Authentication");
 const productController = require('../app/controllers/ProductController')
 const upload = require('../middleware/upload');
 
-router.get("/user/:id", validateToken, productController.showByUserId);
-
 router.get("/single/:id", validateToken, productController.showProductById);
+
+router.get("/user/:id", validateToken, productController.showByUserId);
 
 router.post("/delete/single", validateToken, productController.deleteOne);
 

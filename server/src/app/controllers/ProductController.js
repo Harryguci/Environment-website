@@ -102,6 +102,7 @@ class ProductController {
     // [GET] /products/single/:id
     showProductById = async (req, res, next) => {
         const id = req.params.id;
+        
         console.log(req.params);
 
         const product = await Product.findById(id)
@@ -124,7 +125,7 @@ class ProductController {
     // [GET] /products
     showAll = async function (req, res, next) {
         let q = req.query.q;
-        console.log('products' + q);
+        // console.log('products' + q);
         let filter = {};
         if (q) filter = { name: { "$regex": q, "$options": "i" } };
 

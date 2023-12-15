@@ -8,6 +8,7 @@ import {
     FormLabel,
     Col
 } from "react-bootstrap";
+import ReactPlayer from "react-player";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 function ProductEdit() {
@@ -28,7 +29,7 @@ function ProductEdit() {
 
         setId(productId);
 
-        axios.get(`/products/${productId}`, {
+        axios.get(`/products/single/${productId}`, {
             headers: {
                 accessToken: localStorage.getItem("accessToken"),
             },
@@ -45,6 +46,7 @@ function ProductEdit() {
                         description: data.description,
                         cost: data.cost,
                         remain: data.remain,
+                        files: data.files
                     })
                 }
             })
@@ -52,7 +54,10 @@ function ProductEdit() {
     }, [productId])
 
     useEffect(() => {
-
+        setName(productState.name);
+        setDescription(productState.description);
+        setCost(productState.cost);
+        setRemain(productState.remain);
     }, [productState]);
 
     return (
@@ -83,6 +88,8 @@ function ProductEdit() {
                             <FormLabel>Description</FormLabel>
                             <FormControl
                                 id="description" name="description"
+                                as="textarea"
+                                rows={5}
                                 placeholder="Description"
                                 value={description}
                                 onChange={(e) =>
@@ -116,8 +123,39 @@ function ProductEdit() {
                     </Form>
                 </Col>
                 <Col md={6}>
-                    <div>
-
+                    <div className="d-flex" style={{
+                        flexWrap: 'wrap',
+                        maxHeight: '100rem',
+                        overflow: 'auto'
+                    }}>
+                        {productState.files &&
+                            productState.files.length &&
+                            productState.files.map((file) => (
+                                <div key={file.filename} style={{ margin: '1rem' }}>
+                                    {file.mimetype.indexOf("video") !== -1 ? (
+                                        <div className="video-section">
+                                            <ReactPlayer
+                                                url={`/blogs/${file.filename}`}
+                                                width="100%"
+                                                height="auto"
+                                                playing={false}
+                                                controls={true}
+                                            />
+                                        </div>
+                                    ) : (
+                                        <div className="thumbnail h-100 d-flex justify-content-center align-items-center rounded-2 overflow-hidden"
+                                            style={{ aspectRatio: '16/9' }}>
+                                            <img
+                                                src={`/blogs/${file.filename}`}
+                                                alt="SFIT"
+                                                width={100 + "%"}
+                                                height={100 + "%"}
+                                                style={{ objectFit: "cover" }}
+                                            />
+                                        </div>
+                                    )}
+                                </div>
+                            ))}
                     </div>
                 </Col>
             </Row>

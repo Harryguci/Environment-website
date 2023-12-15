@@ -25,6 +25,8 @@ export default function BlogSingle(props) {
   useEffect(() => setPageState("products"), [setPageState])
 
   useEffect(() => {
+    //    console.log('PRODUCT ID', productId);
+
     axios
       .get(`/products/single/${productId}`, {
         headers: {
