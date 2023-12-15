@@ -6,11 +6,11 @@
 
 - Tính năng bản đồ du lịch: mọi người chia sẻ những khoảng khắc ở nơi mình đi qua và xem các bài viết khác trên bản đồ
 
-<img src="./imgs/home1.png" />
-<img src="./imgs/home2.png" />
-<img src="./imgs/home3.png" />
-<img src="./imgs/account.png" />
-<img src="./imgs/login.png" />
+<img src="./imgs/home1.png" alt="harryguci" />
+<img src="./imgs/home2.png" alt="harryguci" />
+<img src="./imgs/home3.png" alt="harryguci" />
+<img src="./imgs/account.png" alt="harryguci" />
+<img src="./imgs/login.png" alt="harryguci" />
 
 # User case:
 
@@ -35,7 +35,7 @@
 
 # Client:
 
-- React Js, bootstrap, …
+- React Js, bootstrap, Open street maps (Leaflet - JS library)
 
 # Server:
 
