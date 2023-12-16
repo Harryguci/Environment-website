@@ -133,10 +133,10 @@
 }
 
 .search-btn {
-  background: rgb(50, 50, 250);
-  
+  background: rgb(255, 118, 5);
+  background: linear-gradient(110deg, #ff4b2b 0%, #ff416c 100%);
+  // background-size: 200% 200%;
   &:hover {
-    background: rgb(10, 10, 100);
+    filter: brightness(90%);
   }
 }
-

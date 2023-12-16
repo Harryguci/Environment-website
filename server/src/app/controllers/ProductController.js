@@ -96,7 +96,7 @@ class ProductController {
 
         await product.save().catch((err) => console.log(err));
 
-        res.redirect("https://localhost:3000/account/products");
+        res.redirect("back");
     }
 
     // [GET] /products/single/:id

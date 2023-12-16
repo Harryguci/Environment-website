@@ -188,7 +188,7 @@ export default function Cart() {
             </Row>
           )}
       </Container>
-      <OrderList />
+      <OrderList key={showOrderForm}/>
 
       {alertState && alertState.heading && <AlertConfirm {...alertState} />}
       {alertDismissState && alertDismissState.heading && (

@@ -12,6 +12,7 @@ import DisplayPrice from "../helpers/DisplayPrice";
 import AuthContext from "../helpers/Authcontext";
 import CartContext from "../helpers/CartContext";
 import CurrentPageContext from "../helpers/CurrentPageContext";
+import AlertDismissable from '../components/AlertDismissable';
 
 export default function BlogSingle(props) {
   const [product, setBlog] = useState({});
@@ -21,6 +22,7 @@ export default function BlogSingle(props) {
   const { cartState, setCartState } = useContext(CartContext);
   const { authState } = useContext(AuthContext);
   const { setPageState } = useContext(CurrentPageContext);
+  const [alertState, setAlertState] = useState({});
 
   useEffect(() => setPageState("products"), [setPageState])
 
@@ -56,13 +58,30 @@ export default function BlogSingle(props) {
           accessToken: localStorage.getItem("accessToken"),
         },
         body: JSON.stringify({ product_id: productId }),
-      }).then((response) => console.log(response.json()));
+      }).then((response) => {
+        if (response.error) {
+          setAlertState({
+            heading: 'Thông báo',
+            content: 'Có lỗi xảy ra, Thêm vào giỏ hàng không thành công',
+            type: 'error',
+            hide: () => setAlertState({})
+          });
+        }
+        else
+          setAlertState({
+            heading: 'Thông báo',
+            content: 'Thêm vào giỏ hàng thành công',
+            type: 'success',
+            hide: () => setAlertState({})
+          });
+      });
     }
   };
 
   return (
     <React.Fragment>
-      <Container className="blog-single-container">
+      {alertState && alertState.heading && <AlertDismissable {...alertState} />}
+      <Container className="blog-single-container product-single-container">
         <Row>
           <Col md={4} className="media">
             {product.files &&
@@ -122,7 +141,7 @@ export default function BlogSingle(props) {
               )}
             </div>
           </Col>
-          <Col>
+          <Col md={8}>
             <div>
               {product && product.name && (
                 <h1 className="heading">{product.name}</h1>

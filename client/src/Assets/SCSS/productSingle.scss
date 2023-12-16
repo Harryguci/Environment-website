@@ -4,7 +4,7 @@ a.add-cart-btn {
   font-size: 2rem;
   border: none;
   padding: 1rem 2rem;
-  margin-top: 2rem;
+  margin: 2rem 0;
   transition: all 0.3s ease-in-out;
 
   &:hover,
@@ -21,4 +21,18 @@ a.add-cart-btn {
   border-radius: 0.5rem;
   font-size: 2rem;
   font-weight: bold;
+}
+.product-single-container {
+  .row:first-child {
+    flex-direction: row;
+    flex-wrap: nowrap;
+  }
+}
+.product-single-container {
+  @media (max-width: 768px) {
+    .row:first-child {
+      flex-wrap: wrap;
+      flex-direction: column-reverse;
+    }
+  }
 }

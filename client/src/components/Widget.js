@@ -36,7 +36,7 @@ export default function Widget(
   }, [description, showAllDescription]);
 
   return (
-    <Container className={"widget " + className} key={props.key}>
+    <Container className={"widget" + (className ? ` ${className}` : '')} key={props.key}>
       <Row
         className="justify-content-center"
         style={
@@ -52,7 +52,7 @@ export default function Widget(
                 {index <= 1 && (
                   <Badge bg="secondary fs-5 bg-danger mb-2">New</Badge>
                 )}
-                <h3 style={{ fontSize: '5rem', fontWeight: 'bold', color: '#97d534' }}>
+                <h3>
                   {heading || "HEADING"}
                   <p className="fw-light">
                     Tác giả: <b className="fw-bold">{author}</b>
@@ -77,11 +77,11 @@ export default function Widget(
         </Col>
         <Col md={6}>
           <Row>
-            <div className="widget__thumbnail">
+            <a href={link} className="d-block widget__thumbnail">
               <div className="thumbnail">
                 {imageUrl ? <img src={imageUrl} alt="SFIT" /> : <></>}
               </div>
-            </div>
+            </a>
           </Row>
         </Col>
       </Row>

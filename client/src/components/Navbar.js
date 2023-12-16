@@ -116,7 +116,7 @@ function NavbarCustom({ user }) {
                 <FontAwesomeIcon icon={faMap} />
                 <span style={window.innerWidth < 768 ? { display: 'block' } : { display: 'none' }}>Travel Maps</span>
               </Nav.Link>
-              
+
               <Nav.Link name="products" href="/products" title="Products"
                 className={pageState === "products" ? "active" : ""} >
                 <FontAwesomeIcon icon={faBagShopping} />

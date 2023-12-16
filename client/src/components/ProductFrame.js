@@ -124,7 +124,8 @@ export default function ProductFrame({ className }) {
           <div className="d-flex search-container justify-content-center" >
             <Form onSubmit={(e) => HandleFilerName(e)}>
               <FormLabel className="d-flex my-3 my-md-5" style={{ alignItems: 'center', gap: '1rem' }}>
-                <Button className="custom-btn heading-2 my-auto" style={{ fontSize: '1.5rem', padding: '1rem' }}>
+                <Button type="submit"
+                  className="custom-btn heading-2 my-auto" style={{ fontSize: '1.5rem', padding: '0.5rem 1rem' }}>
                   <FontAwesomeIcon icon={faMagnifyingGlass} />
                 </Button>
                 <FormControl
@@ -132,7 +133,7 @@ export default function ProductFrame({ className }) {
                     maxWidth: '700px',
                     width: '90vw',
                     fontSize: '1.6rem',
-                    height: '100%'
+                    height: '100%',
                   }}
                   onChange={(e) => setSearch(e.target.value)}
                 />
@@ -245,7 +246,7 @@ export default function ProductFrame({ className }) {
                             href={`/products/single/${product._id}`}
                             className="text-decoration-none"
                           >
-                            <h3 className="fs-3">{product.name}</h3>
+                            <h3 className="fs-3">{product.name.substr(0, 30)}{product.name.length > 30 ? '...' : ''}</h3>
                           </a>
                           <p>
                             Giá bán:<b> {DisplayPrice(product.cost)}</b>
