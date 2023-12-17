@@ -1,4 +1,4 @@
-import { useEffect, useState, useContext } from "react";
+import { useEffect, useState, useContext, useRef, useLayoutEffect } from "react";
 import {
   Container,
   Row,
@@ -13,6 +13,9 @@ import axios from "axios";
 export default function OrderList() {
   const { authState } = useContext(AuthContext);
   const [orders, setOrders] = useState([]);
+
+  const orderCostRef = useRef(null);
+
   useEffect(() => {
     if (authState.id)
       axios
@@ -29,7 +32,9 @@ export default function OrderList() {
         });
   }, [authState.id]);
 
-  //   useEffect(() => console.log(orders), [orders]);
+  const formatMoney = (number) => {
+    return number.toLocaleString('en-US', { style: 'currency', currency: 'VND' });
+  }
 
   return (
     <Container>
@@ -57,7 +62,7 @@ export default function OrderList() {
                     <tr>
                       {/* <td>{order._id}</td> */}
                       <td>{order.product_name}</td>
-                      <td>{order.cost}</td>
+                      <td ref={orderCostRef}>{formatMoney(order.cost)}</td>
                       <td>{order.phone}</td>
                       <td>{order.address}</td>
                       <td>{order.status}</td>
