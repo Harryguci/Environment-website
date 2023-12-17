@@ -57,6 +57,25 @@ export default function ProductFrame({ className }) {
 
   const [alertState, setAlertState] = useState({});
 
+  const refreshCart = () => {
+    if (authState.id) {
+      axios
+        .get(`/cart/single/${authState.id}`, {
+          headers: {
+            accessToken: localStorage.getItem("accessToken"),
+          },
+        })
+        .then((response) => {
+          if (response.data.error) {
+            // Call alert show error
+          } else {
+            setCartState(prev => [...prev, response.data]);
+          }
+        });
+    }
+  };
+
+
   const AddToCart = async (product) => {
     if (authState.id) {
       setCartState([...cartState, product._id]);
@@ -67,14 +86,15 @@ export default function ProductFrame({ className }) {
           accessToken: localStorage.getItem("accessToken"),
         },
         body: JSON.stringify({ product_id: product._id }),
-      }).then((response) =>
+      }).then((response) => {
+        refreshCart();
         setAlertState({
           type: "success",
           heading: "Thêm vào giỏ hàng",
           content: "Thêm vào giỏ hàng thành công",
           hide: () => setAlertState({}),
-        })
-      );
+        });
+      });
     }
   };
 

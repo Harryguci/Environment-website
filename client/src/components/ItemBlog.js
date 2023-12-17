@@ -1,16 +1,18 @@
 import ReactPlayer from "react-player";
-import { useState, useEffect, useContext, memo } from "react";
+import { useState, useEffect, useContext, memo, useReducer } from "react";
 import { Button } from "react-bootstrap";
 import "../Assets/SCSS/components/showMoreBtn.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrash, faComment } from "@fortawesome/free-solid-svg-icons";
+import { faTrash, faComment, faEllipsis } from "@fortawesome/free-solid-svg-icons";
 import AuthContext from "../helpers/Authcontext";
+import '../Assets/SCSS/components/blogitem.scss';
+import Submenu from "./Submenu";
 
 function ItemBlog({ blog, user, handleDeleteBlog }, key) {
   const [showMore, setShowMore] = useState(false);
   const [blogState, setBlogState] = useState(blog);
   const [userState, setUserState] = useState(user);
-
+  const [showSettingMenu, setShowSettingMenu] = useReducer(prev => !prev, false);
   useEffect(() => {
     setBlogState(blog);
   }, [blog]);
@@ -23,14 +25,40 @@ function ItemBlog({ blog, user, handleDeleteBlog }, key) {
 
   return (
     <li key={key}
-      className="list-group-item border-0 mb-5 user-blog-container__list__item">
+      className="blog-item list-group-item border-0 mb-5 user-blog-container__list__item">
       <div className="info">
-        <h4 style={{ marginBottom: '1rem' }}>
-          @{userState.username}
-        </h4>
+        <div class="d-flex blog-item__header">
+          <h4 style={{ marginBottom: '1rem' }}>
+            @{userState.username}
+          </h4>
+          {authState.id === user.id &&
+            <button className="btn blog-item__show-setting-btn"
+              onClick={setShowSettingMenu}>
+              <FontAwesomeIcon
+                icon={faEllipsis}
+                style={{ color: 'blue' }} />
+            </button>}
+          {showSettingMenu &&
+            <Submenu items={[
+              {
+                content: 'Edit status',
+                link: `/blogs/edit/${blog._id}`
+              }
+            ]}
+              id=''
+              className=""
+              style={{
+                position: 'absolute',
+                right: 0,
+                top: 10,
+                transform: 'translate(50%, 100%)'
+              }} />}
+        </div>
         <h3>{blogState.title}</h3>
         <p style={{ whiteSpace: "pre-line" }}>
-          {showMore ? blogState.detail : blogState.detail.substring(0, 400)}
+          {showMore ?
+            blogState.detail :
+            blogState.detail.substring(0, 400)}
           <button
             className="show-more-btn"
             onClick={(e) => setShowMore(!showMore)}

@@ -28,7 +28,6 @@ class BlogsController {
             .catch((err) => next(err));
     }
 
-
     // [GET] /blogs/moi-truong
     showAboutEnvironment = async (req, res, next) => {
         await Blog.find({})
@@ -139,6 +138,27 @@ class BlogsController {
         await blog.save();
 
         res.redirect("http://localhost:3000/account");
+    }
+
+    // [POST] /blogs/edit/:id
+    edit = async (req, res) => {
+        const data = req.body;
+        const id = req.params.id;
+        var blog = {
+            id: id,
+            title: data.title,
+            detail: data.detail,
+        }
+        // console.log('BLOG: ', blog);
+
+        try {
+            var curr = await Blog.updateOne({ _id: blog.id }, blog);
+            res.send({
+                data: curr
+            });
+        } catch (err) {
+            res.send({ error: err.message });
+        }
     }
 }
 

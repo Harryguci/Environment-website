@@ -19,6 +19,8 @@ router.get("/single/:id", validateToken, blogsController.showSingle);
 
 router.post("/delete/single", validateToken, blogsController.deleteSingle);
 
+router.post("/edit/:id", validateToken, blogsController.edit);
+
 router.post("/", upload.array("files", 12), blogsController.uploadOne);
 
 module.exports = router;

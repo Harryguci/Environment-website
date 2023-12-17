@@ -21,6 +21,7 @@ import Cart from "./pages/Cart";
 import Contact from "./pages/Contact";
 import ProductEdit from "./pages/ProductEdit";
 import Maps from "./pages/Maps";
+import BlogEdit from "./pages/BlogEdit";
 import Travel from "./pages/Travel";
 
 function App() {
@@ -97,6 +98,7 @@ function App() {
                     <Route path="/" element={<Home />} />
                     <Route path="/blogs" element={<Blogs />} />
                     <Route path="/blogs/single/:id" element={<BlogSingle />} />
+                    <Route path="/blogs/edit/:id" element={<BlogEdit />} />
                     <Route path="/products" element={<Products />} />
                     <Route path="/products/edit/:id" element={<ProductEdit />} />
                     <Route path="/products/single/:id" element={<ProductSingle />} />
