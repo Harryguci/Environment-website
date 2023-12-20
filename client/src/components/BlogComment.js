@@ -1,4 +1,4 @@
-import { useState, useEffect, memo, useContext } from 'react';
+import { useState, useEffect, useRef, memo, useContext } from 'react';
 import axios from 'axios';
 import AlertDismissable from './AlertDismissable';
 import AlertConfirm from './AlertConfirm';
@@ -14,6 +14,7 @@ function BlogComment({ blog }) {
     const [alert, setAlert] = useState({});
     const [alertConfirm, setAlertConfirm] = useState({});
     const { authState } = useContext(AuthContext);
+    const contentInput = useRef(null);
 
     useEffect(() => {
         axios.get(`/blogs/comments/${blog._id}?limits=${limits}`, {
@@ -40,6 +41,9 @@ function BlogComment({ blog }) {
 
     const HandleSubmit = async (e) => {
         e.preventDefault();
+        contentInput.current.value = '';
+        setContent("");
+        contentInput.current.focus = true;
 
         await axios.post(`/blogs/comments`, {
             blogId: blog._id,
@@ -64,7 +68,7 @@ function BlogComment({ blog }) {
                 <Form action='/blogs/comments' method='POST' onSubmit={HandleSubmit}>
                     <FormControl name='username' type='hidden' value={authState.username} />
                     <div className='d-flex'>
-                        <FormControl name='content' placeholder='' value={content}
+                        <FormControl ref={contentInput} name='content' placeholder='' value={content}
                             onChange={e => setContent(e.target.value)} />
                         <Button type='submit' style={{ flex: '0 0 10%' }}>
                             <FontAwesomeIcon icon={faShare} />

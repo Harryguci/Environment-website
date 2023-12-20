@@ -1,9 +1,9 @@
+import "../Assets/SCSS/blogSingle.scss";
 import React, { useEffect, useState, useContext } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import { Container, Row, Col } from "react-bootstrap";
 import ReactPlayer from "react-player";
-import "../Assets/SCSS/blogSingle.scss";
 import { useNavigate } from "react-router-dom";
 import AlertDismissible from "../components/AlertDismissable";
 import CurrentPageContext from "../helpers/CurrentPageContext";
