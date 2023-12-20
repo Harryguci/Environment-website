@@ -1,4 +1,4 @@
-import { useState, useContext, useEffect, useCallback, useRef } from "react";
+import { useState, useContext, useEffect, useCallback, memo } from "react";
 import {
   Container,
   Navbar,
@@ -30,6 +30,8 @@ import CartContext from "../helpers/CartContext";
 import CurrentPageContext from "../helpers/CurrentPageContext";
 import AlertDismissible from "../components/AlertDismissable";
 import AlertConfirm from "../components/AlertConfirm";
+
+import '../Assets/SCSS/components/navbar.scss';
 
 function NavbarCustom({ user }) {
   const [search, setSearch] = useState("");
@@ -70,10 +72,6 @@ function NavbarCustom({ user }) {
     navigate(`/search/${search}`);
   }, [navigate, search]);
 
-  useEffect(() =>
-    console.log(pageState),
-    [pageState]);
-
   const HandleLogout = useCallback(() => {
     setAlertConfirm({
       heading: "Bạn có chắc muốn đăng xuất?",
@@ -109,28 +107,28 @@ function NavbarCustom({ user }) {
               <Nav.Link name="home" title="Home" href="/"
                 className={pageState === "home" ? "active" : ""}>
                 <FontAwesomeIcon icon={faHome} />
-                <span style={window.innerWidth < 768 ? { display: 'block' } : { display: 'none' }}>Home</span>
+                <span>Home</span>
               </Nav.Link>
               <Nav.Link name="maps" href="/maps" title="Travel Maps"
                 className={pageState === "maps" ? "active" : ""} >
                 <FontAwesomeIcon icon={faMap} />
-                <span style={window.innerWidth < 768 ? { display: 'block' } : { display: 'none' }}>Travel Maps</span>
+                <span>Travel Maps</span>
               </Nav.Link>
 
               <Nav.Link name="products" href="/products" title="Products"
                 className={pageState === "products" ? "active" : ""} >
                 <FontAwesomeIcon icon={faBagShopping} />
-                <span style={window.innerWidth < 768 ? { display: 'block' } : { display: 'none' }}>Products</span>
+                <span>Products</span>
               </Nav.Link>
               <Nav.Link name="blogs" href="/blogs" title="News Feed"
                 className={pageState === "blogs" ? "active" : ""} >
                 <FontAwesomeIcon icon={faNewspaper} />
-                <span style={window.innerWidth < 768 ? { display: 'block' } : { display: 'none' }}>Feed</span>
+                <span>Feed</span>
               </Nav.Link>
               <Nav.Link name="contact" href="/contact" title="Contact"
                 className={pageState === "contact" ? "active" : ""} >
                 <FontAwesomeIcon icon={faPhone} />
-                <span style={window.innerWidth < 768 ? { display: 'block' } : { display: 'none' }}>Contact</span>
+                <span>Contact</span>
               </Nav.Link>
             </Nav>
             <div className="d-flex gap-2 gap-md-5">
@@ -229,4 +227,4 @@ function NavbarCustom({ user }) {
   );
 }
 
-export default NavbarCustom;
+export default memo(NavbarCustom);

@@ -7,6 +7,7 @@ import "../Assets/SCSS/blogSingle.scss";
 import { useNavigate } from "react-router-dom";
 import AlertDismissible from "../components/AlertDismissable";
 import CurrentPageContext from "../helpers/CurrentPageContext";
+import BlogComment from "../components/BlogComment";
 
 export default function BlogSingle(props) {
   const [blog, setBlog] = useState({});
@@ -95,6 +96,11 @@ export default function BlogSingle(props) {
               </a></p>
             <p style={{ whiteSpace: "pre-line" }}>{blog.detail}</p>
           </Col>
+        </Row>
+        <Row>
+          <div>
+            <BlogComment blog={blog} />
+          </div>
         </Row>
       </Container>
       {alert && alert.heading && <AlertDismissible {...alert} />}

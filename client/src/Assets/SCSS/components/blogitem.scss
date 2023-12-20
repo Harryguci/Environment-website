@@ -1,5 +1,30 @@
 .blog-item {
-    &__header {
-        justify-content: space-between;
+  &__header {
+    justify-content: space-between;
+  }
+}
+
+.blog-comments {
+  margin-top: 1rem;
+  .form-control {
+    border-radius: 0;
+  }
+  form {
+    margin-bottom: 1rem;
+  }
+  &__list {
+    border-radius: 0;
+
+    &__item {
+      align-items: center;
+      padding-top: 0.6rem !important;
+      padding-bottom: 0.6rem !important;
+      border: none;
+
+      p {
+        margin: auto 0;
+        display: block;
+      }
     }
+  }
 }

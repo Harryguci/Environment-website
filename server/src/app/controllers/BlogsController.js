@@ -1,4 +1,5 @@
 const Blog = require("../models/Blogs");
+const Comment = require("../models/Comment");
 const User = require("../models/User");
 const fs = require("fs");
 const path = require("path");
@@ -159,6 +160,35 @@ class BlogsController {
         } catch (err) {
             res.send({ error: err.message });
         }
+    }
+
+
+    // [POST] /blogs/comments
+    postComment = async (req, res) => {
+        const data = req.body;
+        if (!data.content)
+            res.send({ error: 'You must write a content for the comment' });
+        const comment = new Comment({
+            username: req.user.username,
+            blogId: data.blogId,
+            content: data.content,
+        });
+
+        await comment.save();
+
+        res.send(comment)
+    };
+
+    // [GET] /blogs/comments/:id?limits
+    getComment = async (req, res) => {
+        const limits = req.query.limits || 5;
+        await Comment.find({ blogId: req.params.id })
+            .limit(limits)
+            .then((comments) => comments.map((comment) => comment.toObject()))
+            .then((comments) => {
+                res.send(comments)
+            }).catch((error) =>
+                res.send({ error: error.message }));
     }
 }
 

@@ -1,13 +1,7 @@
-import { useContext, useEffect } from "react";
 import { Container } from "react-bootstrap";
 import BlogList from "../components/BlogList";
 import ProductFrame from "../components/ProductFrame";
-import CurrentPageContext from "../helpers/CurrentPageContext";
 export default function Home(props) {
-  const { setPageState } = useContext(CurrentPageContext);
-
-  useEffect(() => setPageState("home"), [setPageState]);
-
   return (
     <div className="App">
       <section className="section-blogs">

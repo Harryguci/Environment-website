@@ -1,5 +1,11 @@
 import ReactPlayer from "react-player";
-import { useState, useEffect, useContext, memo, useReducer } from "react";
+import {
+  useState,
+  useEffect,
+  useContext,
+  memo,
+  useReducer
+} from "react";
 import { Button } from "react-bootstrap";
 import "../Assets/SCSS/components/showMoreBtn.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -7,12 +13,17 @@ import { faTrash, faComment, faEllipsis } from "@fortawesome/free-solid-svg-icon
 import AuthContext from "../helpers/Authcontext";
 import '../Assets/SCSS/components/blogitem.scss';
 import Submenu from "./Submenu";
+import BlogComment from "./BlogComment";
 
 function ItemBlog({ blog, user, handleDeleteBlog }, key) {
   const [showMore, setShowMore] = useState(false);
   const [blogState, setBlogState] = useState(blog);
   const [userState, setUserState] = useState(user);
-  const [showSettingMenu, setShowSettingMenu] = useReducer(prev => !prev, false);
+  const [showSettingMenu, setShowSettingMenu]
+    = useReducer(prev => !prev, false);
+
+  const [showComment, setShowComment] = useState(false);
+
   useEffect(() => {
     setBlogState(blog);
   }, [blog]);
@@ -101,7 +112,8 @@ function ItemBlog({ blog, user, handleDeleteBlog }, key) {
         <Button className="btn text-primary" style={{
           background: 'none',
           border: 'none',
-        }}>
+        }}
+          onClick={() => setShowComment(prev => !prev)}>
           <FontAwesomeIcon style={{ fontSize: 2 + 'rem' }} icon={faComment} />
         </Button>
 
@@ -112,6 +124,10 @@ function ItemBlog({ blog, user, handleDeleteBlog }, key) {
           </Button>
         }
       </div>
+      {showComment &&
+        <div className="comment-container">
+          <BlogComment blog={blog} />
+        </div>}
     </li>
   );
 }

@@ -1,7 +1,9 @@
 const Product = require('../models/Product');
 const User = require('../models/User');
+const Order = require('../models/Order');
 const fs = require('fs');
 const path = require('path');
+const OrderController = require('./OrderController');
 
 class ProductController {
     static PageSize = 10;
@@ -47,14 +49,14 @@ class ProductController {
                 error: "Invalid",
             });
         } else {
-            await Product.findById(data.productId)
+            const deleteImageFiles = Product.findById(data.productId)
                 .then(product => product.toObject())
                 .then(product => {
                     const files = product.files;
 
                     try {
                         for (let i = 0; i < files.length; i++)
-                            fs.unlink(path.join(__dirnFame, '..', '..', '..', 'public', 'blogs', files[i].filename),
+                            fs.unlink(path.join(__dirname, '..', '..', '..', 'public', 'blogs', files[i].filename),
                                 function success() {
                                     console.log('DELETING ' + files[i].filename);
                                 });
@@ -64,9 +66,13 @@ class ProductController {
                         return false;
                     }
                 })
-            await Product.findByIdAndDelete(data.productId)
-                .then((value) => res.send({ ...value, success: true }))
-                .catch((err) => res.send(err));
+
+            const orderTask = Order.deleteMany({ product_id: data.productId });
+            const productTask = Product.findByIdAndDelete(data.productId);
+                
+            await Promise.all([orderTask, productTask, deleteImageFiles])
+                .then((values) => res.send({ ...values[1], success: true }))
+                .catch((err) => res.send({ error: err }));
         }
     }
 
@@ -102,7 +108,7 @@ class ProductController {
     // [GET] /products/single/:id
     showProductById = async (req, res, next) => {
         const id = req.params.id;
-        
+
         console.log(req.params);
 
         const product = await Product.findById(id)

@@ -37,15 +37,34 @@ class OrderController {
                     for (let i = 0; i < query.length; i++) {
                         query[i].product_name = await Product.findById(query[i].product_id)
                             .then((product) => product.toObject())
-                            .then((product) => product.name);
+                            .then((product) => product.name)
+                            .catch(error => 'Sản phẩm đã bị xóa');
                     }
 
-                    res.send(query);
-                });
-            console.log('ORDERS: ' + query);
+                    return query;
+                }).catch((error) => error);
 
-            return query && res.send(query);
+            res.send(query);
         }
+    }
+
+    // [GET] /order/product/:id
+    showByProductId = async (req, res, next) => {
+        var query = await Order.find({ product_id: req.params.id })
+            .then((query) => query.map((order) => order.toObject()))
+            .then(async (query) => {
+                for (let i = 0; i < query.length; i++) {
+                    query[i].product_name = await Product.findById(query[i].product_id)
+                        .then((product) => product.toObject())
+                        .then((product) => product.name)
+                        .catch(error => null);
+                }
+
+                res.send(query);
+            });
+        // console.log('ORDERS: ' + query);
+
+        return query && res.send(query);
     }
 
     // [GET] /order/all

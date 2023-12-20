@@ -7,6 +7,8 @@ router.post("/create", validateToken, orderController.createNewOrder);
 
 router.get("/user/:id", validateToken, orderController.showByUserId);
 
+router.get("/product/:id", validateToken, orderController.showByProductId);
+
 router.get("/all", orderController.showAll);
 
 module.exports = router;

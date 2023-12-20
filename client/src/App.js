@@ -22,7 +22,7 @@ import Contact from "./pages/Contact";
 import ProductEdit from "./pages/ProductEdit";
 import Maps from "./pages/Maps";
 import BlogEdit from "./pages/BlogEdit";
-import Travel from "./pages/Travel";
+// import Travel from "./pages/Travel";
 
 function App() {
   const [authState, setAuthSate] = useState({
