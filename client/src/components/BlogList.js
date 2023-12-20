@@ -8,29 +8,20 @@ import LoadingCard from '../components/LoadingCard';
 
 function BlogList({ limits, typeBlog }, ...props) {
   const [blogs, setBlogs] = useState([]);
-  const [limitState, setLimitState] = useState(limits || 10);
+  const [limitState, setLimitState] = useState(limits || 5);
+  const [pageIndex, setPageIndex] = useState(1);
   const [isFetch, setIsFetch] = useState(false);
-  //const [loadingElements, setLoadingElements] = useState([]);
-  // useEffect(() => {
-  //   const loadings = [];
-
-  //   for (let i = 0; i < limitState.length; i++) {
-  //     loadings.push(<LoadingCard key={i} style={{ height: '30rem' }} />)
-  //   }
-  //   console.log(loadings);
-  //   setLoadingElements(loadings);
-  // }, [limitState]);
 
   useEffect(() => {
     ActiveNavLink("blogs");
   }, []);
 
   useEffect(() => {
-    let type = "moi-truong";
+    let type = "all";
     if (typeBlog) type = typeBlog;
 
     axios
-      .get(`/blogs/${type}`, {
+      .get(`/blogs/${type}?limits=${limitState}&pageIndex=${pageIndex}`, {
         headers: {
           accessToken: localStorage.getItem("accessToken"),
         },
@@ -49,29 +40,29 @@ function BlogList({ limits, typeBlog }, ...props) {
             setIsFetch(true);
             return blog;
           });
-
-          setBlogs(temps.reverse());
+          //temps.reverse();
+          setBlogs(temps);
         }
       })
       .catch((err) => alert(err));
-  }, [typeBlog]);
+  }, [limitState, pageIndex, typeBlog]);
+
+  const HandleChangeLimits = () => {
+    setLimitState((prev) => prev + 5);
+  };
 
   return (
     <>
       {blogs &&
         blogs.length &&
         blogs
-          .slice(0, limitState)
           .map((blog, index) => (
             <Widget
               index={index}
               key={index + 1}
               typeWidget={index % 2 === 0 ? `left` : "right"}
-              heading={
-                blog.title.trim().substring(0, 50) +
-                (blog.title.length >= 50 ? "..." : "")
-              }
-              description={blog.detail.trim()}
+              heading={blog.title}
+              description={blog.detail.trim().substring(0, 100)}
               link={`/blogs/single/${blog._id}`}
               imageUrl={`/blogs/${blog.imageUrl}`}
               author={blog.username}
@@ -98,16 +89,14 @@ function BlogList({ limits, typeBlog }, ...props) {
         </Container>
       }
 
-      {blogs.length > limitState && (
-        <div className="d-flex justify-content-center">
-          <Button
-            className="custom-btn"
-            onClick={(e) => setLimitState((prev) => prev + 5)}
-          >
-            Xem thêm..
-          </Button>
-        </div>
-      )}
+      {blogs && <div className="d-flex justify-content-center">
+        <Button
+          className="custom-btn"
+          onClick={HandleChangeLimits}
+        >
+          Xem thêm..
+        </Button>
+      </div>}
     </>
   );
 }

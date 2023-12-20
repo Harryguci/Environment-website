@@ -4,6 +4,9 @@ const User = require("../models/User");
 const fs = require("fs");
 const path = require("path");
 class BlogsController {
+    // BlogsController() {
+    //     limits = 5;
+    // }
 
     // [GET] /blogs/users/:id
     getByUserId = async function (req, res) {
@@ -49,9 +52,15 @@ class BlogsController {
             .catch((err) => next(err));
     }
 
-    // [GET] /blogs/all
+    // [GET] /blogs/all?limits&pageIndex
     showAll = async (req, res, next) => {
+        const limits = req.query.limits || 5;
+        const pageIndex = req.query.pageIndex || 1;
+
         await Blog.find({})
+            .limit(limits)
+            .skip((pageIndex - 1) * limits)
+            .sort({create_at: -1})
             .then(async (query) => {
                 query = Array.from(query);
                 query = query.map((blog) => blog.toObject());
@@ -138,7 +147,7 @@ class BlogsController {
 
         await blog.save();
 
-        res.redirect("http://localhost:3000/account");
+        res.redirect("back");
     }
 
     // [POST] /blogs/edit/:id
