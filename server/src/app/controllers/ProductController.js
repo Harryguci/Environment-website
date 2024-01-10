@@ -11,13 +11,24 @@ class ProductController {
     // [GET] /products/all
     showAll = async function (req, res, next) {
         var q = req.query.q;
-        console.log('Query ', q);
-        var pageIndex = query.pageIndex || 1;
+        var type = req.query.type;
 
-        await Product.find({ name: { "$regex": q, "$options": "i" } })
-            .skip((pageIndex - 1) * PageSize)
-            .take(PageSize)
-            .then((query) => {
+        console.log('[Query]', q);
+        console.log('[Type]', type);
+
+        var pageIndex = req.query.pageIndex || 1;
+
+        var productQuery = Product;
+        var whereObj = {};
+
+        if (q)
+            whereObj.name = { "$regex": q, "$options": "i" };
+        if (type)
+            whereObj.type = type;
+
+        await productQuery.find(whereObj)
+            .skip((pageIndex - 1) * ProductController.PageSize)
+            .limit(ProductController.PageSize).then((query) => {
                 query = Array.from(query);
                 query = query.map((product) => product.toObject());
                 res.send(query);
@@ -69,7 +80,7 @@ class ProductController {
 
             const orderTask = Order.deleteMany({ product_id: data.productId });
             const productTask = Product.findByIdAndDelete(data.productId);
-                
+
             await Promise.all([orderTask, productTask, deleteImageFiles])
                 .then((values) => res.send({ ...values[1], success: true }))
                 .catch((err) => res.send({ error: err }));
@@ -79,8 +90,8 @@ class ProductController {
     // [POST] /products
     uploadNewProduct = async (req, res) => {
         const data = req.body;
-        // console.log("PRODUCTS POST", req.files);
-        // console.log("PRODUCTS POST", req.body);
+        console.log("PRODUCTS POST", req.files);
+        console.log("PRODUCTS POST", req.body);
         var imgUrl = "NoImage.jpg";
 
         if (
@@ -95,6 +106,7 @@ class ProductController {
             description: data.detail.toString(),
             userId: data.userId,
             cost: data.cost,
+            type: data.type || 'other',
             remain: data.remain,
             files: [...req.files],
             imageUrl: imgUrl,
@@ -129,7 +141,7 @@ class ProductController {
     }
 
     // [GET] /products
-    showAll = async function (req, res, next) {
+    showAll2 = async function (req, res, next) {
         let q = req.query.q;
         // console.log('products' + q);
         let filter = {};

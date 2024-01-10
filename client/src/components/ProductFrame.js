@@ -32,6 +32,7 @@ export default function ProductFrame({ className }) {
   const [otherAddress, setOtherAddress] = useState("");
   const [search, setSearch] = useState("");
   const [isFetch, setIsFetch] = useState(false);
+  const [typeState, setTypeState] = useState("");
 
   useEffect(() => {
     axios
@@ -51,6 +52,24 @@ export default function ProductFrame({ className }) {
       })
       .catch((error) => console.error(error));
   }, []);
+
+  useEffect(() => {
+    axios
+      .get(`/products/all?type=${typeState}`, {
+        headers: {
+          accessToken: localStorage.getItem("accessToken"),
+        },
+      })
+      .then((data) => {
+        if (data.data.error) return console.log(data.data.error);
+        else {
+          setProducts(data.data.reverse());
+        }
+
+        setIsFetch(true);
+      })
+      .catch((error) => console.error(error));
+  }, [typeState]);
 
   const { authState } = useContext(AuthContext);
   const { cartState, setCartState } = useContext(CartContext);
@@ -74,7 +93,6 @@ export default function ProductFrame({ className }) {
         });
     }
   };
-
 
   const AddToCart = async (product) => {
     if (authState.id) {
@@ -106,6 +124,7 @@ export default function ProductFrame({ className }) {
     ["trang-tri", "Decor - Trang trí"],
     ["do-luu-niem", "Đồ lưu niệm"],
     ["other", "Khác"],
+    ['', 'Tất cả']
   ]);
 
   const showErrorAlert = () => {
@@ -137,6 +156,12 @@ export default function ProductFrame({ className }) {
       .catch((error) => console.error(error));
   };
 
+  const HandleChangeProductType = (type) => {
+    setTypeState(type);
+    setIsFetch(false);
+    setProducts([]);
+  };
+
   return (
     <>
       <Container fluid className={"product-frame " + className}>
@@ -165,17 +190,17 @@ export default function ProductFrame({ className }) {
           <Col md={2} className="px-4">
             <div>
               <p className="selector-title">Loại sản phẩm</p>
-              <ul className="control-list">
+              <ul className="control-list rounded-3 overflow-hidden">
                 {productType &&
                   productType.length &&
                   productType.map((item) => (
                     <li className="control-list__item p-0" key={item[0]}>
-                      <a
-                        style={{ textDecoration: "none", display: "block", padding: '1rem' }}
-                        href={`/products/${item[0]}`}
+                      <Button
+                        style={{ textDecoration: "none", display: "block", padding: '1rem', width: '100%', textAlign: 'left' }}
+                        onClick={() => HandleChangeProductType(item[0])}
                       >
                         {item[1]}
-                      </a>
+                      </Button>
                     </li>
                   ))}
               </ul>

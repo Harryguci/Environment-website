@@ -1,6 +1,8 @@
 const Blog = require("../models/Blogs");
 const Comment = require("../models/Comment");
 const User = require("../models/User");
+const Notification = require('../models/Notification')
+
 const fs = require("fs");
 const path = require("path");
 class BlogsController {
@@ -60,7 +62,7 @@ class BlogsController {
         await Blog.find({})
             .limit(limits)
             .skip((pageIndex - 1) * limits)
-            .sort({create_at: -1})
+            .sort({ create_at: -1 })
             .then(async (query) => {
                 query = Array.from(query);
                 query = query.map((blog) => blog.toObject());
@@ -177,6 +179,7 @@ class BlogsController {
         const data = req.body;
         if (!data.content)
             res.send({ error: 'You must write a content for the comment' });
+
         const comment = new Comment({
             username: req.user.username,
             blogId: data.blogId,
@@ -185,12 +188,25 @@ class BlogsController {
 
         await comment.save();
 
+        const currentBlog = await Blog.findById(data.blogId);
+        const user2 = await User.findById(currentBlog.userId);
+
+        if (user2) {
+
+            let noti = new Notification({
+                username: user2.username,
+                content: `<b>${req.user.username}</b> đã bình luận bài viết của bạn`,
+                link: `/blogs/single/${currentBlog._id}`,
+            });
+            await noti.save();
+        }
+
         res.send(comment)
     };
 
     // [GET] /blogs/comments/:id?limits
     getComment = async (req, res) => {
-        const limits = req.query.limits || 5;
+        const limits = req.query.limits;
         await Comment.find({ blogId: req.params.id })
             .limit(limits)
             .then((comments) => comments.map((comment) => comment.toObject()))

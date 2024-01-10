@@ -31,6 +31,8 @@ function FormProduct({ user: userInfo }) {
 
   const [previewUrl, setPreviewUrl] = useState([]);
 
+  const [type, setType] = useState([])
+
   useEffect(() => {
     setUser({
       username: authState.username,
@@ -69,11 +71,29 @@ function FormProduct({ user: userInfo }) {
       let value = e.target.files;
       setShowPreview(true);
       e.target.files = null;
-      console.log(value);
-
       return value;
     });
   };
+
+  const HandleChangeType = (e) => {
+    console.log(e.target.value);
+    if (e.target.checked)
+      setType(e.target.value);
+  }
+
+  useEffect(() => {
+    console.log('Type : ', type);
+  }, [type])
+
+  const types = [
+    { name: 'thoi-trang', display: 'Thời trang' },
+    { name: 'do-gia-dung', display: 'Đồ gia dụng' },
+    { name: 'do-dung-hoc-tap', display: 'Đồ dùng học tập' },
+    { name: 'phu-kien', display: 'Phụ kiện' },
+    { name: 'trang-tri', display: 'Trang trí' },
+    { name: 'do-luu-niem', display: 'Đồ lưu niệm' },
+    { name: 'other', display: 'Khác' },
+  ]
 
   // eslint-disable-next-line no-unused-vars
   const HandleSubmit = (e) => {
@@ -84,6 +104,8 @@ function FormProduct({ user: userInfo }) {
       detail: detailState,
       userId: user.id,
       files: files,
+      type: type,
+
       headers: {
         "Content-Type": "multipart/form-data",
       },
@@ -93,6 +115,17 @@ function FormProduct({ user: userInfo }) {
   const typeList = useMemo(() => (
     <div className="my-4">
       <p className="fw-bold">Loại hàng</p>
+      {types && types.map(elem =>
+      (<Form.Check
+        key={elem.name}
+        type="radio"
+        name={`type`}
+        id={elem.name}
+        value={elem.name}
+        label={elem.display}
+        onChange={e => HandleChangeType(e)}
+      />))}
+      {/*       
       <Form.Check
         type="checkbox"
         name={`type`}
@@ -134,7 +167,7 @@ function FormProduct({ user: userInfo }) {
         name={`other`}
         id={`other`}
         label={`Khác`}
-      />
+      /> */}
     </div>
   ), []);
 

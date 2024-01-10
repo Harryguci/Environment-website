@@ -6,25 +6,43 @@
 
 .blog-comments {
   margin-top: 1rem;
+
   .form-control {
     border-radius: 0;
   }
+
   form {
     margin-bottom: 1rem;
   }
+
   &__list {
     border-radius: 0;
+    max-height: 0;
+    transition: max-height 0.3s linear;
+    overflow-y: auto;
+
+    &::-webkit-scrollbar {
+      width: 5px;
+    }
 
     &__item {
       align-items: center;
       padding-top: 0.6rem !important;
       padding-bottom: 0.6rem !important;
       border: none;
+      a {
+        color: rgb(0, 0, 200);
+      }
 
       p {
         margin: auto 0;
         display: block;
       }
     }
+  }
+
+  &__list.active {
+    max-height: 30rem;
+    transition: max-height 0.3s ease-in-out;
   }
 }

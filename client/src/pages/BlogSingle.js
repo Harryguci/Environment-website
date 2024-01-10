@@ -99,7 +99,7 @@ export default function BlogSingle(props) {
         </Row>
         <Row>
           <div>
-            <BlogComment blog={blog} />
+            <BlogComment blog={blog} limits={10} />
           </div>
         </Row>
       </Container>

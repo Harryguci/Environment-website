@@ -15,7 +15,7 @@ import {
   faCartShopping,
   faHome,
   faBagShopping,
-  faCircleInfo,
+  faBell,
   faNewspaper,
   faPhone,
   faMap
@@ -30,7 +30,7 @@ import CartContext from "../helpers/CartContext";
 import CurrentPageContext from "../helpers/CurrentPageContext";
 import AlertDismissible from "../components/AlertDismissable";
 import AlertConfirm from "../components/AlertConfirm";
-
+import NotiSubmenu from "./NotiSubmenu";
 import '../Assets/SCSS/components/navbar.scss';
 
 function NavbarCustom({ user }) {
@@ -45,9 +45,10 @@ function NavbarCustom({ user }) {
   const { cartState } = useContext(CartContext);
   const { pageState, setPageState } = useContext(CurrentPageContext);
   const [cartNumber, setCartNumber] = useState(cartState.length || 0);
-  // const currentPage = useRef("home");
   const [alert, setAlert] = useState("");
   const [alertConfirm, setAlertConfirm] = useState("");
+  const [noti, setNoti] = useState(false);
+  const [notiNum, setNotiNum] = useState(0);
 
   useEffect(() => {
     if (authState.id)
@@ -67,6 +68,15 @@ function NavbarCustom({ user }) {
           }
         });
   }, [authState, cartState]);
+
+  useEffect(() => {
+    axios.get('/notification/new', {
+      headers: {
+        accessToken: localStorage.getItem('accessToken')
+      },
+    }).then(res => res.data)
+      .then(data => setNotiNum(data.length));
+  }, [])
 
   const sendSearch = useCallback(() => {
     navigate(`/search/${search}`);
@@ -90,6 +100,10 @@ function NavbarCustom({ user }) {
       cancel: () => setAlertConfirm({}),
     });
   }, [authState, navigate, setAuthSate]);
+
+  const HandleToggleNoti = (e) => {
+    setNoti(prev => !prev)
+  };
 
   return (
     <React.Fragment>
@@ -193,6 +207,20 @@ function NavbarCustom({ user }) {
                         >
                           <FontAwesomeIcon icon={faRightFromBracket} />
                         </Button>
+                        <Button className="d-block w-100 border-0"
+                          style={{
+                            fontSize: "16px",
+                            background: "rgb(255, 50, 50)",
+                          }}
+                          onClick={HandleToggleNoti}>
+                          <FontAwesomeIcon icon={faBell} />
+                          <Badge
+                            className="position-absolute"
+                            style={{ right: -15, zIndex: 100 }}
+                          >
+                            {notiNum > 0 && notiNum}
+                          </Badge>
+                        </Button>
                         <Button
                           className="d-block w-100 border-0"
                           style={{
@@ -215,6 +243,7 @@ function NavbarCustom({ user }) {
                             {cartNumber || 0}
                           </Badge>
                         </Button>
+                        <NotiSubmenu visible={noti} />
                       </ButtonGroup>
                     </>
                   ))}

@@ -1,8 +1,9 @@
 @use "base";
+@use "thumbnail";
 
 .heading {
   // color: base.$primary;
-  font-weight: regular;
+  font-weight: bold;
   font-size: 3rem;
   //background: rgb(250, 50, 50);
   color: white;
