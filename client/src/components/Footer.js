@@ -112,6 +112,7 @@ function Footer() {
                     className="footer__section-container__item products-container"
                   >
                     <a
+                      className="thumbnail"
                       href={`/products/single/${product._id}`}
                       style={{ cursor: "pointer" }}
                     >
@@ -126,7 +127,7 @@ function Footer() {
                       style={{
                         position: "absolute",
                         display: "block",
-                        bottom: 10 + "px",
+                        bottom: 10 + "px",  
                         padding: "0 1rem",
                         zIndex: 10,
                       }}

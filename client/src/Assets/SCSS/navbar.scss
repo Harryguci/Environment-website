@@ -11,6 +11,7 @@
     font-size: 2rem;
   }
 }
+
 .navbar-brand {
   font-size: 3rem;
   font-weight: 800;
@@ -45,6 +46,7 @@
     background: base.$primary;
 
     border: none;
+
     &:hover {
       background: rgb(70, 200, 70);
     }
@@ -110,24 +112,27 @@
         transform: translate(0, 0);
         opacity: 1;
       }
+
       &::before {
         display: block !important;
       }
     }
   }
+
   .nav-link.active {
     font-size: bold;
     color: base.$primary;
-    &::after {
-      opacity: 1;
-      transform: translate(0);
-    }
+    // &::after {
+    //   opacity: 1;
+    //   transform: translate(0);
+    // }
   }
 }
 
 .logout-btn {
   background: rgb(200, 200, 200);
 }
+
 .logout-btn:hover {
   background: rgb(150, 150, 150);
 }
@@ -135,8 +140,23 @@
 .search-btn {
   background: rgb(255, 118, 5);
   background: linear-gradient(110deg, #ff4b2b 0%, #ff416c 100%);
+
   // background-size: 200% 200%;
   &:hover {
     filter: brightness(90%);
   }
+}
+
+#navbar-selector {
+  position: absolute;
+  z-index: 10;
+
+  bottom: 0;
+  left: 0;
+  width: 150px;
+  height: 1px;
+  background: base.$primary;
+
+  transition: left 0.3s ease-in-out;
+  transition-duration: 0.3s;
 }

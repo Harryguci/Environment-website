@@ -3,7 +3,7 @@ import '../Assets/SCSS/components/loading.scss';
 
 function Loading({ visible }) {
     const [visibleState, setVisibleState] = useState(false);
-
+    
     useEffect(() => {
         if (visible) {
             setVisibleState(true);

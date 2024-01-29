@@ -17,6 +17,7 @@ function BlogComment({ blog, limits }) {
     const { authState } = useContext(AuthContext);
     const contentInput = useRef(null);
     const [loading, setLoading] = useState(true);
+    const listComment = useRef(null);
 
     useEffect(() => {
         axios.get(`/blogs/comments/${blog._id}?limits=${limitsState}`, {
@@ -35,7 +36,6 @@ function BlogComment({ blog, limits }) {
                 } else {
                     setComments(data);
                     setLoading(false);
-                    console.log(data);
                 }
             })
             .catch((error) => console.error(error));
@@ -68,6 +68,19 @@ function BlogComment({ blog, limits }) {
         setLoading(true);
     }
 
+    useEffect(() => {
+        var numberOfComment = comments.length;
+
+        var li = document.querySelector('.blog-comments__list__item');
+        if (!li) return;
+
+        var height = li.getBoundingClientRect().height;
+
+        if (listComment.current) listComment.current.style.height = height * numberOfComment + 100 + 'px';
+        if (listComment.current) listComment.current.style.maxHeight = height * numberOfComment + 100 + 'px';
+        console.log(height, numberOfComment);
+    }, [listComment, comments]);
+
     return (
         <>
             <Loading visible={loading} />
@@ -85,7 +98,7 @@ function BlogComment({ blog, limits }) {
                     </div>
 
                 </Form>
-                <ul className={'list-group blog-comments__list' + (comments.length > 0 ? ' active' : '')}>
+                <ul ref={listComment} className={'list-group blog-comments__list' + (comments.length > 0 ? ' active' : '')}>
                     {comments && comments.length > 0 &&
                         <>
                             {comments.map((comment, index) =>

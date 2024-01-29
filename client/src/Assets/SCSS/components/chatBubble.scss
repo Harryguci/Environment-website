@@ -1,0 +1,35 @@
+.chat-bubble {
+    position: fixed;
+    border-radius: 50%;
+    background: rgb(50, 50, 255);
+    aspect-ratio: 1/1;
+    width: 50px;
+    height: 50px;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    bottom: 10rem;
+    right: 1rem;
+
+    animation-name: chat-bubble-animate;
+    animation-duration: 1s;
+    animation-fill-mode: both;
+    animation-timing-function: ease-in-out;
+    animation-direction: alternate-reverse;
+    animation-iteration-count: infinite;
+
+    cursor: pointer;
+    box-shadow: 3px 3px 5rem rgba(0, 0, 0, 0.2);
+}
+
+@keyframes chat-bubble-animate {
+    0% {
+        bottom: 10.5rem;
+    }
+
+    100% {
+        bottom: 9.5rem;
+    }
+}

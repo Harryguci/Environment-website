@@ -1,11 +1,6 @@
 import { useEffect, useState, useReducer } from "react";
+import { Link } from "react-router-dom";
 import { Container, Row, Col, Badge } from "react-bootstrap";
-
-// eslint-disable-next-line no-unused-vars
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-// eslint-disable-next-line no-unused-vars
-import { faHeart } from "@fortawesome/free-solid-svg-icons";
-
 import "../Assets/SCSS/components/widget.scss";
 export default function Widget(
   {
@@ -48,7 +43,7 @@ export default function Widget(
         <Col md={6} className="d-flex align-items-center">
           <Row>
             <div className="widget__content-container px-3">
-              <a href={link}>
+              <Link to={link}>
                 {index <= 1 && (
                   <Badge bg="secondary fs-5 bg-danger mb-2">New</Badge>
                 )}
@@ -58,7 +53,7 @@ export default function Widget(
                     Tác giả: <b className="fw-bold">{author}</b>
                   </p>
                 </h3>
-              </a>
+              </Link>
               <p className="widget__description">
                 {displayDescription || "some content..."}
                 <button
@@ -77,11 +72,11 @@ export default function Widget(
         </Col>
         <Col md={6}>
           <Row>
-            <a href={link} className="d-block widget__thumbnail">
+            <Link to={link} className="d-block widget__thumbnail">
               <div className="thumbnail">
                 {imageUrl ? <img src={imageUrl} alt="SFIT" /> : <></>}
               </div>
-            </a>
+            </Link>
           </Row>
         </Col>
       </Row>

@@ -1,4 +1,5 @@
-import { useState, useContext, useEffect, useCallback, memo } from "react";
+import { useState, useContext, useEffect, useCallback, memo, useRef, useLayoutEffect } from "react";
+import { Link, NavLink } from "react-router-dom";
 import {
   Container,
   Navbar,
@@ -49,6 +50,7 @@ function NavbarCustom({ user }) {
   const [alertConfirm, setAlertConfirm] = useState("");
   const [noti, setNoti] = useState(false);
   const [notiNum, setNotiNum] = useState(0);
+  const navbarSelector = useRef(null);
 
   useEffect(() => {
     if (authState.id)
@@ -105,45 +107,67 @@ function NavbarCustom({ user }) {
     setNoti(prev => !prev)
   };
 
+  const [navbarItems, setNavbarItems] = useState([
+    {
+      display: 'Home',
+      name: 'home',
+      href: '/home',
+      icon: faHome,
+    },
+    {
+      display: 'Travel Maps',
+      name: 'maps',
+      href: '/maps',
+      icon: faMap,
+    },
+    {
+      display: 'Products',
+      name: 'products',
+      href: '/products',
+      icon: faBagShopping,
+    },
+    {
+      display: 'Contact',
+      name: 'contact',
+      href: '/contact',
+      icon: faNewspaper,
+    },
+  ]);
+
   return (
     <React.Fragment>
       {alert && alert.heading && <AlertDismissible {...alert} />}
       {alertConfirm && alertConfirm.heading && <AlertConfirm {...alertConfirm} />}
       <Navbar key={`${authState.id}`} collapseOnSelect expand="lg" data-bs-theme="light">
         <Container>
-          <Navbar.Brand href="/">HAR</Navbar.Brand>
+          <NavLink className={'nav-brand'} to={'/home'}>
+            <img src="/harryguci-logo-orange.png" alt="logo" style={{ width: '50px', height: '50px' }} />
+          </NavLink>
+          {/* <Navbar.Brand href="/">
+          </Navbar.Brand> */}
           <Navbar.Toggle id="toggle-btn" aria-controls="responsive-navbar-nav">
             <FontAwesomeIcon icon={faBars} />
           </Navbar.Toggle>
           <Navbar.Collapse id="responsive-navbar-nav"
             style={{ justifyContent: 'center' }}>
             <Nav className="me-auto mx-auto">
-              <Nav.Link name="home" title="Home" href="/"
-                className={pageState === "home" ? "active" : ""}>
-                <FontAwesomeIcon icon={faHome} />
-                <span>Home</span>
-              </Nav.Link>
-              <Nav.Link name="maps" href="/maps" title="Travel Maps"
-                className={pageState === "maps" ? "active" : ""} >
-                <FontAwesomeIcon icon={faMap} />
-                <span>Travel Maps</span>
-              </Nav.Link>
-
-              <Nav.Link name="products" href="/products" title="Products"
-                className={pageState === "products" ? "active" : ""} >
-                <FontAwesomeIcon icon={faBagShopping} />
-                <span>Products</span>
-              </Nav.Link>
-              <Nav.Link name="blogs" href="/blogs" title="News Feed"
-                className={pageState === "blogs" ? "active" : ""} >
-                <FontAwesomeIcon icon={faNewspaper} />
-                <span>Feed</span>
-              </Nav.Link>
-              <Nav.Link name="contact" href="/contact" title="Contact"
-                className={pageState === "contact" ? "active" : ""} >
-                <FontAwesomeIcon icon={faPhone} />
-                <span>Contact</span>
-              </Nav.Link>
+              {navbarItems.map(item =>
+                <NavLink key={item.name}
+                  name={item.name}
+                  to={item.href}
+                  title={item.display}
+                  className={
+                    ({ isActive, isPending }) =>
+                      isActive
+                        ? "nav-link active"
+                        : isPending
+                          ? "nav-link pending"
+                          : "nav-link"
+                  }>
+                  <FontAwesomeIcon icon={item.icon} />
+                  <span>{item.display}</span>
+                </NavLink>
+              )}
             </Nav>
             <div className="d-flex gap-2 gap-md-5">
               <form
@@ -191,13 +215,13 @@ function NavbarCustom({ user }) {
                   ) : (
                     <>
                       <div>
-                        <a
-                          href={`/account/${authState.username}`}
+                        <Link
+                          to={`/account/${authState.username}`}
                           className="btn fw-bold"
                           style={{ color: "rgb(100,100,255)", fontSize: 16 }}
                         >
                           {authState.username}
-                        </a>
+                        </Link>
                       </div>
                       <ButtonGroup className="d-flex gap-1">
                         <Button

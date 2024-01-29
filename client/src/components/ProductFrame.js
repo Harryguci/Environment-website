@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, useRef } from "react";
 import "../Assets/SCSS/components/productFrame.scss";
 import {
   Container,
@@ -138,7 +138,6 @@ export default function ProductFrame({ className }) {
 
   const HandleFilerName = async (e) => {
     e.preventDefault();
-
     await axios
       .get(`/products/all?q=${search}`, {
         headers: {
@@ -162,25 +161,58 @@ export default function ProductFrame({ className }) {
     setProducts([]);
   };
 
+  const idTimeout = useRef(null);
+
+  const HandleChangeSearchContent = async (e) => {
+    setSearch(e.target.value);
+    if (idTimeout.current) clearTimeout(idTimeout.current);
+    idTimeout.current = setTimeout(async () => {
+      await axios
+        .get(`/products/all?q=${search}`, {
+          headers: {
+            accessToken: localStorage.getItem("accessToken"),
+          },
+        })
+        .then((data) => {
+          if (data.data.error)
+            return console.log(data.data.error);
+          else {
+            console.log(data.data);
+            setProducts(data.data.reverse());
+          }
+        })
+        .catch((error) => console.error(error));
+    }, 500);
+  }
+
   return (
     <>
       <Container fluid className={"product-frame " + className}>
         <Row>
           <div className="d-flex search-container justify-content-center" >
             <Form onSubmit={(e) => HandleFilerName(e)}>
-              <FormLabel className="d-flex my-3 my-md-5" style={{ alignItems: 'center', gap: '1rem' }}>
+              <FormLabel className="d-flex my-3 my-md-5" style={{ alignItems: 'center', gap: '0' }}>
                 <Button type="submit"
-                  className="custom-btn heading-2 my-auto" style={{ fontSize: '1.5rem', padding: '0.5rem 1rem' }}>
+                  className="custom-btn heading-2 my-auto" style={{
+                    fontSize: '2rem', padding: '0.5rem 1.5rem',
+                    borderTopRightRadius: '0',
+                    borderBottomRightRadius: '0',
+                  }}>
                   <FontAwesomeIcon icon={faMagnifyingGlass} />
                 </Button>
                 <FormControl
                   type="text" style={{
+                    display: 'block',
                     maxWidth: '700px',
                     width: '90vw',
-                    fontSize: '1.6rem',
-                    height: '100%',
+                    fontSize: '2rem',
+                    borderTopLeftRadius: '0',
+                    borderBottomLeftRadius: '0',
+                    background: 'rgb(245, 245, 245)',
+                    margin: '0',
+                    border: '1px solid rgb(235, 235, 235)'
                   }}
-                  onChange={(e) => setSearch(e.target.value)}
+                  onChange={HandleChangeSearchContent}
                 />
               </FormLabel>
             </Form>
@@ -257,7 +289,7 @@ export default function ProductFrame({ className }) {
           </Col>
           <Col md={10}>
             <div className="product-frame__main">
-              {products && products.length && (
+              {products && products.length > 0 && (
                 <Row className="" style={{ rowGap: "1.5rem" }}>
                   {products.map((product, index) => (
                     <Col

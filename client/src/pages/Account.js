@@ -464,8 +464,8 @@ export default function Account() {
                         <div className="info">
                           <h3>{user.username}</h3>
                           <ListGroup>
-                            <ListGroupItem>{product.name}</ListGroupItem>
-                            <ListGroupItem>
+                            <ListGroupItem style={{fontWeight: 'bold'}}>{product.name}</ListGroupItem>
+                            <ListGroupItem style={{ whiteSpace: "pre-line" }}>
                               Mô tả: {product.description}
                               <Button style={{
                                 background: 'none', border: 'none',

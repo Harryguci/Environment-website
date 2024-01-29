@@ -3,12 +3,10 @@
   position: relative;
   border-radius: 5px;
   background: rgb(240, 240, 240);
-  background: linear-gradient(
-    90deg,
-    rgba(240, 240, 240, 1) 30%,
-    hwb(9 47% 0%) 50%,
-    rgba(240, 240, 240, 1) 70%
-  );
+  background: linear-gradient(90deg,
+      rgba(240, 240, 240, 1) 30%,
+      hwb(9 47% 0%) 50%,
+      rgba(240, 240, 240, 1) 70%);
 
   background-size: 200% 200%;
 
@@ -36,9 +34,11 @@
     0% {
       background-position: 10% 0%;
     }
+
     50% {
       background-position: 91% 100%;
     }
+
     100% {
       background-position: 10% 0%;
     }

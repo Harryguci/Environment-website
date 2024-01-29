@@ -95,7 +95,7 @@ function App() {
                   {/* Use a Layout */}
                   <Route path="/" element={<Layout />}>
                     <Route index element={<Home />} />
-                    <Route path="/" element={<Home />} />
+                    <Route path="/home" element={<Home />} />
                     <Route path="/blogs" element={<Blogs />} />
                     <Route path="/blogs/single/:id" element={<BlogSingle />} />
                     <Route path="/blogs/edit/:id" element={<BlogEdit />} />

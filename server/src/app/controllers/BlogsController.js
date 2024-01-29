@@ -60,9 +60,9 @@ class BlogsController {
         const pageIndex = req.query.pageIndex || 1;
 
         await Blog.find({})
+            .sort({ create_at: -1 })
             .limit(limits)
             .skip((pageIndex - 1) * limits)
-            .sort({ create_at: -1 })
             .then(async (query) => {
                 query = Array.from(query);
                 query = query.map((blog) => blog.toObject());

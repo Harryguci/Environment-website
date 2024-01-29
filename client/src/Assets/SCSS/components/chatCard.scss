@@ -1,0 +1,62 @@
+.chat-card {
+    background: white;
+    border-radius: 1rem;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    box-shadow: 5px 5px 10rem rgba(0, 0, 0, 0.1);
+    margin-bottom: 1rem;
+    overflow: hidden;
+    width: 35rem;
+    // max-height: 40rem;
+    min-width: 300px;
+
+    &__header {
+        display: flex;
+        padding: 1rem;
+        background: rgb(120, 120, 255);
+        color: white;
+    }
+
+    &__contact {
+        display: flex;
+        margin-left: auto;
+        margin-right: 0;
+
+        .btn {
+            font-size: 1.5rem;
+            color: white;
+        }
+    }
+
+    &__info {
+        display: flex;
+
+        &__user {
+
+            p,
+            small {
+                margin: 0;
+            }
+
+            .username {
+                font-weight: bold;
+            }
+
+            .status {
+                color: yellow;
+            }
+        }
+    }
+
+    &__content {
+        height: 30rem;
+    }
+
+    &__footer {
+        padding: 5px;
+        background: rgb(245, 245, 245);
+    }
+}
+
+.chat-container {
+    transition: all 0.3s ease-in-out;
+}

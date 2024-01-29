@@ -54,7 +54,7 @@ function BlogList({ limits, typeBlog }, ...props) {
   return (
     <>
       {blogs &&
-        blogs.length &&
+        blogs.length > 0 &&
         blogs
           .map((blog, index) => (
             <Widget
