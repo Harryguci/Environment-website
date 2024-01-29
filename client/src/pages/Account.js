@@ -514,7 +514,7 @@ export default function Account() {
                         </div>
                         {(authState.id === user.id && (
                           <div className="control mt-3 d-flex">
-                            <a className="btn custom-btn" href={`/products/edit/${product._id}`}>Edit</a>
+                            <Link className="btn custom-btn" to={`/products/edit/${product._id}`}>Edit</Link>
                             <Button
                               className="custom-btn"
                               style={{
@@ -528,12 +528,12 @@ export default function Account() {
                           </div>
                         )) || (
                             <div className="control mt-3 d-flex">
-                              <a
+                              <Link
                                 className="default-link custom-btn primary-blue"
-                                href={`/products/single/${product._id}`}
+                                to={`/products/single/${product._id}`}
                               >
                                 Chi tiết
-                              </a>
+                              </Link>
                             </div>
                           )}
                       </li>

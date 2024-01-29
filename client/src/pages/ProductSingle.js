@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext } from "react";
 import axios from "axios";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { Container, Row, Col, Button } from "react-bootstrap";
 import ReactPlayer from "react-player";
 import "../Assets/SCSS/blogSingle.scss";
@@ -130,13 +130,13 @@ export default function BlogSingle(props) {
                 </>
               ) : (
                 <>
-                  <a
-                    href="/account?tab=products"
+                  <Link
+                    to="/account?tab=products"
                     className="add-cart-btn gap-4 d-flex justify-content-center align-content-center default-link"
                   // onClick={handleAddCart}
                   >
                     Đi đến sản phẩm của bạn
-                  </a>
+                  </Link>
                 </>
               )}
             </div>
@@ -149,12 +149,12 @@ export default function BlogSingle(props) {
             </div>
             <p className="opacity-50">
               Author:
-              <a
-                href={`/account/${product.username}`}
+              <Link
+                to={`/account/${product.username}`}
                 style={{ marginLeft: "1rem" }}
               >
                 {product.username || product.userId}
-              </a>
+              </Link>
             </p>
             <p className="cost">Giá bán: {DisplayPrice(product.cost)} VND</p>
             <p style={{ whiteSpace: "pre-line" }}>{product.description}</p>

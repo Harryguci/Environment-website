@@ -2,6 +2,7 @@ import { useState, useEffect, useContext, memo, useRef } from 'react';
 // import AuthContext from '../helpers/Authcontext';
 import axios from 'axios';
 import '../Assets/SCSS/components/notisubmenu.scss';
+import { Link } from 'react-router-dom';
 
 function NotiSubmenu({ visible }) {
     //const { authState } = useContext(AuthContext);
@@ -57,9 +58,9 @@ function NotiSubmenu({ visible }) {
                     <>
                         {notiData.map((noti, index) =>
                             <li key={index} className='list-group-item'>
-                                <a className='list-group-link' href={noti.link}>
+                                <Link className='list-group-link' to={noti.link}>
                                     <div dangerouslySetInnerHTML={{ __html: noti.content }} />
-                                </a>
+                                </Link>
                             </li>)}
                     </>
                 }

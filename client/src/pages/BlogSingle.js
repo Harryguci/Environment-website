@@ -1,7 +1,7 @@
 import "../Assets/SCSS/blogSingle.scss";
 import React, { useEffect, useState, useContext } from "react";
 import axios from "axios";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { Container, Row, Col } from "react-bootstrap";
 import ReactPlayer from "react-player";
 import { useNavigate } from "react-router-dom";
@@ -88,12 +88,13 @@ export default function BlogSingle(props) {
               )}
             </div>
             <p className="opacity-50">Author:
-              <a
-                href={`/account/${blog.username}`}
+              <Link
+                to={`/account/${blog.username}`}
                 style={{ marginLeft: "1rem" }}
               >
                 {blog.username || blog.userId}
-              </a></p>
+              </Link>
+            </p>
             <p style={{ whiteSpace: "pre-line" }}>{blog.detail}</p>
           </Col>
         </Row>

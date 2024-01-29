@@ -3,7 +3,7 @@ import React, {
     useState, useContext, useRef
 } from "react";
 import axios from "axios";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { Container, Row, Col, FormControl, Form, Button } from "react-bootstrap";
 import ReactPlayer from "react-player";
 import "../Assets/SCSS/blogSingle.scss";
@@ -179,12 +179,12 @@ export default function BlogEdit(props) {
                                 )}
                             </div>
                             <p className="opacity-50 my-2">Author:
-                                <a
-                                    href={`/account/${blog.username}`}
+                                <Link
+                                    to={`/account/${blog.username}`}
                                     style={{ marginLeft: "1rem" }}
                                 >
                                     {blog.username || blog.userId}
-                                </a>
+                                </Link>
                             </p>
                             <textarea
                                 ref={textareaRef}

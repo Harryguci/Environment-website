@@ -21,6 +21,7 @@ import AlertConfirm from "../components/AlertConfirm";
 import AlertDismissable from "../components/AlertDismissable";
 import OrderForm from "../components/OrderForm";
 import OrderList from "../components/OrderList";
+import { Link } from "react-router-dom";
 
 export default function Cart() {
   const { authState } = useContext(AuthContext);
@@ -146,12 +147,12 @@ export default function Cart() {
                         />
                       </div>
                       <div className="cart-container__item__info">
-                        <a
-                          href={`/products/single/${product._id}`}
+                        <Link
+                          to={`/products/single/${product._id}`}
                           className="fs-3 fw-bold default-link text-dark"
                         >
                           {product.name}
-                        </a>
+                        </Link>
                         <p>{product.description.substring(0, 200) + "..."}</p>
                       </div>
                       <div className="cart-container__item__control">

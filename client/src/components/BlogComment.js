@@ -7,6 +7,7 @@ import AuthContext from '../helpers/Authcontext';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faShare } from "@fortawesome/free-solid-svg-icons";
 import Loading from './Loading';
+import { Link } from 'react-router-dom';
 
 function BlogComment({ blog, limits }) {
     const [limitsState, setLimitsState] = useState(limits || 10);
@@ -104,11 +105,11 @@ function BlogComment({ blog, limits }) {
                             {comments.map((comment, index) =>
                                 <li key={index} className='list-group-item blog-comments__list__item'>
                                     <div className='d-flex gap-3'>
-                                        <a href={`/account/${comment.username}`}
+                                        <Link to={`/account/${comment.username}`}
                                             className='blog-comments__list__item__username fw-bold text-decoration-none'
                                             style={{ flex: '0 0 70px' }}>
                                             {comment.username}
-                                        </a>
+                                        </Link>
                                         <p className='blog-comments__list__item__content'>
                                             {comment.content}
                                         </p>

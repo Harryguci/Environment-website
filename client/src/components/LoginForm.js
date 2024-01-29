@@ -3,7 +3,7 @@ import Form from "react-bootstrap/Form";
 import FormControl from "react-bootstrap/FormControl";
 import Button from "react-bootstrap/Button";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import AuthContext from "../helpers/Authcontext";
 import AlertDismissible from "./AlertDismissable";
 
@@ -200,11 +200,6 @@ function LoginForm() {
         <div class="form-container sign-up-container">
           <form action="/auth/signup" onSubmit={(e) => SignupHandle(e)}>
             <h1 style={{ fontSize: '3rem' }}>Create Account</h1>
-            {/* <div class="social-container">
-              <a href="/" class="social"><i class="fab fa-facebook-f"></i></a>
-              <a href="/" class="social"><i class="fab fa-google-plus-g"></i></a>
-              <a href="/" class="social"><i class="fab fa-linkedin-in"></i></a>
-            </div> */}
             <span>or use your email for registration</span>
             <input type="text" placeholder="Username" name='username' value={username} onChange={e => setUsername(e.target.value)} />
             <input type="email" placeholder="Email" name="email" value={email} onChange={e => setEmail(e.target.value)} />
@@ -216,15 +211,10 @@ function LoginForm() {
         <div class="form-container sign-in-container">
           <form action="/auth/login" onSubmit={(e) => LoginHandle(e)}>
             <h1 style={{ fontSize: '3rem' }}>Login</h1>
-            {/* <div class="social-container">
-              <a href="/" class="social"><i class="fab fa-facebook-f"></i></a>
-              <a href="/" class="social"><i class="fab fa-google-plus-g"></i></a>
-              <a href="/" class="social"><i class="fab fa-linkedin-in"></i></a>
-            </div> */}
             <span>or use your account</span>
             <input type="text" placeholder="Username" name="username" value={username} onChange={e => setUsername(e.target.value)} />
             <input type="password" placeholder="Password" name="password" value={password} onChange={e => setPassword(e.target.value)} />
-            <a href="/">Forgot your password?</a>
+            <Link to="/">Forgot your password?</Link>
             <button type="submit">Login</button>
           </form>
         </div>

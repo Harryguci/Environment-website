@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import {
   Container,
   Row,
@@ -94,20 +94,20 @@ export default function Search() {
                 <ListGroup id="search-users" className="px-5">
                   {result.users.slice(0, 5).map((user) => (
                     <ListGroupItem key={user._id}>
-                      <a
+                      <Link
                         className="fs-2 fw-bold text-decoration-none"
-                        href={`/account/${user.username}`}
+                        to={`/account/${user.username}`}
                       >
                         {user.username}
-                      </a>
+                      </Link>
                     </ListGroupItem>
                   ))}
                 </ListGroup>
               )) || (
-                <p className="fs-3 opacity-50">
-                  Không tìm thấy kết quả phù hợp
-                </p>
-              )}
+                  <p className="fs-3 opacity-50">
+                    Không tìm thấy kết quả phù hợp
+                  </p>
+                )}
             </div>
             <div>
               <h2 className="heading">Blogs</h2>
@@ -118,29 +118,29 @@ export default function Search() {
                   <ListGroup id="search-blogs" key={blog._id} className="px-5">
                     <ListGroupItem>
                       <div className="d-flex">
-                        <a
+                        <Link
                           className="fs-2 fw-bold text-decoration-none"
-                          href={`/blogs/single/${blog._id}`}
+                          to={`/blogs/single/${blog._id}`}
                         >
                           {blog.title.substring(0, 60)}
-                        </a>
-                        <a
-                          href={`/account?user=${blog.username}`}
+                        </Link>
+                        <Link
+                          to={`/account?user=${blog.username}`}
                           style={{ marginLeft: "auto", marginRight: 0 }}
                         >
                           <small className="fs-5 fw-thin opacity-50">
                             {blog.username}
                           </small>
-                        </a>
+                        </Link>
                       </div>
                       <p>{blog.description.substring(0, 300)}....</p>
                     </ListGroupItem>
                   </ListGroup>
                 ))) || (
-                <p className="fs-3 opacity-50">
-                  Không tìm thấy kết quả phù hợp
-                </p>
-              )}
+                  <p className="fs-3 opacity-50">
+                    Không tìm thấy kết quả phù hợp
+                  </p>
+                )}
             </div>
             <div>
               <h2 className="heading">Products</h2>
@@ -148,21 +148,21 @@ export default function Search() {
                 <ListGroup id="search-blogs" className="px-5">
                   {result.products.slice(0, 5).map((product) => (
                     <ListGroupItem key={product._id}>
-                      <a
+                      <Link
                         className="fs-2 fw-bold text-decoration-none"
-                        href={`/products/single/${product._id}`}
+                        to={`/products/single/${product._id}`}
                       >
                         {product.name}
-                      </a>
+                      </Link>
                       <p>{product.description.substring(0, 250)} </p>
                     </ListGroupItem>
                   ))}
                 </ListGroup>
               )) || (
-                <p className="fs-3 opacity-50">
-                  Không tìm thấy kết quả phù hợp
-                </p>
-              )}
+                  <p className="fs-3 opacity-50">
+                    Không tìm thấy kết quả phù hợp
+                  </p>
+                )}
             </div>
           </Col>
         </Row>

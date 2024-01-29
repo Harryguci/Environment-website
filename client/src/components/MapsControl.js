@@ -2,6 +2,7 @@ import { useCallback, useMemo, memo } from 'react';
 import { FormControl, Row } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faClose } from '@fortawesome/free-solid-svg-icons';
+import { Link } from 'react-router-dom';
 
 function MapsControl({
     cites,
@@ -71,7 +72,7 @@ function MapsControl({
                     {brandElement}
                 </Row>
                 <Row className='my-5'>
-                    <a className="custom-button" href='/'>Back to Feed</a>
+                    <Link className="custom-button" to='/'>Back to Feed</Link>
                 </Row>
                 <Row className="my-2 d-flex justify-content-center gap-2">
                     {currentLocationBtn}

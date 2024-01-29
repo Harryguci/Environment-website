@@ -16,6 +16,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { useState, useEffect, memo } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 function Footer() {
   const [blogs, setBlogs] = useState([]);
@@ -74,25 +75,25 @@ function Footer() {
                     key={index + 1}
                     className="footer__section-container__item d-flex gap-4"
                   >
-                    <div style={{ flex: "0 0 20%" }}>
+                    <div className="thumbnail-container">
                       <div className="thumbnail">
-                        <a href={`/blogs/${blog._id}`}>
+                        <Link to={`/blogs/${blog._id}`}>
                           <img
                             src={`/blogs/${blog.files[0].filename}`}
                             alt="SFIT"
                           />
-                        </a>
+                        </Link>
                       </div>
                     </div>
-                    <div className="p-3">
-                      <a
-                        href={`/blogs/single/${blog._id}`}
+                    <div className="p-3" style={{ height: '100%', overflow: 'hidden' }}>
+                      <Link
+                        to={`/blogs/single/${blog._id}`}
                         style={{ textDecoration: "none", color: "white" }}
                       >
                         <p className="footer__section-container__item__title">
                           {blog.title.substring(0, 30)}...
                         </p>
-                      </a>
+                      </Link>
                       <p className="footer__section-container__item__content">
                         {blog.description.substring(0, 150) + "..."}
                       </p>
@@ -111,29 +112,29 @@ function Footer() {
                     key={index + 1}
                     className="footer__section-container__item products-container"
                   >
-                    <a
+                    <Link
                       className="thumbnail"
-                      href={`/products/single/${product._id}`}
+                      to={`/products/single/${product._id}`}
                       style={{ cursor: "pointer" }}
                     >
                       <img
                         src={`/blogs/${product.imageUrl}`}
                         alt={product.name}
                       />
-                    </a>
-                    <a
-                      href={`/products/single/${product._id}`}
+                    </Link>
+                    <Link
+                      to={`/products/single/${product._id}`}
                       className="footer__section-container__item__title text-white text-decoration-none"
                       style={{
                         position: "absolute",
                         display: "block",
-                        bottom: 10 + "px",  
+                        bottom: 10 + "px",
                         padding: "0 1rem",
                         zIndex: 10,
                       }}
                     >
                       {product.name}
-                    </a>
+                    </Link>
                   </Col>
                 ))}
               </Row>
@@ -220,12 +221,12 @@ function Footer() {
             className="d-flex gap-3"
             style={{ marginRight: 0, marginLeft: "auto", width: "max-content" }}
           >
-            <a href="/home" style={{ color: "white" }}>
+            <Link to="/home" style={{ color: "white" }}>
               <FontAwesomeIcon icon={faHome} />
-            </a>
-            <a href="/about" style={{ color: "white" }}>
+            </Link>
+            <Link to="/about" style={{ color: "white" }}>
               <FontAwesomeIcon icon={faCircleInfo} />
-            </a>
+            </Link>
           </div>
         </Col>
       </Row>

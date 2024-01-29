@@ -26,6 +26,7 @@ import AuthContext from "../helpers/Authcontext";
 import CartContext from "../helpers/CartContext";
 import LoadingCard from '../components/LoadingCard';
 import AlertDismissible from "./AlertDismissable";
+import { Link } from "react-router-dom";
 
 export default function ProductFrame({ className }) {
   const [products, setProducts] = useState([]);
@@ -319,12 +320,12 @@ export default function ProductFrame({ className }) {
                           />
                         </div>
                         <div className="product-frame__main__item__content">
-                          <a
-                            href={`/products/single/${product._id}`}
+                          <Link
+                            to={`/products/single/${product._id}`}
                             className="text-decoration-none"
                           >
                             <h3 className="fs-3">{product.name.substr(0, 30)}{product.name.length > 30 ? '...' : ''}</h3>
-                          </a>
+                          </Link>
                           <p>
                             Giá bán:<b> {DisplayPrice(product.cost)}</b>
                           </p>

@@ -143,8 +143,7 @@ function NavbarCustom({ user }) {
           <NavLink className={'nav-brand'} to={'/home'}>
             <img src="/harryguci-logo-orange.png" alt="logo" style={{ width: '50px', height: '50px' }} />
           </NavLink>
-          {/* <Navbar.Brand href="/">
-          </Navbar.Brand> */}
+
           <Navbar.Toggle id="toggle-btn" aria-controls="responsive-navbar-nav">
             <FontAwesomeIcon icon={faBars} />
           </Navbar.Toggle>
@@ -199,18 +198,18 @@ function NavbarCustom({ user }) {
               </form>
               <div>
                 {(user && (
-                  <Nav.Link href={`/accounts/${user.username}`}>
+                  <NavLink to={`/accounts/${user.username}`} className={'nav-link'}>
                     {user.username}
-                  </Nav.Link>
+                  </NavLink>
                 )) ||
                   (!authState.status ? (
                     <>
-                      <Nav.Link className="text-center" href="/login">
+                      <NavLink className="text-center nav-link" to="/login">
                         Login
-                      </Nav.Link>
-                      <Nav.Link className="text-center" href="/signup">
+                      </NavLink>
+                      <NavLink className="text-center nav-link" to="/signup">
                         Sign Up
-                      </Nav.Link>
+                      </NavLink>
                     </>
                   ) : (
                     <>

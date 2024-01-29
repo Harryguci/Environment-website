@@ -4,6 +4,7 @@ import Row from "react-bootstrap/Row";
 import LoginForm from "../components/LoginForm";
 // import "../Assets/SCSS/login.scss";
 import "../Assets/CSS/login.scss";
+import { Link } from "react-router-dom";
 export default function Login() {
   // const [type, setType] = useState("login");
 
@@ -36,9 +37,9 @@ export default function Login() {
         }}
       >
         <div className="position-absolute" style={{ bottom: 30, left: 30 }}>
-          <a className="custom-btn primary-blue d-block my-auto" href="/">
+          <Link className="custom-btn primary-blue d-block my-auto" to="/home">
             Trang chủ
-          </a>
+          </Link>
         </div>
         <LoginForm />
 
