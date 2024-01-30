@@ -1,0 +1,11 @@
+.notification-field {
+    position: fixed;
+    display: flex;
+    flex-direction: column-reverse;
+    width: max-content;
+    height: max-content;
+    bottom: 0;
+    left: 0;
+    z-index: 100;
+    row-gap: 5px;
+}

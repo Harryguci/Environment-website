@@ -1,15 +1,10 @@
 import React, { useState, useEffect, useContext, memo } from "react";
-import Form from "react-bootstrap/Form";
-import FormControl from "react-bootstrap/FormControl";
-import Button from "react-bootstrap/Button";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import AuthContext from "../helpers/Authcontext";
 import AlertDismissible from "./AlertDismissable";
 
 function LoginForm() {
-
-  // const [formType, setFormType] = useState("login");
   const { authState, setAuthSate } = useContext(AuthContext);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -192,7 +187,7 @@ function LoginForm() {
       .then((response) => console.log(response))
       .catch((error) => console.log(error.message));
   };
-
+  
   return (
     <React.Fragment>
       {alert && alert.heading && <AlertDismissible {...alert} />}

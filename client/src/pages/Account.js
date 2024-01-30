@@ -19,15 +19,32 @@ import ReactPlayer from "react-player";
 import AuthContext from "../helpers/Authcontext";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import AlertDismissible from "../components/AlertDismissable";
-import ActiveNavLink from "../helpers/ActiveNavLink";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import AlertConfirm from "../components/AlertConfirm";
 import ItemBlog from "../components/ItemBlog";
-
+import NotificationContext from "../helpers/NotificationContext";
 import { useLocation } from "react-router-dom";
 import OrderList from "../components/OrderList";
+
+function BtnAddNoti() {
+  const { setNotificationState } = useContext(NotificationContext);
+  const HandleClick = () => {
+    setNotificationState(prev => [...prev,
+    {
+      id: prev.length === 0 ? 1 : prev[prev.length - 1].id + 1,
+      title: 'hello',
+      contentText: 'my name is harryguci' + prev.length,
+      timer: '30-01-2023',
+      visible: 'true'
+    }]);
+  }
+
+  return (
+    <button className="btn" onClick={HandleClick}>Create</button>
+  )
+}
 
 export default function Account() {
   const { authState } = useContext(AuthContext);
@@ -50,15 +67,11 @@ export default function Account() {
   const location = useLocation();
 
   useEffect(() => {
-    ActiveNavLink("account");
-  }, []);
-
-  useEffect(() => {
     setSlugState(userId);
   }, [userId]);
 
   useEffect(() => {
-    console.log('User:' + userId);
+    // console.log('User:' + userId);
     if (userId) {
       axios
         .get(`/account/${userId}`, {
@@ -69,7 +82,7 @@ export default function Account() {
         .then((response) => {
           if (response.data.error) {
             alert("Bạn phải đăng nhập để truy cập trang web này");
-            navigate("http://localhost:3000/login");
+            navigate("/login");
           } else
             setUser({
               id: response.data.id,
@@ -464,7 +477,7 @@ export default function Account() {
                         <div className="info">
                           <h3>{user.username}</h3>
                           <ListGroup>
-                            <ListGroupItem style={{fontWeight: 'bold'}}>{product.name}</ListGroupItem>
+                            <ListGroupItem style={{ fontWeight: 'bold' }}>{product.name}</ListGroupItem>
                             <ListGroupItem style={{ whiteSpace: "pre-line" }}>
                               Mô tả: {product.description}
                               <Button style={{

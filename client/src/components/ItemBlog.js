@@ -38,7 +38,7 @@ function ItemBlog({ blog, user, handleDeleteBlog }, key) {
     <li key={key}
       className="blog-item list-group-item border-0 mb-5 user-blog-container__list__item">
       <div className="info">
-        <div class="d-flex blog-item__header">
+        <div className="d-flex blog-item__header">
           <h4 style={{ marginBottom: '1rem' }}>
             @{userState.username}
           </h4>

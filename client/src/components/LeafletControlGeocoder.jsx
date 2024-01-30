@@ -31,7 +31,6 @@ export default function LeafletControlGeocoder() {
         map.fitBounds(e.geocode.bbox);
       })
       .addTo(map);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return null;

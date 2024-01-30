@@ -3,6 +3,7 @@ import React, { Suspense, useState, useEffect, useCallback } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import AuthContext from "./helpers/Authcontext";
+import NotificationContext from "./helpers/NotificationContext";
 import CartContext from "./helpers/CartContext";
 import CurrentPageContext from "./helpers/CurrentPageContext";
 import axios from "axios";
@@ -33,6 +34,7 @@ function App() {
   });
 
   const [cartState, setCartState] = useState([]);
+  const [notificationState, setNotificationState] = useState([]);
 
   const [pageState, setPageState] = useState("home");
 
@@ -83,42 +85,44 @@ function App() {
       <AuthContext.Provider value={{ authState, setAuthSate }}>
         <CartContext.Provider value={{ cartState, setCartState }}>
           <CurrentPageContext.Provider value={{ pageState, setPageState }}>
-            <BrowserRouter>
-              <Suspense fallback={<LoadingPage />}>
-                <Routes>
+            <NotificationContext.Provider value={{ notificationState, setNotificationState }}>
+              <BrowserRouter>
+                <Suspense fallback={<LoadingPage />}>
+                  <Routes>
 
-                  {/* Not use a layout if the current page is Login or Sign Up */}
-                  <Route path="/login" element={<Login typeForm={"login"} />} />
-                  <Route path="/signup" element={<Login typeForm={"signup"} />} />
-                  <Route path="/maps" element={<Maps />} />
+                    {/* Not use a layout if the current page is Login or Sign Up */}
+                    <Route path="/login" element={<Login typeForm={"login"} />} />
+                    <Route path="/signup" element={<Login typeForm={"signup"} />} />
+                    <Route path="/maps" element={<Maps />} />
 
-                  {/* Use a Layout */}
-                  <Route path="/" element={<Layout />}>
-                    <Route index element={<Home />} />
-                    <Route path="/home" element={<Home />} />
-                    <Route path="/blogs" element={<Blogs />} />
-                    <Route path="/blogs/single/:id" element={<BlogSingle />} />
-                    <Route path="/blogs/edit/:id" element={<BlogEdit />} />
-                    <Route path="/products" element={<Products />} />
-                    <Route path="/products/edit/:id" element={<ProductEdit />} />
-                    <Route path="/products/single/:id" element={<ProductSingle />} />
-                    <Route path="/account/:id" element={<Account />} />
-                    <Route path="/account" element={<Account />} />
-                    <Route path="/search/:q" element={<Search />} />
-                    <Route path="/search" element={<Search />} />
-                    <Route path="/about" element={<About />} />
-                    <Route path="/cart" element={<Cart />} />
-                    <Route path="/contact" element={<Contact />} />
+                    {/* Use a Layout */}
+                    <Route path="/" element={<Layout />}>
+                      <Route index element={<Home />} />
+                      <Route path="/home" element={<Home />} />
+                      <Route path="/blogs" element={<Blogs />} />
+                      <Route path="/blogs/single/:id" element={<BlogSingle />} />
+                      <Route path="/blogs/edit/:id" element={<BlogEdit />} />
+                      <Route path="/products" element={<Products />} />
+                      <Route path="/products/edit/:id" element={<ProductEdit />} />
+                      <Route path="/products/single/:id" element={<ProductSingle />} />
+                      <Route path="/account/:id" element={<Account />} />
+                      <Route path="/account" element={<Account />} />
+                      <Route path="/search/:q" element={<Search />} />
+                      <Route path="/search" element={<Search />} />
+                      <Route path="/about" element={<About />} />
+                      <Route path="/cart" element={<Cart />} />
+                      <Route path="/contact" element={<Contact />} />
 
-                    <Route path="*" element={<NoPage />} />
-                  </Route>
-                </Routes>
-              </Suspense>
-            </BrowserRouter>
+                      <Route path="*" element={<NoPage />} />
+                    </Route>
+                  </Routes>
+                </Suspense>
+              </BrowserRouter>
+            </NotificationContext.Provider>
           </CurrentPageContext.Provider>
         </CartContext.Provider>
       </AuthContext.Provider>
-    </div>
+    </div >
   );
 }
 

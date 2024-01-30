@@ -4,13 +4,14 @@ import Footer from "../components/Footer";
 import "../Assets/SCSS/index.scss";
 
 import { Outlet } from "react-router-dom";
-// import ChatCard from "../components/ChatCard.jsx";
-// import ChatBubble from "../components/ChatBubble.jsx";
 import ChatField from "../components/ChatField.jsx";
+import Notification from "../components/Notification.jsx";
+import NotificationField from "../components/NotificationField.jsx";
 
 export default function Layout() {
   return (
     <React.Fragment>
+      <NotificationField />
       <ChatField />
       <header>
         <Navbar />

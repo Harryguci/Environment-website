@@ -25,7 +25,6 @@ function ChatField() {
     const CloseChat = useCallback((id) => {
         setChats(prev => {
             prev = prev.filter(element => element.id !== id);
-
             return prev;
         });
     }, []);
