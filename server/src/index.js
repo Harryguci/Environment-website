@@ -14,6 +14,8 @@ const httpServer = createServer(app);
 const { Server } = require("socket.io");
 // const io = new Server(httpServer, { /* options */ });
 
+global._root = path.join(__dirname, '..', 'public');
+
 app.use(
   session({
     secret: "keyboard cat",

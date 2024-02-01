@@ -7,6 +7,7 @@ const Blog = new Schema({
   detail: { type: String, default: "", required: true },
   userId: { type: String, default: "" },
   imageUrl: { type: String, default: "" },
+  imageBlurhash: { type: String, default: ''},
   files: { type: Array, default: [] },
   links: { type: Object, default: "" },
   create_at: { type: Date, default: new Date() },

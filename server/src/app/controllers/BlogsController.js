@@ -5,6 +5,7 @@ const Notification = require('../models/Notification')
 
 const fs = require("fs");
 const path = require("path");
+const imageBlurhash = require("../../helpers/imageBlurhash");
 class BlogsController {
     // BlogsController() {
     //     limits = 5;
@@ -53,7 +54,7 @@ class BlogsController {
             .then(blogs => { res.send(blogs) })
             .catch((err) => next(err));
     }
-
+    
     // [GET] /blogs/all?limits&pageIndex
     showAll = async (req, res, next) => {
         const limits = req.query.limits || 5;
@@ -66,12 +67,6 @@ class BlogsController {
             .then(async (query) => {
                 query = Array.from(query);
                 query = query.map((blog) => blog.toObject());
-
-                for (var i = 0; i < query.length; i++) {
-                    query[i].username = await User.findById(query[i].userId)
-                        .then((user) => user.toObject().username);
-                }
-
                 res.send(query);
             })
             .catch((err) => next(err));
@@ -137,7 +132,6 @@ class BlogsController {
     // [POST] /blogs
     uploadOne = async (req, res) => {
         const data = req.body;
-        // console.log("BLOGS POST", req.files);
 
         var blog = new Blog({
             title: data.title,
@@ -146,6 +140,14 @@ class BlogsController {
             userId: data.userId,
             files: [...req.files],
         });
+
+        if (blog.files.length) {
+            let blurhash = await imageBlurhash(_root + '/blogs/' + blog.files[0], 5, 5)
+                .then(blurHashString => {
+                    blog.imageBlurhash = blurHashString;
+                    return blurHashString;
+                }).catch(err => console.error('[BLOG Upload One]', err.message, blog.files[0].filename));
+        }
 
         await blog.save();
 
