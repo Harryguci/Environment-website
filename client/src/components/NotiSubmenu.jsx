@@ -1,11 +1,9 @@
-import { useState, useEffect, useContext, memo, useRef } from 'react';
-// import AuthContext from '../helpers/Authcontext';
+import { useState, useEffect, memo, useRef } from 'react';
 import axios from 'axios';
 import '../Assets/SCSS/components/notisubmenu.scss';
 import { Link } from 'react-router-dom';
 
 function NotiSubmenu({ visible }) {
-    //const { authState } = useContext(AuthContext);
     const notiElem = useRef(null);
     const [notiData, setNotiData] = useState([])
     const [isFetch, setIsFetch] = useState(true);
@@ -18,8 +16,10 @@ function NotiSubmenu({ visible }) {
             },
         })
             .then(response => response.data)
-            .then(response => setNotiData(response))
-            .then(response => setIsFetch(false))
+            .then(response => {
+                setNotiData(response);
+                setIsFetch(false);
+            })
             .catch(error => window.alert(JSON(error)));
     }, []);
 

@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import AlertDismissible from "../components/AlertDismissable";
 import CurrentPageContext from "../helpers/CurrentPageContext";
 import BlogComment from "../components/BlogComment";
+import Autoscroll from "../helpers/Autoscroll";
 
 export default function BlogSingle(props) {
   const [blog, setBlog] = useState({});
@@ -17,6 +18,9 @@ export default function BlogSingle(props) {
   let navigate = useNavigate();
 
   const { setPageState } = useContext(CurrentPageContext);
+
+  useEffect(() => Autoscroll(), [blog]);
+  
   useEffect(() => setPageState("blogs"), [setPageState]);
 
   useEffect(() => {

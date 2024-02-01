@@ -9,5 +9,5 @@ try {
         container.classList.remove("right-panel-active");
     });
 } catch (e) {
-
+    
 }

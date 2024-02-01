@@ -24,27 +24,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import AlertConfirm from "../components/AlertConfirm";
 import ItemBlog from "../components/ItemBlog";
-import NotificationContext from "../helpers/NotificationContext";
+// import NotificationContext from "../helpers/NotificationContext";
 import { useLocation } from "react-router-dom";
 import OrderList from "../components/OrderList";
-
-function BtnAddNoti() {
-  const { setNotificationState } = useContext(NotificationContext);
-  const HandleClick = () => {
-    setNotificationState(prev => [...prev,
-    {
-      id: prev.length === 0 ? 1 : prev[prev.length - 1].id + 1,
-      title: 'hello',
-      contentText: 'my name is harryguci' + prev.length,
-      timer: '30-01-2023',
-      visible: 'true'
-    }]);
-  }
-
-  return (
-    <button className="btn" onClick={HandleClick}>Create</button>
-  )
-}
 
 export default function Account() {
   const { authState } = useContext(AuthContext);

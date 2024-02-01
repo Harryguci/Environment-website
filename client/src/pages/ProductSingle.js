@@ -1,18 +1,22 @@
 import React, { useEffect, useState, useContext } from "react";
-import axios from "axios";
-import { Link, useParams } from "react-router-dom";
-import { Container, Row, Col, Button } from "react-bootstrap";
-import ReactPlayer from "react-player";
 import "../Assets/SCSS/blogSingle.scss";
 import "../Assets/SCSS/productSingle.scss";
+
+import ReactPlayer from "react-player";
+import axios from "axios";
+
+import { Link, useParams } from "react-router-dom";
+import { Container, Row, Col, Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCartArrowDown } from "@fortawesome/free-solid-svg-icons";
+
 import DisplayPrice from "../helpers/DisplayPrice";
 import AuthContext from "../helpers/Authcontext";
 import CartContext from "../helpers/CartContext";
 import CurrentPageContext from "../helpers/CurrentPageContext";
 import AlertDismissable from '../components/AlertDismissable';
+import Autoscroll from "../helpers/Autoscroll";
 
 export default function BlogSingle(props) {
   const [product, setBlog] = useState({});
@@ -24,6 +28,7 @@ export default function BlogSingle(props) {
   const { setPageState } = useContext(CurrentPageContext);
   const [alertState, setAlertState] = useState({});
 
+  useEffect(() => Autoscroll(), [product]);
   useEffect(() => setPageState("products"), [setPageState])
 
   useEffect(() => {

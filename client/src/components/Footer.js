@@ -211,11 +211,11 @@ function Footer() {
       <hr />
       <Row>
         <Col>
-          <span>Copyright 2023</span>
+          <span>Copyright {new Date(Date.now()).getFullYear()}</span>
           <span className="mx-4">|</span>
-          <span>SFIT - Environment</span>
+          <span>Harryguci - Social Media</span>
         </Col>
-        <Col>Hackfest 2023</Col>
+        <Col>Harryguci {new Date(Date.now()).getFullYear()}</Col>
         <Col>
           <div
             className="d-flex gap-3"

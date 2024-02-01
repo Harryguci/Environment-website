@@ -23,7 +23,9 @@ import Contact from "./pages/Contact";
 import ProductEdit from "./pages/ProductEdit";
 import Maps from "./pages/Maps";
 import BlogEdit from "./pages/BlogEdit";
-// import Travel from "./pages/Travel";
+import SideBarLayout from './layouts/SideBarLayout.jsx';
+import Chat from "./pages/Chat.jsx";
+
 
 function App() {
   const [authState, setAuthSate] = useState({
@@ -94,6 +96,10 @@ function App() {
                     <Route path="/login" element={<Login typeForm={"login"} />} />
                     <Route path="/signup" element={<Login typeForm={"signup"} />} />
                     <Route path="/maps" element={<Maps />} />
+
+                    <Route path="/chat" element={<SideBarLayout />}>
+                      <Route path="/chat" element={<Chat />} />
+                    </Route>
 
                     {/* Use a Layout */}
                     <Route path="/" element={<Layout />}>

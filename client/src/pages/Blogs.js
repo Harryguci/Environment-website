@@ -10,7 +10,7 @@ export default function Blogs(props) {
 
   return (
     <Container>
-      <h1 className="heading">Blogs</h1>
+      <h1 className="heading">Newfeed</h1>
       <BlogList typeBlog={"all"} />
     </Container>
   );

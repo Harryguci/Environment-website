@@ -1,0 +1,23 @@
+#side-bar-layout {
+    $bg-light: #f5f7f9;
+    $primary: #558beb;
+    $primary-2: #8cb7fc;
+    $pink: #f1ccd8;
+    $red: #d62453;
+
+    display: flex;
+    flex-wrap: nowrap;
+    height: 100vh;
+    
+    font-size: 1.6rem;
+
+    .control-container {
+        flex: 0 0 20%;
+        padding: 1rem;
+    }
+
+    .content-container {
+        flex: 0 0 80%;
+        padding: 1rem;
+    }
+}

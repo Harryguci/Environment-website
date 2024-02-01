@@ -1,4 +1,4 @@
-import { useState, useContext, useEffect, useCallback, memo, useRef, useLayoutEffect } from "react";
+import { useState, useContext, useEffect, useCallback, memo } from "react";
 import { Link, NavLink } from "react-router-dom";
 import {
   Container,
@@ -18,8 +18,8 @@ import {
   faBagShopping,
   faBell,
   faNewspaper,
-  faPhone,
-  faMap
+  faMap,
+  faMessage
 } from "@fortawesome/free-solid-svg-icons";
 import React from "react";
 import "../Assets/SCSS/navbar.scss";
@@ -28,7 +28,6 @@ import AuthContext from "../helpers/Authcontext";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import CartContext from "../helpers/CartContext";
-import CurrentPageContext from "../helpers/CurrentPageContext";
 import AlertDismissible from "../components/AlertDismissable";
 import AlertConfirm from "../components/AlertConfirm";
 import NotiSubmenu from "./NotiSubmenu";
@@ -44,13 +43,11 @@ function NavbarCustom({ user }) {
   const navigate = useNavigate();
   const { authState, setAuthSate } = useContext(AuthContext);
   const { cartState } = useContext(CartContext);
-  const { pageState, setPageState } = useContext(CurrentPageContext);
   const [cartNumber, setCartNumber] = useState(cartState.length || 0);
-  const [alert, setAlert] = useState("");
+  const [alert] = useState("");
   const [alertConfirm, setAlertConfirm] = useState("");
   const [noti, setNoti] = useState(false);
   const [notiNum, setNotiNum] = useState(0);
-  const navbarSelector = useRef(null);
 
   useEffect(() => {
     if (authState.id)
@@ -107,7 +104,7 @@ function NavbarCustom({ user }) {
     setNoti(prev => !prev)
   };
 
-  const [navbarItems, setNavbarItems] = useState([
+  const [navbarItems] = useState([
     {
       display: 'Home',
       name: 'home',
@@ -127,11 +124,23 @@ function NavbarCustom({ user }) {
       icon: faBagShopping,
     },
     {
-      display: 'Contact',
-      name: 'contact',
-      href: '/contact',
+      display: 'New Feed',
+      name: 'blogs',
+      href: '/blogs',
       icon: faNewspaper,
     },
+    // {
+    //   display: 'Contact',
+    //   name: 'contact',
+    //   href: '/contact',
+    //   icon: faPhone,
+    // },
+    {
+      display: 'Chat',
+      name: 'chat',
+      href: '/chat',
+      icon: faMessage
+    }
   ]);
 
   return (

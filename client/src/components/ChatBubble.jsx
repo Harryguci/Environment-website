@@ -16,7 +16,9 @@ function ChatBubble({ Toggle }, props) {
 
     return (
         <>
-            <div className="chat-bubble" onClick={HandleClick} style={{ zIndex: props.zIndex || '100' }}>
+            <div className="chat-bubble"
+                onClick={HandleClick}
+                style={{ zIndex: props.zIndex || '100' }}>
                 {type === 'off' && <FontAwesomeIcon icon={faComment} />}
                 {type === 'on' && <FontAwesomeIcon icon={faCaretDown} />}
             </div>
