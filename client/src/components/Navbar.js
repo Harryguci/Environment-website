@@ -232,13 +232,13 @@ function NavbarCustom({ user }) {
                         </Link>
                       </div>
                       <ButtonGroup className="d-flex gap-1">
-                        <Button
-                          className="d-block w-100 border-0 logout-btn"
+                        <button
+                          className="btn d-block w-100 border-0 logout-btn"
                           style={{ fontSize: "16px" }}
                           onClick={() => HandleLogout()}
                         >
                           <FontAwesomeIcon icon={faRightFromBracket} />
-                        </Button>
+                        </button>
                         <Button className="d-block w-100 border-0"
                           style={{
                             fontSize: "16px",

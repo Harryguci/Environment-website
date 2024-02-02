@@ -97,11 +97,12 @@ function App() {
                     <Route path="/signup" element={<Login typeForm={"signup"} />} />
                     <Route path="/maps" element={<Maps />} />
 
+                    {/* Use Chat layout */}
                     <Route path="/chat" element={<SideBarLayout />}>
                       <Route path="/chat" element={<Chat />} />
                     </Route>
 
-                    {/* Use a Layout */}
+                    {/* Use MAIN Layout */}
                     <Route path="/" element={<Layout />}>
                       <Route index element={<Home />} />
                       <Route path="/home" element={<Home />} />

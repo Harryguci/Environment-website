@@ -7,8 +7,6 @@ import {
   Card,
   Form,
   FormLabel,
-  ListGroup,
-  ListGroupItem,
   FormControl,
   Button,
   Badge,
@@ -36,6 +34,8 @@ export default function ProductFrame({ className }) {
   const [typeState, setTypeState] = useState("");
 
   useEffect(() => {
+    let isCancelled = false;
+
     axios
       .get("/products/all", {
         headers: {
@@ -43,6 +43,7 @@ export default function ProductFrame({ className }) {
         },
       })
       .then((data) => {
+        if (isCancelled) return;
         if (data.data.error) return console.log(data.data.error);
         else {
           // console.log(data.data);
@@ -52,9 +53,15 @@ export default function ProductFrame({ className }) {
         setIsFetch(true);
       })
       .catch((error) => console.error(error));
+
+    return () => {
+      isCancelled = true;
+    }
   }, []);
 
   useEffect(() => {
+    let isCancelled = false;
+
     axios
       .get(`/products/all?type=${typeState}`, {
         headers: {
@@ -62,6 +69,7 @@ export default function ProductFrame({ className }) {
         },
       })
       .then((data) => {
+        if (isCancelled) return;
         if (data.data.error) return console.log(data.data.error);
         else {
           setProducts(data.data.reverse());
@@ -70,12 +78,16 @@ export default function ProductFrame({ className }) {
         setIsFetch(true);
       })
       .catch((error) => console.error(error));
+
+    return () => {
+      isCancelled = true;
+    }
   }, [typeState]);
 
   const { authState } = useContext(AuthContext);
   const { cartState, setCartState } = useContext(CartContext);
-
   const [alertState, setAlertState] = useState({});
+
 
   const refreshCart = () => {
     if (authState.id) {
@@ -138,6 +150,7 @@ export default function ProductFrame({ className }) {
   };
 
   const HandleFilerName = async (e) => {
+    let isCancelled = false;
     e.preventDefault();
     await axios
       .get(`/products/all?q=${search}`, {
@@ -146,6 +159,7 @@ export default function ProductFrame({ className }) {
         },
       })
       .then((data) => {
+        if (isCancelled) return;
         if (data.data.error)
           return console.log(data.data.error);
         else {
@@ -154,6 +168,10 @@ export default function ProductFrame({ className }) {
         }
       })
       .catch((error) => console.error(error));
+
+    return () => {
+      isCancelled = true;
+    }
   };
 
   const HandleChangeProductType = (type) => {
@@ -162,12 +180,12 @@ export default function ProductFrame({ className }) {
     setProducts([]);
   };
 
-  const idTimeout = useRef(null);
-
   const HandleChangeSearchContent = async (e) => {
     setSearch(e.target.value);
-    if (idTimeout.current) clearTimeout(idTimeout.current);
-    idTimeout.current = setTimeout(async () => {
+  }
+
+  useEffect(() => {
+    let id = setTimeout(async () => {
       await axios
         .get(`/products/all?q=${search}`, {
           headers: {
@@ -176,15 +194,19 @@ export default function ProductFrame({ className }) {
         })
         .then((data) => {
           if (data.data.error)
-            return console.log(data.data.error);
+            return console.error(data.data.error);
           else {
-            console.log(data.data);
+            //console.log(data.data);
             setProducts(data.data.reverse());
           }
         })
         .catch((error) => console.error(error));
-    }, 500);
-  }
+    }, 300);
+
+    return () => {
+      clearTimeout(id);
+    }
+  }, [search]);
 
   return (
     <>
@@ -213,6 +235,7 @@ export default function ProductFrame({ className }) {
                     margin: '0',
                     border: '1px solid rgb(235, 235, 235)'
                   }}
+                  value={search}
                   onChange={HandleChangeSearchContent}
                 />
               </FormLabel>

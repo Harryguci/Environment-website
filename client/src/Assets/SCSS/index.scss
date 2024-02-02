@@ -2,10 +2,8 @@
 @use "thumbnail";
 
 .heading {
-  // color: base.$primary;
   font-weight: bold;
   font-size: 3rem;
-  //background: rgb(250, 50, 50);
   color: white;
   width: max-content;
   max-width: 100%;
@@ -15,6 +13,17 @@
   background: linear-gradient(110deg,
       #ff4b2b 0%,
       #ff416c 100%);
+  margin: 0;
+
+  &:focus,
+  &:active {
+    color: white;
+  }
+
+  &::-webkit-input-placeholder {
+    /* WebKit, Blink, Edge */
+    color: white;
+  }
 }
 
 .heading-2 {
@@ -144,8 +153,7 @@
 
     button {
       padding: 1rem 2.5rem;
-      color: #ff4b2b;
-      background-color: rgb(240, 240, 240);
+      color: white;
       font-weight: bold;
       position: relative;
       border: none;
@@ -217,5 +225,24 @@
         opacity: 1;
       }
     }
+  }
+}
+
+
+.btn-primary {
+  background: linear-gradient(110deg,
+      #ff4b2b 0%,
+      #ff416c 100%);
+
+  color: white;
+  border: none;
+
+  transition: all 0.3s ease-in-out !important;
+
+  &:hover {
+    color: white;
+    background: linear-gradient(110deg,
+        rgb(255, 104, 78) 0%,
+        #ff90aa 100%);
   }
 }

@@ -70,6 +70,7 @@ input,
 .custom-btn.primary {
   background: $primary;
   color: white;
+
   &:hover {
     background: rgb(70, 200, 70);
     color: white;
@@ -79,6 +80,7 @@ input,
 .custom-btn.primary-blue {
   background: $primary-blue;
   color: white;
+
   &:hover {
     background: rgb(20, 20, 70);
     color: white;
@@ -91,6 +93,7 @@ button.bg-none {
   border: none;
   transition: all 0.3s ease-in-out;
   border-radius: 0.5rem;
+
   &:hover {
     background: $primary-blue;
     color: white;
@@ -99,6 +102,7 @@ button.bg-none {
 
 button.bg-none.red {
   color: rgb(255, 50, 50);
+
   &:hover {
     background: rgb(255, 50, 50);
     color: white;

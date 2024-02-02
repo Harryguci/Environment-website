@@ -1,4 +1,4 @@
-import React, { useState, useEffect, memo, useCallback, useMemo } from "react";
+import React, { useState, useEffect, memo, useCallback, useMemo, useRef } from "react";
 import Widget from "./Widget";
 import "../Assets/SCSS/index.scss";
 import axios from "axios";
@@ -6,20 +6,54 @@ import { Button, Container } from "react-bootstrap";
 import ActiveNavLink from "../helpers/ActiveNavLink";
 import LoadingCard from '../components/LoadingCard';
 
-function BlogList({ limits, typeBlog }, ...props) {
+var captureImage = function (video, scale = 1) {
+  var canvas = document.createElement("canvas");
+  canvas.width = video.videoWidth * scale;
+  canvas.height = video.videoHeight * scale;
+  canvas.getContext('2d')
+    .drawImage(video, 0, 0, canvas.width, canvas.height);
+
+  var img = document.createElement("img");
+  img.src = canvas.toDataURL();
+};
+
+
+function BlogList({ limits, typeBlog, autoChangeLimits }, ...props) {
   const [blogs, setBlogs] = useState([]);
   const [limitState, setLimitState] = useState(limits || 5);
+  const [remain, setRemain] = useState(true);
+
   const [pageIndex, setPageIndex] = useState(1);
   const [isFetch, setIsFetch] = useState(false);
+  const container = useRef(null);
 
   useEffect(() => {
     ActiveNavLink("blogs");
   }, []);
 
   useEffect(() => {
+    if (!autoChangeLimits) return;
+
+    function handle(event) {
+      let scroll = window.scrollY;
+
+      if (container.current.scrollHeight - scroll <= 200) {
+        HandleChangeLimits();
+      }
+    }
+
+    window.addEventListener('scroll', handle);
+
+    return () => window.removeEventListener('scroll', handle);
+  }, [container.current])
+
+  useEffect(() => {
+    if (!remain) return;
+
     let type = "all";
     if (typeBlog) type = typeBlog;
 
+    setIsFetch(false);
     axios
       .get(`/blogs/${type}?limits=${limitState}&pageIndex=${pageIndex}`, {
         headers: {
@@ -42,6 +76,8 @@ function BlogList({ limits, typeBlog }, ...props) {
           });
           //temps.reverse();
           setBlogs(temps);
+
+          if (temps.length < limitState) setRemain(false);
         }
       })
       .catch((err) => alert(err));
@@ -52,7 +88,7 @@ function BlogList({ limits, typeBlog }, ...props) {
   };
 
   return (
-    <>
+    <div className="blog-list" ref={container}>
       {blogs &&
         blogs.length > 0 &&
         blogs
@@ -89,7 +125,7 @@ function BlogList({ limits, typeBlog }, ...props) {
         </Container>
       }
 
-      {blogs && <div className="d-flex justify-content-center">
+      {remain && blogs && <div className="d-flex justify-content-center">
         <Button
           className="custom-btn"
           onClick={HandleChangeLimits}
@@ -97,7 +133,7 @@ function BlogList({ limits, typeBlog }, ...props) {
           Xem thêm..
         </Button>
       </div>}
-    </>
+    </div>
   );
 }
 

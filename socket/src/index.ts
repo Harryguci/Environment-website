@@ -2,9 +2,9 @@ import express, { Application, Response, Request } from 'express';
 import { Server, Socket } from 'socket.io';
 import { createServer } from 'node:http';
 import * as db from './config/db';
-import * as Authentication from './middleware/Authentication';
-
 import dotenv from 'dotenv'
+
+// import * as Authentication from './middleware/Authentication';
 
 // dot env config
 dotenv.config();
@@ -20,7 +20,7 @@ io.on('connection', (socket: Socket) => {
     global._io = io;
     
     socket.on('chat message', (msg) => {
-        
+
         socket.broadcast.emit('chat message', msg, { id: socket.id }); // send to all client, except the sender
     });
 });

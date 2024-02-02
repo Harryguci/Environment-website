@@ -11,7 +11,7 @@ export default function Blogs(props) {
   return (
     <Container>
       <h1 className="heading">Newfeed</h1>
-      <BlogList typeBlog={"all"} />
+      <BlogList typeBlog={"all"} autoChangeLimits={true} />
     </Container>
   );
 }

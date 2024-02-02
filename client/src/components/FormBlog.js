@@ -15,6 +15,8 @@ import {
 } from "react-bootstrap";
 import "../Assets/SCSS/components/formBlog.scss";
 import AuthContext from "../helpers/Authcontext";
+import TextareaAutoHeight from "./TextareaAutoHeight";
+import '../Assets/SCSS/customFormControl.scss';
 
 function FormBlog() {
   const { authState } = useContext(AuthContext);
@@ -111,7 +113,13 @@ function FormBlog() {
     >
       <div>
         <FormControl
-          style={{ fontWeight: 'bold' }}
+          className="heading"
+          style={{
+            fontWeight: 'bold',
+            boxShadow: 'none',
+            width: '100%',
+            fontSize: '2rem',
+          }}
           name="title"
           value={titleState}
           onChange={(e) => setTitleState(e.target.value)}
@@ -121,18 +129,14 @@ function FormBlog() {
         />
       </div>
       <div>
-        <FormControl
-          as="textarea"
-          name="detail"
-          rows={3}
-          value={
-            !isChangeTextarea
-              ? `Bạn đang nghĩ gì`
-              : detailState
-          }
-          onChange={(e) => setDetailState(e.target.value)}
-          onFocus={() => setIsChangeTextarea(true)}
-          required
+        <TextareaAutoHeight
+          id={'detail'}
+          value={!isChangeTextarea
+            ? `Bạn đang nghĩ gì`
+            : detailState}
+          handleChange={setDetailState}
+          handleFocus={() => setIsChangeTextarea(true)}
+          required={true}
         />
       </div>
       {showPreview && previewUrl && previewUrl.length && (
