@@ -12,8 +12,8 @@ class ProductController {
         var q = req.query.q;
         var type = req.query.type;
 
-        console.log('[Query]', q);
-        console.log('[Type]', type);
+        // console.log('[Query]', q);
+        // console.log('[Type]', type);
 
         var pageIndex = req.query.pageIndex || 1;
 

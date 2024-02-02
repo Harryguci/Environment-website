@@ -15,7 +15,7 @@ import {
 } from "react-bootstrap";
 import "../Assets/SCSS/components/formBlog.scss";
 import AuthContext from "../helpers/Authcontext";
-import axios from "axios";
+// import axios from "axios";
 import TextareaAutoHeight from "./TextareaAutoHeight";
 
 function FormProduct({ user: userInfo }) {
@@ -86,7 +86,7 @@ function FormProduct({ user: userInfo }) {
     console.log('Type : ', type);
   }, [type])
 
-  const types = [
+  const [types] = useState([
     { name: 'thoi-trang', display: 'Thời trang' },
     { name: 'do-gia-dung', display: 'Đồ gia dụng' },
     { name: 'do-dung-hoc-tap', display: 'Đồ dùng học tập' },
@@ -94,24 +94,7 @@ function FormProduct({ user: userInfo }) {
     { name: 'trang-tri', display: 'Trang trí' },
     { name: 'do-luu-niem', display: 'Đồ lưu niệm' },
     { name: 'other', display: 'Khác' },
-  ]
-
-  // eslint-disable-next-line no-unused-vars
-  const HandleSubmit = (e) => {
-    e.preventDefault();
-    axios.post("/products", {
-      title: detailState,
-      description: detailState,
-      detail: detailState,
-      userId: user.id,
-      files: files,
-      type: type,
-
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    });
-  };
+  ]);
 
   const typeList = useMemo(() => (
     <div className="my-4">
@@ -126,51 +109,8 @@ function FormProduct({ user: userInfo }) {
         label={elem.display}
         onChange={e => HandleChangeType(e)}
       />))}
-      {/*       
-      <Form.Check
-        type="checkbox"
-        name={`type`}
-        id={`thoi-trang`}
-        label={`Thời trang`}
-      />
-      <Form.Check
-        type="checkbox"
-        name={`type`}
-        id={`do-gia-dung`}
-        label={`Đồ gia dụng`}
-      />
-      <Form.Check
-        type="checkbox"
-        name={`type`}
-        id={`do-dung-hoc-tap`}
-        label={`Đồ dùng học tập`}
-      />
-      <Form.Check
-        type="checkbox"
-        name={`type`}
-        id={`phu-kien`}
-        label={`Phụ kiện`}
-      />
-      <Form.Check
-        type="checkbox"
-        name={`type`}
-        id={`trang-tri`}
-        label={`Decor - Trang trí`}
-      />
-      <Form.Check
-        type="checkbox"
-        name={`type`}
-        id={`do-luu-niem`}
-        label={`Đồ lưu niệm`}
-      />
-      <Form.Check
-        type="checkbox"
-        name={`other`}
-        id={`other`}
-        label={`Khác`}
-      /> */}
     </div>
-  ), []);
+  ), [types]);
 
   const HandlePreview = useCallback(() => (
     <div className="preview-container">

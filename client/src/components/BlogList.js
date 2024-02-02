@@ -1,10 +1,12 @@
-import React, { useState, useEffect, memo, useCallback, useMemo, useRef } from "react";
-import Widget from "./Widget";
+import React, { useState, useEffect, memo, useRef, lazy, Suspense } from "react";
 import "../Assets/SCSS/index.scss";
-import axios from "axios";
 import { Button, Container } from "react-bootstrap";
-import ActiveNavLink from "../helpers/ActiveNavLink";
+// import Widget from "./Widget";
+import axios from "axios";
 import LoadingCard from '../components/LoadingCard';
+
+const Widget = lazy(() => import(
+  './Widget'));
 
 var captureImage = function (video, scale = 1) {
   var canvas = document.createElement("canvas");
@@ -17,7 +19,6 @@ var captureImage = function (video, scale = 1) {
   img.src = canvas.toDataURL();
 };
 
-
 function BlogList({ limits, typeBlog, autoChangeLimits }, ...props) {
   const [blogs, setBlogs] = useState([]);
   const [limitState, setLimitState] = useState(limits || 5);
@@ -26,10 +27,6 @@ function BlogList({ limits, typeBlog, autoChangeLimits }, ...props) {
   const [pageIndex, setPageIndex] = useState(1);
   const [isFetch, setIsFetch] = useState(false);
   const container = useRef(null);
-
-  useEffect(() => {
-    ActiveNavLink("blogs");
-  }, []);
 
   useEffect(() => {
     if (!autoChangeLimits) return;
@@ -54,10 +51,12 @@ function BlogList({ limits, typeBlog, autoChangeLimits }, ...props) {
     if (typeBlog) type = typeBlog;
 
     setIsFetch(false);
+
     axios
       .get(`/blogs/${type}?limits=${limitState}&pageIndex=${pageIndex}`, {
         headers: {
           accessToken: localStorage.getItem("accessToken"),
+          "Content-Type": "multipart/form-data",
         },
       })
       .then((data) => {
@@ -65,7 +64,8 @@ function BlogList({ limits, typeBlog, autoChangeLimits }, ...props) {
         else {
           var temps = data.data;
           temps = temps.map((blog) => {
-            if (blog.files && blog.files[0].mimetype.indexOf("image") !== -1) {
+            if (blog.files && blog.files.length > 0
+              && blog.files[0].mimetype.indexOf("image") !== -1) {
               blog.imageUrl = blog.files[0].filename;
             } else {
               blog.imageUrl = "NoImage.jpg";
@@ -93,16 +93,22 @@ function BlogList({ limits, typeBlog, autoChangeLimits }, ...props) {
         blogs.length > 0 &&
         blogs
           .map((blog, index) => (
-            <Widget
-              index={index}
-              key={index + 1}
-              typeWidget={index % 2 === 0 ? `left` : "right"}
-              heading={blog.title}
-              description={blog.detail.trim().substring(0, 100)}
-              link={`/blogs/single/${blog._id}`}
-              imageUrl={`/blogs/${blog.imageUrl}`}
-              author={blog.username}
-            />
+            <Suspense fallback=
+              {<LoadingCard
+                key={index}
+                style={{ height: '30rem', marginBottom: '1rem' }}
+              />}>
+              <Widget
+                index={index}
+                key={index + 1}
+                typeWidget={index % 2 === 0 ? `left` : "right"}
+                heading={blog.title}
+                description={blog.detail.trim().substring(0, 100)}
+                link={`/blogs/single/${blog._id}`}
+                imageUrl={`/blogs/${blog.imageUrl}`}
+                author={blog.username}
+              />
+            </Suspense>
           ))}
       {isFetch && (!blogs || blogs.length === 0) && (
         <Container>

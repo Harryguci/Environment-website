@@ -67,7 +67,7 @@ function ProductEdit() {
         return () => {
             isCancelled = true;
         }
-    }, [productId])
+    }, [productId, navigate])
 
     useEffect(() => {
         setName(productState.name);

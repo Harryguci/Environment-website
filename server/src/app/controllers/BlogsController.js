@@ -54,11 +54,13 @@ class BlogsController {
             .then(blogs => { res.send(blogs) })
             .catch((err) => next(err));
     }
-    
+
     // [GET] /blogs/all?limits&pageIndex
     showAll = async (req, res, next) => {
         const limits = req.query.limits || 5;
         const pageIndex = req.query.pageIndex || 1;
+
+        // console.log('[GET] blogs/all', 'limits=' + limits, 'pageIndex=' + pageIndex);
 
         await Blog.find({})
             .sort({ create_at: -1 })

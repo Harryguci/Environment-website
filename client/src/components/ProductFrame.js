@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext, useRef } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import "../Assets/SCSS/components/productFrame.scss";
 import {
   Container,
@@ -129,7 +129,7 @@ export default function ProductFrame({ className }) {
     }
   };
 
-  const [productType, setProductType] = useState([
+  const [productType] = useState([
     ["thoi-trang", "Thời trang"],
     ["do-gia-dung", "Đồ gia dụng"],
     ["do-dung-hoc-tap", "Đồ dùng học tập"],
