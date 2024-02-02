@@ -3,7 +3,6 @@ const User = require('../models/User');
 const Order = require('../models/Order');
 const fs = require('fs');
 const path = require('path');
-const OrderController = require('./OrderController');
 
 class ProductController {
     static PageSize = 10;
@@ -90,8 +89,8 @@ class ProductController {
     // [POST] /products
     uploadNewProduct = async (req, res) => {
         const data = req.body;
-        console.log("PRODUCTS POST", req.files);
-        console.log("PRODUCTS POST", req.body);
+        // console.log("PRODUCTS POST", req.files);
+        // console.log("PRODUCTS POST", req.body);
         var imgUrl = "NoImage.jpg";
 
         if (
@@ -115,6 +114,22 @@ class ProductController {
         await product.save().catch((err) => console.log(err));
 
         res.redirect("back");
+    }
+
+    // [PUT] /products
+    updateOne = async (req, res) => {
+        const data = req.body;
+        const newProduct = { id: data.id };
+
+        if (data.name) newProduct['name'] = data.name;
+        if (data.description) newProduct['description'] = data.description;
+        if (data.cost) newProduct['cost'] = data.cost;
+        if (data.deleted) newProduct['deleted'] = data.deleted;
+        if (data.remain) newProduct['remain'] = data.remain;
+
+        await Product.findByIdAndUpdate(newProduct.id, { ...newProduct })
+            .then(value => res.send({ ...value, status: 'success' }))
+            .catch(err => res.send({ error: err }))
     }
 
     // [GET] /products/single/:id

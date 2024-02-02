@@ -78,10 +78,10 @@ function ItemBlog({ blog, user, handleDeleteBlog }, key) {
           </button>
         </p>
       </div>
-      <div className="d-flex media">
+      <div className="d-flex media m-0">
         {blogState &&
           blogState.files &&
-          blogState.files.length &&
+          blogState.files.length > 0 &&
           blogState.files.map((file) => (
             <div key={file.filename}>
               {file.mimetype.indexOf("video") !== -1 ? (

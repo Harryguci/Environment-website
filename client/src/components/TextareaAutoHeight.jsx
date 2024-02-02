@@ -2,7 +2,7 @@ import { FormControl } from 'react-bootstrap'
 import { memo, useRef, useEffect } from 'react';
 import '../Assets/SCSS/customFormControl.scss';
 
-function TextareaAutoHeight({ id, className, value, handleChange, handleFocus, required }) {
+function TextareaAutoHeight({ id, className, value, handleChange, handleFocus, required, disable }) {
     const textAreaRef = useRef(null);
     useEffect(() => {
         if (!textAreaRef) return;
@@ -27,7 +27,8 @@ function TextareaAutoHeight({ id, className, value, handleChange, handleFocus, r
                 minHeight: '10rem',
                 maxHeight: '100rem'
             }}
-            placeholder='' />
+            placeholder=''
+            disabled={disable ? disable : false} />
     )
 }
 

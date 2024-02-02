@@ -14,6 +14,8 @@ router.get("/all", productController.showAll);
 
 router.post("/", upload.array("files", 12), productController.uploadNewProduct);
 
+router.put('/', validateToken, productController.updateOne);
+
 router.get("/", productController.showAll);
 
 module.exports = router;

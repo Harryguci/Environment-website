@@ -11,6 +11,10 @@ import {
 import ReactPlayer from "react-player";
 import { useParams } from "react-router-dom";
 import axios from "axios";
+import TextareaAutoHeight from "../components/TextareaAutoHeight";
+import AutoScroll from "../helpers/Autoscroll";
+import { useNavigate } from 'react-router-dom';
+
 function ProductEdit() {
     const productId = useParams().id;
     const [productState, setProductState] = useState({});
@@ -21,10 +25,18 @@ function ProductEdit() {
     const [cost, setCost] = useState(0);
     const [remain, setRemain] = useState(0);
 
+    const navigate = useNavigate();
+
     useEffect(() => {
+        AutoScroll();
+    }, [productId]);
+
+    useEffect(() => {
+        let isCancelled = false;
+
         if (!productId) {
             alert("Can't find the product");
-            window.location = '/products'
+            navigate('/products');
         }
 
         setId(productId);
@@ -39,7 +51,7 @@ function ProductEdit() {
                 if (data.error) {
                     alert(data.error);
                 } else {
-                    console.log(data);
+                    if (isCancelled) return;
                     setProductState({
                         id: productId,
                         name: data.name,
@@ -50,7 +62,11 @@ function ProductEdit() {
                     })
                 }
             })
-            .catch((err) => console.log(err))
+            .catch((err) => console.error(err))
+
+        return () => {
+            isCancelled = true;
+        }
     }, [productId])
 
     useEffect(() => {
@@ -60,11 +76,34 @@ function ProductEdit() {
         setRemain(productState.remain);
     }, [productState]);
 
+    async function handleSubmit(e) {
+        e.preventDefault();
+
+        var url = '/products';
+        await axios.put(url, {
+            id, name, description, cost, remain
+        }, {
+            headers: {
+                accessToken: localStorage.getItem('accessToken'),
+                'Content-Type': 'application/json',
+                Accept: 'application/json',
+            },
+        }).then(response => response.data)
+            .then(data => {
+                if (data['status'] === 'success') {
+                    window.alert('Update successfully !!');
+                    navigate('/account?tab=products')
+                }
+                else if (data['error']) window.alert('ERROR: ' + JSON.stringify(data['error']));
+            })
+            .catch(err => console.error(JSON.stringify(err)));
+    }
+
     return (
         <Container>
             <Row className="justify-content-center">
                 <Col md={6}>
-                    <Form>
+                    <Form onSubmit={handleSubmit}>
                         <FormGroup style={{ margin: '1rem 0' }}>
                             <FormLabel>Id</FormLabel>
                             <FormControl
@@ -77,8 +116,11 @@ function ProductEdit() {
                         <FormGroup style={{ margin: '1rem 0' }}>
                             <FormLabel>Name</FormLabel>
                             <FormControl
-                                id="name" name="name"
+                                id="name"
+                                className="heading"
+                                name="name"
                                 placeholder="name"
+                                style={{ width: '100%' }}
                                 value={name}
                                 onChange={(e) => setName(e.target.value)}
                             />
@@ -86,14 +128,12 @@ function ProductEdit() {
 
                         <FormGroup style={{ margin: '1rem 0' }}>
                             <FormLabel>Description</FormLabel>
-                            <FormControl
-                                id="description" name="description"
-                                as="textarea"
+                            <TextareaAutoHeight
+                                id="description"
                                 rows={5}
                                 placeholder="Description"
                                 value={description}
-                                onChange={(e) =>
-                                    setDescription(e.target.value)}
+                                onChange={setDescription}
                             />
                         </FormGroup>
 
@@ -129,7 +169,7 @@ function ProductEdit() {
                         overflow: 'auto'
                     }}>
                         {productState.files &&
-                            productState.files.length &&
+                            productState.files.length > 0 &&
                             productState.files.map((file) => (
                                 <div key={file.filename} style={{ margin: '1rem' }}>
                                     {file.mimetype.indexOf("video") !== -1 ? (

@@ -16,6 +16,7 @@ import {
 import "../Assets/SCSS/components/formBlog.scss";
 import AuthContext from "../helpers/Authcontext";
 import axios from "axios";
+import TextareaAutoHeight from "./TextareaAutoHeight";
 
 function FormProduct({ user: userInfo }) {
   const { authState } = useContext(AuthContext);
@@ -195,7 +196,8 @@ function FormProduct({ user: userInfo }) {
       <div className="position-relative">
         <FormControl
           name="name"
-          className="position-relative fw-bold"
+          className="heading"
+          style={{ width: '100%', fontSize: '2rem' }}
           value={
             !isChangeTextarea
               ? `${user.username}, Tiêu đề sản phẩm của bạn`
@@ -212,7 +214,19 @@ function FormProduct({ user: userInfo }) {
         )}
       </div>
       <div className="position-relative">
-        <FormControl
+        <TextareaAutoHeight
+          id="detail"
+          className="position-relative"
+          value={
+            !isChangeTextarea
+              ? `Mô tả sản phẩm của bạn`
+              : detailState
+          }
+          handleChange={setDetailState}
+          handleFocus={() => setIsChangeTextarea(true)}
+          disabled={user.phone ? false : true}
+        />
+        {/* <FormControl
           as="textarea"
           name="detail"
           className="position-relative"
@@ -225,7 +239,7 @@ function FormProduct({ user: userInfo }) {
           onChange={(e) => setDetailState(e.target.value)}
           onFocus={() => setIsChangeTextarea(true)}
           disabled={user.phone ? false : true}
-        />
+        /> */}
         {!user.phone && (
           <p className="text-danger mt-3 fw-bold">
             Bạn phải cập nhật SĐT để đăng sản phẩm

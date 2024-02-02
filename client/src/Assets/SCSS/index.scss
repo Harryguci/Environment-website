@@ -16,8 +16,10 @@
   margin: 0;
 
   &:focus,
-  &:active {
+  &:active,
+  &:hover {
     color: white;
+    box-shadow: 5px 5px 50px #ffd5d5;
   }
 
   &::-webkit-input-placeholder {
