@@ -39,7 +39,7 @@ function ProductEdit() {
             navigate('/products');
         }
 
-        setId(productId);
+        setId(productId); // ??? What did this do ?
 
         axios.get(`/products/single/${productId}`, {
             headers: {
