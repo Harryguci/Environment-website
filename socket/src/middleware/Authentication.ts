@@ -25,4 +25,4 @@ function generateToken(token: String) {
     return user;
 }
 
-module.exports = { validateToken };
+module.exports = { validateToken, generateToken };
